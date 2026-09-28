@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="PH Catalog — a resumable local Product Hunt catalogue and analytics experiment with a privacy-safe synthetic demo.">
 <title>PH Catalog</title>
+<script src="https://health.sassmaker.com/tracker.js" data-key="ahk_pub_6ffe706f72e7394a34115b53b1e09e058009afab54b22e0f585f67ad678978a3" data-project="app-import-101d8097b05706b4c10bc776b5171149282e31994ee1557e248e78bc20375d6a" data-identity="session" defer></script>
 <style>
   * { margin:0; box-sizing:border-box; }
   body { font-family: -apple-system, 'Segoe UI', sans-serif; background:#0e0f13; color:#e8e9ed; padding:64px 24px; }
@@ -27,12 +28,21 @@
   <p class="lede">A resumable local Product Hunt catalogue — half a million launches deduplicated into one analytical mart, with a privacy-safe synthetic demo.</p>
   <h2>Demo products</h2>
   <ul>
-    <li><a class="card" href="samples/acme-toolkit.html"><strong>Acme Toolkit</strong><span>Synthetic sample product</span></a></li>
-    <li><a class="card" href="samples/pixelboard.html"><strong>Pixelboard</strong><span>Synthetic sample product</span></a></li>
-    <li><a class="card" href="samples/quantify.html"><strong>Quantify</strong><span>Synthetic sample product</span></a></li>
+    <li><a class="card" href="samples/acme-toolkit.html" data-sample="acme-toolkit"><strong>Acme Toolkit</strong><span>Synthetic sample product</span></a></li>
+    <li><a class="card" href="samples/pixelboard.html" data-sample="pixelboard"><strong>Pixelboard</strong><span>Synthetic sample product</span></a></li>
+    <li><a class="card" href="samples/quantify.html" data-sample="quantify"><strong>Quantify</strong><span>Synthetic sample product</span></a></li>
   </ul>
   <p class="note">The full catalogue stays local. Public pages show only synthetic fixtures.</p>
   <footer>A Significant Hobbies experiment.</footer>
 </main>
+<script>
+  document.querySelectorAll('a[data-sample]').forEach((link) => {
+    link.addEventListener('click', () => {
+      window.appHealth?.track('sample_opened');
+    });
+  });
+</script>
+<script src="https://sassmaker.com/project-strip.js" data-project="ph-catalog" defer></script>
+<script src="https://sassmaker.com/ai-chat-footer.js" data-name="PH Catalog" defer></script>
 </body>
 </html>
