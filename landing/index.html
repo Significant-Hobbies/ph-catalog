@@ -41,9 +41,29 @@
       window.appHealth?.track('sample_opened');
     });
   });
+
+  const newsletterWidget = document.querySelector('saas-maker-newsletter-capture');
+  const trackerScript = document.querySelector('script[src="https://health.sassmaker.com/tracker.js"]');
+  let newsletterInteractionTracked = false;
+  let newsletterInteractionPending = false;
+  const flushNewsletterInteraction = () => {
+    if (!newsletterInteractionPending || !window.appHealth?.track) return;
+    newsletterInteractionPending = false;
+    window.appHealth.track('newsletter_widget_interacted');
+    void Promise.resolve(window.appHealth.flush?.()).catch(() => {});
+  };
+  const trackNewsletterInteraction = () => {
+    if (newsletterInteractionTracked) return;
+    newsletterInteractionTracked = true;
+    newsletterInteractionPending = true;
+    flushNewsletterInteraction();
+  };
+  newsletterWidget?.addEventListener('click', trackNewsletterInteraction);
+  newsletterWidget?.addEventListener('focusin', trackNewsletterInteraction);
+  trackerScript?.addEventListener('load', flushNewsletterInteraction, { once: true });
 </script>
 <fleet-footer-extension>
-  <saas-maker-newsletter-capture slot="capture" catalog-id="ph-catalog" project-key="pk_f0b2e58b3705f48ff52ddfa347eecad4776407b6cd789cce" product-name="PH Catalog" kind="newsletter" allow-kind-selection source="fleet-footer" privacy-url="https://sassmaker.com/privacy" theme="dark" data-app-health-event="newsletter_widget_interacted"></saas-maker-newsletter-capture>
+  <saas-maker-newsletter-capture slot="capture" catalog-id="ph-catalog" project-key="pk_f0b2e58b3705f48ff52ddfa347eecad4776407b6cd789cce" product-name="PH Catalog" kind="newsletter" allow-kind-selection source="fleet-footer" privacy-url="https://sassmaker.com/privacy" theme="dark"></saas-maker-newsletter-capture>
 </fleet-footer-extension>
 <script type="module" src="https://sassmaker.com/newsletter-capture.js"></script>
 <script src="https://sassmaker.com/project-strip.js" data-project="ph-catalog" defer></script>
