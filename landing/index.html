@@ -42,25 +42,18 @@
     });
   });
 
-  const newsletterWidget = document.querySelector('saas-maker-newsletter-capture');
-  const trackerScript = document.querySelector('script[src="https://health.sassmaker.com/tracker.js"]');
-  let newsletterInteractionTracked = false;
-  let newsletterInteractionPending = false;
-  const flushNewsletterInteraction = () => {
-    if (!newsletterInteractionPending || !window.appHealth?.track) return;
-    newsletterInteractionPending = false;
-    window.appHealth.track('newsletter_widget_interacted');
-    void Promise.resolve(window.appHealth.flush?.()).catch(() => {});
-  };
-  const trackNewsletterInteraction = () => {
-    if (newsletterInteractionTracked) return;
-    newsletterInteractionTracked = true;
-    newsletterInteractionPending = true;
-    flushNewsletterInteraction();
-  };
-  newsletterWidget?.addEventListener('click', trackNewsletterInteraction);
-  newsletterWidget?.addEventListener('focusin', trackNewsletterInteraction);
-  trackerScript?.addEventListener('load', flushNewsletterInteraction, { once: true });
+  document.addEventListener('DOMContentLoaded', () => {
+    const newsletterWidget = document.querySelector('saas-maker-newsletter-capture');
+    let newsletterInteractionTracked = false;
+    const trackNewsletterInteraction = () => {
+      if (newsletterInteractionTracked) return;
+      newsletterInteractionTracked = true;
+      window.appHealth?.track('newsletter_widget_interacted');
+      void Promise.resolve(window.appHealth?.flush?.()).catch(() => {});
+    };
+    newsletterWidget?.addEventListener('click', trackNewsletterInteraction);
+    newsletterWidget?.addEventListener('focusin', trackNewsletterInteraction);
+  }, { once: true });
 </script>
 <fleet-footer-extension>
   <saas-maker-newsletter-capture slot="capture" catalog-id="ph-catalog" project-key="pk_f0b2e58b3705f48ff52ddfa347eecad4776407b6cd789cce" product-name="PH Catalog" kind="newsletter" allow-kind-selection source="fleet-footer" privacy-url="https://sassmaker.com/privacy" theme="dark"></saas-maker-newsletter-capture>
