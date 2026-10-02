@@ -8,7 +8,8 @@
   const context = document.getElementById("page-context");
   const names = { overview: "Overview", trends: "Relative trends", explore: "Explore products", quality: "Data quality" };
   const nf = new Intl.NumberFormat("en-US");
-  const count = (value) => Number.isFinite(value) ? nf.format(value) : "Unavailable";
+  const isCount = (value) => Number.isSafeInteger(value) && value >= 0;
+  const count = (value) => isCount(value) ? nf.format(value) : "Unavailable";
   const pct = (value, digits = 1) => Number.isFinite(value) ? `${(value * 100).toFixed(digits)}%` : "Unavailable";
   const title = (value) => String(value || "").replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
   const escapeHtml = (value) => String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
@@ -54,7 +55,7 @@
   }
 
   function renderEvidenceCounts(data) {
-    const coverage = (value) => !Number.isFinite(data.products) || data.products < 0 || !Number.isFinite(value) || value < 0 || value > data.products ? "Unavailable" : data.products > 0 ? pct(value / data.products) : "Not applicable";
+    const coverage = (value) => !isCount(data.products) || !isCount(value) || value > data.products ? "Unavailable" : data.products > 0 ? pct(value / data.products) : "Not applicable";
     document.getElementById("opened-product-count").textContent = `${count(data.products)} products in this mart`;
     document.getElementById("quality-product-count").textContent = `${count(data.products)} products`;
     document.getElementById("category-assignment-count").textContent = `${count(data.category_assignments)} assignments`;
@@ -72,7 +73,7 @@
 
   function renderCoverage(data) {
     const total = data.products;
-    if (!Number.isFinite(total) || total < 0) {
+    if (!isCount(total)) {
       document.getElementById("coverage-rings").innerHTML = `<p class="panel-note">Product count unavailable. Coverage cannot be calculated.</p>`;
       return;
     }
@@ -82,7 +83,7 @@
     }
     const rings = [["PH categories", data.categorized_products], ["Broad labels", data.labeled_products], ["Entities", data.entity_products]];
     document.getElementById("coverage-rings").innerHTML = rings.map(([label, numerator]) => {
-      const value = Number.isFinite(numerator) && numerator >= 0 && numerator <= total ? numerator / total : null;
+      const value = isCount(numerator) && numerator <= total ? numerator / total : null;
       return `<div class="coverage-ring${value === null ? " is-unavailable" : ""}"${value === null ? "" : ` style="--coverage:${pct(value)}"`}><div><strong>${pct(value)}</strong><span>${escapeHtml(label)}</span></div></div>`;
     }).join("");
   }
@@ -211,7 +212,7 @@
     try {
       const result = await api(productQuery(reset));
       if (request !== state.request) return;
-      if (!Array.isArray(result.items) || !Number.isFinite(result.total) || result.total < 0) throw new Error("Invalid product list");
+      if (!Array.isArray(result.items) || !isCount(result.total)) throw new Error("Invalid product list");
       state.searchStatus = "loaded";
       state.total = result.total;
       state.products.push(...result.items);

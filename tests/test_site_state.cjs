@@ -278,6 +278,45 @@ async function main() {
   api.renderCoverage({ products: -1 });
   assert(node('category-coverage').textContent.startsWith('Unavailable'));
   assert(node('coverage-rings').innerHTML.includes('unavailable'));
-  console.log('PASS: empty, reset, stale detail/error, failure/recovery, pagination retry/row selection/no duplicates, coverage boundaries, stacked explicit focus/return/retry, initial and desktop nojump, stale completion nojump');
+  for (const value of [-1, 1.5, Number.MAX_SAFE_INTEGER + 1, NaN, Infinity]) {
+    const invalid = { products: value, categorized_products: 0, labeled_products: 0,
+      category_assignments: value, label_assignments: value, entity_assignments: value };
+    api.renderEvidenceCounts(invalid);
+    api.renderCoverage(invalid);
+    assert.equal(node('opened-product-count').textContent, 'Unavailable products in this mart');
+    for (const id of ['category-assignment-count', 'label-assignment-count', 'entity-assignment-count']) {
+      assert.equal(node(id).textContent, 'Unavailable assignments');
+    }
+    assert(node('category-coverage').textContent.startsWith('Unavailable'));
+    assert(node('coverage-rings').innerHTML.includes('Product count unavailable'));
+    assert(!node('coverage-rings').innerHTML.includes('0.0%'));
+
+    const invalidNumerator = { products: 2, categorized_products: value, labeled_products: value,
+      entity_products: value };
+    api.renderEvidenceCounts(invalidNumerator);
+    api.renderCoverage(invalidNumerator);
+    assert(node('category-coverage').textContent.startsWith('Unavailable'));
+    assert(node('label-coverage').textContent.startsWith('Unavailable'));
+    assert(!node('coverage-rings').innerHTML.includes('0.0%'));
+    assert(node('coverage-rings').innerHTML.includes('Unavailable'));
+
+    pending = api.searchProducts(true);
+    respond(requests.at(-1), { total: value, items: [] });
+    await pending;
+    assert(node('result-count').textContent.includes('could not be loaded'));
+    assert.equal(node('load-more').textContent, 'Retry search');
+  }
+  api.renderCoverage({ products: 0, categorized_products: 0, labeled_products: 0, entity_products: 0 });
+  assert(node('coverage-rings').innerHTML.includes('No products in this mart'));
+  assert(!node('coverage-rings').innerHTML.includes('0.0%'));
+  api.renderEvidenceCounts({ products: 2, categorized_products: 1, labeled_products: 0,
+    category_assignments: 1, label_assignments: 0, entity_assignments: 2 });
+  api.renderCoverage({ products: 2, categorized_products: 1, labeled_products: 0, entity_products: 2 });
+  assert.equal(node('opened-product-count').textContent, '2 products in this mart');
+  assert(node('category-coverage').textContent.startsWith('50.0%'));
+  assert(node('label-coverage').textContent.startsWith('0.0%'));
+  assert(node('coverage-rings').innerHTML.includes('50.0%'));
+  assert(node('coverage-rings').innerHTML.includes('100.0%'));
+  console.log('PASS: empty, reset, stale detail/error, failure/recovery, pagination retry/row selection/no duplicates, coverage boundaries and safe integer counts, stacked explicit focus/return/retry, initial and desktop nojump, stale completion nojump');
 }
 main().catch((error) => { console.error(error); process.exitCode = 1; });
