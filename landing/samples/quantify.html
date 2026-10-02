@@ -1,13 +1,30 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quantify — Atlas / PH Catalog fixture evidence</title>
+    <link rel="stylesheet" href="../styles.css">
     <meta property="og:title" content="Quantify: Simple local metrics | Product Hunt">
     <meta property="og:description" content="A useful fallback description for offline parsing.">
   </head>
   <body>
-    <main>
-      <h1>Quantify</h1>
-      <a data-test="visit-website-button" href="https://quantify.example">Visit</a>
+    <a class="skip-link" href="#content">Skip to evidence</a>
+    <header class="site-header">
+      <a class="brand" href="../" aria-label="Atlas / PH Catalog home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Atlas</strong><small>PH Catalog / local research</small></span></a>
+      <nav aria-label="Sample navigation"><a href="../#records">Back to original fixtures</a></nav>
+    </header>
+    <main id="content">
+      <section class="record-page" aria-labelledby="record-name">
+        <div><p class="eyebrow">Original fictional fixture</p><h1 id="record-name">Quantify</h1><p class="record-intro">Simple local metrics</p><p class="record-intro">An original offline parser record, presented as Atlas evidence. All product details here are fictional; this is not live Product Hunt data.</p><a class="secondary" href="../#run-locally">How to run Atlas locally</a></div>
+        <article class="evidence" aria-labelledby="source-title">
+          <p class="eyebrow">Retained source fields / quantify</p><h2 id="source-title">Read the record.</h2>
+          <dl class="source-fields"><div><dt>Name</dt><dd>Quantify<small>Title metadata; also present in original heading</small></dd></div><div><dt>Tagline</dt><dd>Simple local metrics<small>Title metadata</small></dd></div><div><dt>Description</dt><dd>A useful fallback description for offline parsing.<small>Description metadata fallback</small></dd></div><div><dt>Categories</dt><dd>Not supplied<small>No category field in original fixture</small></dd></div><div><dt>Destination</dt><dd>https://quantify.example<small>Original visit-link href; illustrative destination</small></dd></div><div><dt>Fixture source identifier</dt><dd>https://www.producthunt.com/products/quantify<small>Original parser identifier; not verified as a real product</small></dd></div></dl>
+          <div class="record-boundary"><h3>Where the evidence ends.</h3><p>No derived labels or entity annotations are supplied by this fixture. Post dates, votes, popularity, live freshness and enrichment precision are unavailable.</p><p>The original structured fixture data is retained in this page. Field origins describe only the fictional input and parser precedence, not verified claims about a live product. Illustrative destinations are shown as text.</p></div>
+        </article>
+      </section>
+      <footer><span>Atlas / PH Catalog</span><span>Static fictional evidence / no live enrichment</span></footer>
     </main>
+    <a data-test="visit-website-button" href="https://quantify.example" hidden inert aria-hidden="true" tabindex="-1">Visit</a>
   </body>
 </html>

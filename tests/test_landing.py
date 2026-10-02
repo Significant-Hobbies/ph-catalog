@@ -79,3 +79,17 @@ def test_sample_click_reports_to_both_analytics_without_requiring_either_loader(
         if surface["id"] != "home":
             markdown = (LANDING / urlparse(surface["md"]).path.lstrip("/")).read_text()
             assert "fictional" in markdown
+
+
+def test_public_record_layout_preserves_original_parser_evidence():
+    from ph_catalog.parsing import parse_product_page
+
+    for slug in ("acme-toolkit", "pixelboard", "quantify"):
+        public = (LANDING / "samples" / f"{slug}.html").read_bytes()
+        original = (LANDING.parent / "samples" / f"{slug}.html").read_bytes()
+        source_url = f"https://www.producthunt.com/products/{slug}"
+        assert parse_product_page(public, slug, source_url) == parse_product_page(
+            original, slug, source_url
+        )
+        assert b"Original fictional fixture" in public
+        assert b"Back to original fixtures" in public
