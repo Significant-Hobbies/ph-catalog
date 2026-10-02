@@ -98,6 +98,8 @@ h2 { margin-bottom: 6px; font-size: clamp(21px, 2vw, 29px); line-height: 1.1; le
 .rank-count { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
 .coverage-rings { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .coverage-ring { --coverage: 50%; display: grid; place-items: center; aspect-ratio: 1; border-radius: 50%; background: conic-gradient(var(--lime) var(--coverage), #294038 var(--coverage)); }
+.coverage-ring.is-unavailable { background: transparent; border: 1px dashed #9aada5; }
+.coverage-ring.is-unavailable strong { font-size: clamp(12px, 1.4vw, 20px); }
 .coverage-ring::before { content: ""; grid-area: 1 / 1; width: 72%; aspect-ratio: 1; border-radius: 50%; background: var(--night); }
 .coverage-ring div { z-index: 1; grid-area: 1 / 1; text-align: center; }
 .coverage-ring strong, .coverage-ring span { display: block; }
