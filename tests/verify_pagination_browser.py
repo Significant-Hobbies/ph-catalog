@@ -78,6 +78,7 @@ class StaticFixtureHandler(BaseHTTPRequestHandler):
             "/styles.css": "site/styles.css",
             "/landing": "landing/index.html",
             "/samples/acme-toolkit.html": "landing/samples/acme-toolkit.html",
+            "/samples/acme-toolkit": "landing/samples/acme-toolkit.html",
         }
         filename = files.get(urlparse(self.path).path)
         if filename is None:
@@ -339,7 +340,8 @@ async def verify(browser_executable):
                             path=str(OUTPUT / f"landing-{suffix}.png"), full_page=True
                         )
                         await page.locator('[data-sample="acme-toolkit"]').click()
-                        assert page.url == f"{ORIGIN}/samples/acme-toolkit.html"
+                        assert page.url == f"{ORIGIN}/samples/acme-toolkit"
+                        assert await page.locator("h1").text_content() == "Acme Toolkit"
                         assert not errors, errors
                         results.append(
                             {
