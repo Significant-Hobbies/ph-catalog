@@ -21,8 +21,8 @@
           <button class="nav-item" data-route="quality" type="button"><span>04</span>Data quality</button>
         </nav>
         <div class="sidebar-foot">
-          <div class="live-dot"><i></i> Live local mart</div>
-          <p>Snapshot<br /><strong>31 August 2026</strong></p>
+          <div class="live-dot"><i></i> Local analytics mart</div>
+          <p>Snapshot<br /><strong>Not supplied by this mart</strong></p>
         </div>
       </aside>
 
@@ -37,7 +37,7 @@
           <div class="page-heading overview-heading">
             <div>
               <p class="eyebrow">The complete local catalogue</p>
-              <h1>Half a million products.<br /><em>One analytical surface.</em></h1>
+              <h1>Your opened catalogue.<br /><em>One analytical surface.</em></h1>
               <p class="lede">Explore the supply, language, distribution, and launch structure of Product Hunt without inventing dates or popularity signals.</p>
             </div>
             <button class="round-action" data-go-explore type="button" aria-label="Explore products">↗</button>
@@ -58,7 +58,7 @@
               <p class="panel-note">Coverage layers overlap. Missing evidence stays missing; it is never filled with a guess.</p>
             </section>
             <section class="panel span-8">
-              <div class="panel-heading"><div><p class="eyebrow">Concrete extracted evidence</p><h2>Entity layer</h2></div><span>115,504 assignments</span></div>
+              <div class="panel-heading"><div><p class="eyebrow">Concrete extracted evidence</p><h2>Entity layer</h2></div><span id="entity-assignment-count">Unavailable</span></div>
               <div class="entity-type-grid" id="entity-types"></div>
             </section>
             <section class="panel span-4">
@@ -74,7 +74,7 @@
 
         <section class="page" data-page="trends" hidden>
           <div class="page-heading compact-heading">
-            <div><p class="eyebrow">Relative launch-order analysis</p><h1>Movement without <em>fake dates.</em></h1><p class="lede">Twenty equal-sized cohorts ordered by the earliest mapped Product Hunt post ID. Cohort 1 is earlier; cohort 20 is later. These are not calendar periods.</p></div>
+            <div><p class="eyebrow">Relative launch-order analysis</p><h1>Movement without <em>fake dates.</em></h1><p class="lede">Relative cohorts ordered by the earliest mapped Product Hunt post ID. Lower cohort numbers are earlier; higher numbers are later. These are not calendar periods.</p></div>
           </div>
           <section class="panel cohort-panel">
             <div class="panel-heading"><div><p class="eyebrow">Coverage through catalogue order</p><h2>Evidence availability by cohort</h2></div><div class="chart-legend"><span class="legend-label"></span>Labels <span class="legend-entity"></span>Entities <span class="legend-category"></span>PH categories</div></div>
@@ -89,34 +89,34 @@
         </section>
 
         <section class="page explore-page" data-page="explore" hidden>
-          <div class="page-heading compact-heading"><div><p class="eyebrow">574,752 complete records</p><h1>Find the product,<br /><em>then inspect the evidence.</em></h1></div></div>
+          <div class="page-heading compact-heading"><div><p class="eyebrow" id="opened-product-count">Catalogue size unavailable</p><h1>Find the product,<br /><em>then inspect the evidence.</em></h1></div></div>
           <form class="search-controls" id="search-form">
             <label class="search-box"><span>Search</span><input id="product-search" type="search" placeholder="Name, slug, tagline, or domain" autocomplete="off" /></label>
             <label><span>Broad label</span><select id="label-filter"><option value="">All labels</option></select></label>
             <label><span>Entity type</span><select id="entity-filter"><option value="">All entities</option></select></label>
             <label><span>Sort</span><select id="sort-filter"><option value="recent">Relative recency</option><option value="relaunches">Most launches</option><option value="name">Name A–Z</option></select></label>
           </form>
-          <div class="results-meta"><p id="result-count">Loading products…</p><p>Dates deliberately omitted</p></div>
+          <div class="results-meta"><p id="result-count" role="status" aria-live="polite">Loading products…</p><p>Dates deliberately omitted</p></div>
           <div class="explorer-layout">
             <section><div id="product-list" class="product-list"></div><button id="load-more" class="load-more" type="button">Load more</button></section>
-            <aside id="product-detail" class="product-detail"><div class="detail-placeholder">Select a product to inspect its full record.</div></aside>
+            <aside id="product-detail" class="product-detail" tabindex="-1" aria-label="Product evidence"><button id="return-to-product" class="detail-return" type="button" data-return-to-list hidden>Return to selected product</button><div id="product-evidence" aria-live="polite"><div class="detail-placeholder">Select a product to inspect its full record.</div></div></aside>
           </div>
         </section>
 
         <section class="page" data-page="quality" hidden>
           <div class="page-heading compact-heading"><div><p class="eyebrow">Evidence before confidence</p><h1>What is present,<br /><em>and what is not.</em></h1><p class="lede">The catalogue separates source fields, derived labels, extracted mentions, and relative-order evidence so every claim has a visible boundary.</p></div></div>
           <div class="quality-grid">
-            <article class="quality-card accent-card"><span>01</span><h2>Complete product text</h2><strong>574,752 / 574,752</strong><p>Every retained record has a name, tagline, and description. Website-derived recovery provenance remains stored.</p></article>
-            <article class="quality-card"><span>02</span><h2>Original categories</h2><strong>199,654 assignments</strong><p>Product Hunt categories remain unchanged and separate. Products without them are explicitly uncategorized.</p></article>
-            <article class="quality-card"><span>03</span><h2>Broad labels</h2><strong>281,228 trusted</strong><p>Precision-oriented analytical themes. They are not presented as Product Hunt source data or a final primary category.</p></article>
-            <article class="quality-card"><span>04</span><h2>NER entities</h2><strong>97% type precision</strong><p>100 manually reviewed assignments, stratified across types and the rare tail; 100% were relevant mentions.</p></article>
+            <article class="quality-card accent-card"><span>01</span><h2>Complete product text</h2><strong id="quality-product-count">Unavailable</strong><p>Every retained record has a name, tagline, and description. Website-derived recovery provenance remains stored.</p></article>
+            <article class="quality-card"><span>02</span><h2>Original categories</h2><strong id="category-assignment-count">Unavailable</strong><p>Product Hunt categories remain unchanged and separate. Products without them are explicitly uncategorized.</p></article>
+            <article class="quality-card"><span>03</span><h2>Broad labels</h2><strong id="label-assignment-count">Unavailable</strong><p>Precision-oriented analytical themes. They are not presented as Product Hunt source data or a final primary category.</p></article>
+            <article class="quality-card"><span>04</span><h2>NER entities</h2><strong>Precision unmeasured</strong><p>This mart does not supply a linked evaluation for entity precision. Extracted mentions are evidence, not verified quality scores.</p></article>
           </div>
           <section class="boundary-table panel">
             <div class="panel-heading"><div><p class="eyebrow">Interpretation contract</p><h2>Field-by-field boundaries</h2></div></div>
             <div class="boundary-row"><strong>Tagline / description</strong><span>Complete catalogue text with field-level provenance.</span><em>Descriptive, not independently verified.</em></div>
             <div class="boundary-row"><strong>Website URL</strong><span>External destination when recoverable.</span><em>Host counts are exact hosts, not companies.</em></div>
-            <div class="boundary-row"><strong>Product Hunt categories</strong><span>Original source taxonomy, unchanged.</span><em>Available on 16.2% of products.</em></div>
-            <div class="boundary-row"><strong>Trusted labels</strong><span>Derived broad analytical themes.</span><em>43.1% precision-first coverage.</em></div>
+            <div class="boundary-row"><strong>Product Hunt categories</strong><span>Original source taxonomy, unchanged.</span><em id="category-coverage">Coverage unavailable.</em></div>
+            <div class="boundary-row"><strong>Trusted labels</strong><span>Derived broad analytical themes.</span><em id="label-coverage">Coverage unavailable.</em></div>
             <div class="boundary-row"><strong>Entities</strong><span>Concrete roles, industries, technologies, platforms, formats, OSes, and hardware.</span><em>Mention-level evidence, not a full taxonomy.</em></div>
             <div class="boundary-row"><strong>Launch order</strong><span>Earliest and latest mapped post IDs.</span><em>Relative order only—never calendar dates.</em></div>
             <div class="boundary-row unavailable"><strong>Votes / comments</strong><span>Not collected.</span><em>No popularity claims.</em></div>

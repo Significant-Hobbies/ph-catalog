@@ -24,5 +24,9 @@ jobs:
           python-version: '3.12'
       - name: Install locked development dependencies
         run: uv sync --frozen
+      - name: Check local analytics syntax and state regressions
+        run: |
+          node --check site/app.js
+          node tests/test_site_state.cjs
       - name: Test pipeline and public synthetic demo
         run: uv run pytest
