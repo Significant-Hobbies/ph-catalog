@@ -1,0 +1,29 @@
+{
+  "name": "PH Catalog",
+  "description": "A resumable local Product Hunt catalogue and analytics experiment with a privacy-safe synthetic demo.",
+  "llms": "https://ph.significanthobbies.com/llms.txt",
+  "sitemap": "https://ph.significanthobbies.com/sitemap.xml",
+  "markdown": "https://ph.significanthobbies.com/index.md",
+  "surfaces": [
+    {
+      "id": "home",
+      "url": "https://ph.significanthobbies.com/",
+      "md": "https://ph.significanthobbies.com/index.md"
+    },
+    {
+      "id": "acme-toolkit",
+      "url": "https://ph.significanthobbies.com/samples/acme-toolkit",
+      "md": "https://ph.significanthobbies.com/samples/acme-toolkit.md"
+    },
+    {
+      "id": "pixelboard",
+      "url": "https://ph.significanthobbies.com/samples/pixelboard",
+      "md": "https://ph.significanthobbies.com/samples/pixelboard.md"
+    },
+    {
+      "id": "quantify",
+      "url": "https://ph.significanthobbies.com/samples/quantify",
+      "md": "https://ph.significanthobbies.com/samples/quantify.md"
+    }
+  ]
+}
