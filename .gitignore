@@ -18,3 +18,4 @@ runtime
 # Proxy files can contain credentials.
 proxies.txt
 *.proxy
+.wrangler/

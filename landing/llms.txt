@@ -1,0 +1,17 @@
+# PH Catalog
+
+> A resumable local Product Hunt catalogue and analytics experiment with a privacy-safe synthetic demo.
+
+PH Catalog demonstrates a local-first Python pipeline that normalizes public product records into DuckDB and Parquet for reproducible analysis. The public site contains only original fictional fixtures; the full catalogue and analytics data stay local.
+
+## Primary links
+
+- [Public demo](https://ph.significanthobbies.com/)
+- [Source repository](https://github.com/Significant-Hobbies/ph-catalog)
+- [Synthetic Acme Toolkit record](https://ph.significanthobbies.com/samples/acme-toolkit)
+- [Synthetic Pixelboard record](https://ph.significanthobbies.com/samples/pixelboard)
+- [Synthetic Quantify record](https://ph.significanthobbies.com/samples/quantify)
+
+## Important boundary
+
+The public demo does not redistribute the locally collected Product Hunt catalogue. Its three sample records are fictional and exist to demonstrate the real parser, storage, snapshot, and analytics workflow safely.
