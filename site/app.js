@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const state = { dashboard: null, products: [], total: 0, offset: 0, selected: null, request: 0, detailRequest: 0, searchStatus: "idle", failedSearchReset: true };
+  const state = { dashboard: null, products: [], total: 0, offset: 0, selected: null, query: null, request: 0, detailRequest: 0, searchStatus: "idle", failedSearchReset: true };
   const routes = [...document.querySelectorAll("[data-route]")];
   const pages = [...document.querySelectorAll("[data-page]")];
   const sidebar = document.querySelector(".sidebar");
@@ -54,7 +54,7 @@
   }
 
   function renderEvidenceCounts(data) {
-    const coverage = (value) => !Number.isFinite(data.products) || !Number.isFinite(value) ? "Unavailable" : data.products > 0 ? pct(value / data.products) : "Not applicable";
+    const coverage = (value) => !Number.isFinite(data.products) || data.products < 0 || !Number.isFinite(value) || value < 0 || value > data.products ? "Unavailable" : data.products > 0 ? pct(value / data.products) : "Not applicable";
     document.getElementById("opened-product-count").textContent = `${count(data.products)} products in this mart`;
     document.getElementById("quality-product-count").textContent = `${count(data.products)} products`;
     document.getElementById("category-assignment-count").textContent = `${count(data.category_assignments)} assignments`;
@@ -72,7 +72,7 @@
 
   function renderCoverage(data) {
     const total = data.products;
-    if (!Number.isFinite(total)) {
+    if (!Number.isFinite(total) || total < 0) {
       document.getElementById("coverage-rings").innerHTML = `<p class="panel-note">Product count unavailable. Coverage cannot be calculated.</p>`;
       return;
     }
@@ -188,17 +188,22 @@
     const root = document.getElementById("product-list");
     root.innerHTML = state.products.map((product) => `<button class="product-row ${state.selected === product.slug ? "is-active" : ""}" type="button" data-slug="${escapeHtml(product.slug)}"><span><span class="product-name">${escapeHtml(product.name)}</span><span class="product-tagline">${escapeHtml(product.tagline)}</span></span><span class="product-meta">${product.top_trusted_label ? escapeHtml(title(product.top_trusted_label)) : "Unlabeled"}<br>${product.launch_count} launch${product.launch_count === 1 ? "" : "es"}</span></button>`).join("");
     if (state.searchStatus === "loaded") document.getElementById("result-count").textContent = `${nf.format(state.total)} matching products · showing ${nf.format(state.products.length)}`;
-    document.getElementById("load-more").hidden = state.products.length >= state.total;
+    document.getElementById("load-more").hidden = state.searchStatus !== "error" && state.products.length >= state.total;
   }
 
   async function searchProducts(reset = true) {
+    const query = productQuery(true);
+    reset = reset || query !== state.query;
+    state.query = query;
     const request = ++state.request;
     state.searchStatus = "pending";
     if (reset) {
       state.offset = 0; state.products = []; state.selected = null; state.total = 0;
       state.detailRequest++;
+      document.getElementById("return-to-product").hidden = true;
+      document.getElementById("product-detail").setAttribute("aria-busy", "false");
       renderProducts();
-      document.getElementById("product-detail").innerHTML = `<div class="detail-placeholder">Select a product to inspect its full record.</div>`;
+      document.getElementById("product-evidence").innerHTML = `<div class="detail-placeholder">Select a product to inspect its full record.</div>`;
     }
     document.getElementById("result-count").textContent = reset ? "Loading products…" : "Loading more products…";
     document.getElementById("product-list").setAttribute("aria-busy", "true");
@@ -214,7 +219,7 @@
       if (!state.selected && state.products.length) state.selected = state.products[0].slug;
       renderProducts();
       if (reset && state.selected) loadProduct(state.selected);
-      if (reset && !state.products.length) document.getElementById("product-detail").innerHTML = `<div class="detail-placeholder">No matching products. Change or clear the search filters.</div>`;
+      if (reset && !state.products.length) document.getElementById("product-evidence").innerHTML = `<div class="detail-placeholder">No matching products. Change or clear the search filters.</div>`;
     } catch (error) {
       if (request !== state.request) return;
       state.searchStatus = "error";
@@ -234,20 +239,41 @@
     return items.length ? items.map((item) => `<span class="chip ${className}">${escapeHtml(item)}</span>`).join("") : `<span class="chip ${className}">None recorded</span>`;
   }
 
-  async function loadProduct(slug) {
+  function revealStackedEvidence(root) {
+    if (!window.matchMedia("(max-width: 900px)").matches) return;
+    root.focus({ preventScroll: true });
+    // Instant navigation also overrides the page's smooth-scroll CSS for reduced motion.
+    root.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+
+  function returnToProductList() {
+    const row = [...document.getElementById("product-list").querySelectorAll("[data-slug]")]
+      .find((item) => item.dataset.slug === state.selected);
+    if (!row) return;
+    row.focus({ preventScroll: true });
+    row.scrollIntoView({ block: "nearest", behavior: "instant" });
+  }
+
+  async function loadProduct(slug, navigate = false) {
     const request = ++state.detailRequest;
     state.selected = slug;
     renderProducts();
     const root = document.getElementById("product-detail");
-    root.innerHTML = `<div class="detail-placeholder">Loading product evidence…</div>`;
+    const evidence = document.getElementById("product-evidence");
+    document.getElementById("return-to-product").hidden = false;
+    evidence.innerHTML = `<div class="detail-placeholder">Loading product evidence…</div>`;
+    root.setAttribute("aria-busy", "true");
+    if (navigate) revealStackedEvidence(root);
     try {
       const product = await api(`/api/products/${encodeURIComponent(slug)}`);
       if (request !== state.detailRequest || state.selected !== slug) return;
-      root.innerHTML = `<div class="detail-top"><span class="detail-kicker">${product.top_trusted_label ? `Top broad label · ${escapeHtml(title(product.top_trusted_label))}` : "No broad label assigned"}</span><span class="detail-id">Product ID ${product.latest_product_id ? nf.format(product.latest_product_id) : "unavailable"}</span></div><h2>${escapeHtml(product.name)}</h2><p class="detail-tagline">${escapeHtml(product.tagline)}</p><p class="detail-description">${escapeHtml(product.description)}</p><dl class="detail-facts"><div><dt>Launch relationships</dt><dd>${nf.format(product.launch_count)}</dd></div><div><dt>Post ID span</dt><dd>${product.first_post_id ? `${nf.format(product.first_post_id)}–${nf.format(product.latest_post_id)}` : "None mapped"}</dd></div><div><dt>External host</dt><dd>${escapeHtml(product.website_host || "Unavailable")}</dd></div></dl><div class="detail-section"><span>Trusted broad labels</span><div class="chips">${chips(product.labels.map((item) => title(item.label)))}</div></div><div class="detail-section"><span>Original Product Hunt categories</span><div class="chips">${chips(product.source_categories || [], "source")}</div></div><div class="detail-section"><span>Concrete entity mentions</span><div class="chips">${chips(product.entities.map((item) => `${title(item.entity_type)} · ${title(item.canonical_value)}`), "entity")}</div></div><div class="detail-actions">${product.has_external_website ? `<a href="${escapeHtml(safeUrl(product.website_url))}" target="_blank" rel="noopener noreferrer">Visit website</a>` : ""}<a class="secondary" href="${escapeHtml(safeUrl(product.producthunt_url))}" target="_blank" rel="noopener noreferrer">Product Hunt</a></div>`;
+      evidence.innerHTML = `<div class="detail-top"><span class="detail-kicker">${product.top_trusted_label ? `Top broad label · ${escapeHtml(title(product.top_trusted_label))}` : "No broad label assigned"}</span><span class="detail-id">Product ID ${product.latest_product_id ? nf.format(product.latest_product_id) : "unavailable"}</span></div><h2>${escapeHtml(product.name)}</h2><p class="detail-tagline">${escapeHtml(product.tagline)}</p><p class="detail-description">${escapeHtml(product.description)}</p><dl class="detail-facts"><div><dt>Launch relationships</dt><dd>${nf.format(product.launch_count)}</dd></div><div><dt>Post ID span</dt><dd>${product.first_post_id ? `${nf.format(product.first_post_id)}–${nf.format(product.latest_post_id)}` : "None mapped"}</dd></div><div><dt>External host</dt><dd>${escapeHtml(product.website_host || "Unavailable")}</dd></div></dl><div class="detail-section"><span>Trusted broad labels</span><div class="chips">${chips(product.labels.map((item) => title(item.label)))}</div></div><div class="detail-section"><span>Original Product Hunt categories</span><div class="chips">${chips(product.source_categories || [], "source")}</div></div><div class="detail-section"><span>Concrete entity mentions</span><div class="chips">${chips(product.entities.map((item) => `${title(item.entity_type)} · ${title(item.canonical_value)}`), "entity")}</div></div><div class="detail-actions">${product.has_external_website ? `<a href="${escapeHtml(safeUrl(product.website_url))}" target="_blank" rel="noopener noreferrer">Visit website</a>` : ""}<a class="secondary" href="${escapeHtml(safeUrl(product.producthunt_url))}" target="_blank" rel="noopener noreferrer">Product Hunt</a></div>`;
     } catch (error) {
       if (request !== state.detailRequest || state.selected !== slug) return;
-      root.innerHTML = `<div class="detail-placeholder">Could not load this product. Select it again to retry.</div>`;
+      evidence.innerHTML = `<div class="detail-placeholder">Could not load this product. Return to the selected product and select it again to retry.</div>`;
       toast(error.message);
+    } finally {
+      if (request === state.detailRequest) root.setAttribute("aria-busy", "false");
     }
   }
 
@@ -260,7 +286,8 @@
   ["label-filter", "entity-filter", "sort-filter"].forEach((id) => document.getElementById(id).addEventListener("change", () => searchProducts(true)));
   document.getElementById("load-more").addEventListener("click", () => searchProducts(state.searchStatus === "error" ? state.failedSearchReset : false));
   document.getElementById("metric-grid").addEventListener("click", (event) => { if (event.target.closest("[data-retry-dashboard]")) loadDashboard(); });
-  document.getElementById("product-list").addEventListener("click", (event) => { const row = event.target.closest("[data-slug]"); if (row) loadProduct(row.dataset.slug); });
+  document.getElementById("product-list").addEventListener("click", (event) => { const row = event.target.closest("[data-slug]"); if (row) loadProduct(row.dataset.slug, true); });
+  document.getElementById("product-detail").addEventListener("click", (event) => { if (event.target.closest("[data-return-to-list]")) returnToProductList(); });
   window.addEventListener("hashchange", () => activate(window.location.hash.slice(1)));
 
   loadDashboard();
