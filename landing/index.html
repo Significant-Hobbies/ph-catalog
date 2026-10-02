@@ -20,52 +20,55 @@
 <!-- Microsoft Clarity — session replay + heatmaps for the public synthetic demo only. -->
 <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/ymdtaonrgw";y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","ymdtaonrgw");window.clarity("set","project_id","ph-catalog");</script>
 <script src="https://health.sassmaker.com/tracker.js" data-key="ahk_pub_6ffe706f72e7394a34115b53b1e09e058009afab54b22e0f585f67ad678978a3" data-project="app-import-101d8097b05706b4c10bc776b5171149282e31994ee1557e248e78bc20375d6a" data-identity="session" defer></script>
-<style>
-  * { margin:0; box-sizing:border-box; }
-  body { font-family: -apple-system, 'Segoe UI', sans-serif; background:#0e0f13; color:#e8e9ed; padding:64px 24px; }
-  main { max-width:680px; margin:0 auto; }
-  h1 { font-size:2.2rem; }
-  .lede { color:#9aa0ad; font-size:1.05rem; margin:14px 0 40px; }
-  h2 { font-size:1rem; text-transform:uppercase; letter-spacing:.08em; color:#7f8592; margin:40px 0 14px; }
-  ul { list-style:none; padding:0; display:grid; gap:10px; }
-  a.card { display:block; padding:16px 18px; background:#171a21; border:1px solid #262b36; border-radius:10px; color:#e8e9ed; text-decoration:none; }
-  a.card:hover { border-color:#4f8cff; }
-  a.card strong { display:block; }
-  a.card span { color:#9aa0ad; font-size:.9rem; }
-  .copy { color:#c1c5ce; line-height:1.7; }
-  .copy p { margin:0 0 14px; }
-  .copy a { color:#8fb4ff; }
-  p.note { color:#9aa0ad; font-size:.9rem; margin-top:8px; }
-  footer { margin-top:56px; color:#7f8592; font-size:.82rem; }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<main>
-  <h1>PH Catalog</h1>
-  <p class="lede">A resumable local Product Hunt catalogue — half a million launches deduplicated into one analytical mart, with a privacy-safe synthetic demo.</p>
-  <h2>Demo products</h2>
-  <ul>
-    <li><a class="card" href="samples/acme-toolkit" data-sample="acme-toolkit"><strong>Acme Toolkit</strong><span>Synthetic sample product</span></a></li>
-    <li><a class="card" href="samples/pixelboard" data-sample="pixelboard"><strong>Pixelboard</strong><span>Synthetic sample product</span></a></li>
-    <li><a class="card" href="samples/quantify" data-sample="quantify"><strong>Quantify</strong><span>Synthetic sample product</span></a></li>
-  </ul>
-  <p class="note">The full catalogue stays local. Public pages show only synthetic fixtures.</p>
-  <section class="copy" aria-labelledby="how-it-works">
-    <h2 id="how-it-works">How it works</h2>
-    <p>PH Catalog is a local-first research pipeline for collecting public Product Hunt records into one consistent analytical dataset. The importer normalizes product identities, follows canonical aliases, deduplicates repeated records, and saves resumable progress so a long collection run can continue after interruption instead of starting over.</p>
-    <p>The normalized records live in DuckDB for exploration and can be exported to compressed Parquet snapshots. Each snapshot carries provenance and verification checks so analysis can distinguish a complete, tested export from an incomplete scrape. The repository also includes a read-only analytics path for asking aggregate questions without turning the experiment into another hosted Product Hunt clone.</p>
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="./" aria-label="Atlas / PH Catalog home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Atlas</strong><small>PH Catalog / local research</small></span></a>
+  <nav aria-label="Page sections"><a href="#records">Original fixtures</a><a href="#run-locally">Run locally</a></nav>
+</header>
+<main id="content">
+  <section class="hero" aria-labelledby="proposition">
+    <div class="proposition">
+      <p class="eyebrow">PH Catalog / a local research cabinet</p>
+      <h1 id="proposition">Find the product.<br><em>Read its evidence.</em></h1>
+      <p class="intro">A resumable local Product Hunt catalogue for developers and product researchers. Import, verify and explore records with Python, DuckDB and Parquet — with source fields and unknowns kept explicit.</p>
+      <div class="actions"><a class="primary" href="samples/pixelboard" data-sample="pixelboard">Inspect sample evidence <span aria-hidden="true">↗</span></a><a class="secondary" href="#run-locally">Run Atlas locally</a></div>
+      <p class="note">Three original fictional fixtures. No live market data or hosted app.</p>
+    </div>
+    <aside class="evidence" aria-labelledby="proof-title">
+      <p class="eyebrow">Original fictional fixture</p>
+      <h2 id="proof-title">Pixelboard</h2>
+      <p class="record-tagline">Draw together</p>
+      <dl class="facts"><div><dt>Source category</dt><dd>Design Tools</dd></div><div><dt>Destination</dt><dd>Not supplied</dd></div></dl>
+      <div class="evidence-section"><p class="eyebrow">Structured source description</p><p>Structured-data description for a fictional collaborative canvas.</p></div>
+      <div class="evidence-section"><p class="eyebrow">Evidence boundary</p><p>Name, description and category come from the original fixture’s JSON-LD; tagline comes from its title metadata. Post dates, popularity and live freshness are not supplied.</p></div>
+      <p class="record-caption">Static parser evidence / no enrichment</p>
+    </aside>
   </section>
-  <section class="copy" aria-labelledby="public-demo">
-    <h2 id="public-demo">What the public demo proves</h2>
-    <p>This site shows three original fictional products. The repository's offline demo exercises the real parsing and database path using synthetic fixtures. The examples demonstrate the shape of a catalogue record and the boundary between reproducible code and data that should remain local. No real Product Hunt catalogue, private database, or generated research snapshot is published here.</p>
-    <p>The synthetic fixture is deliberately small. It is evidence that the pipeline can be exercised safely, not a claim that three records reproduce the scale or messiness of the full local catalogue. The project’s tests cover importing, alias resolution, snapshots, recovery, analytics, and the refusal to overwrite a non-sample catalogue accidentally.</p>
+  <div class="evidence-band" aria-label="Research principles"><span>Retained source fields</span><span>Separate derived annotations</span><span>Explicit unknowns</span></div>
+  <section class="workflow" aria-labelledby="how-it-works">
+    <div class="section-heading"><p class="eyebrow">01 / The local workflow</p><h2 id="how-it-works">A catalogue you can <em>trace.</em></h2></div>
+    <div class="workflow-grid">
+      <article><h3>Import &amp; resume</h3><p>The Python pipeline normalizes identities, follows canonical aliases and saves progress so interrupted imports can continue.</p></article>
+      <article><h3>Verify &amp; snapshot</h3><p>Explore records in DuckDB and export Parquet snapshots. Keep verification and field provenance alongside the data.</p></article>
+      <article><h3>Inspect the boundary</h3><p>Atlas separates source fields from derived research annotations. Missing evidence stays unavailable; it is never filled with a guess.</p></article>
+    </div>
   </section>
-  <section class="copy" aria-labelledby="use-cases">
-    <h2 id="use-cases">Who it is for</h2>
-    <p>PH Catalog is useful to developers and product researchers who want a transparent starting point for local market analysis: studying launch patterns, comparing categories, testing enrichment ideas, or learning how to build a resumable public-data workflow without republishing the source dataset. It is an experiment and reference implementation, not a commercial analytics service.</p>
-    <p><a href="https://github.com/Significant-Hobbies/ph-catalog" data-repository>Read the source and documentation on GitHub</a> to inspect the pipeline, run the synthetic demo, and reproduce the verified local workflow.</p>
+  <section class="records" id="records" aria-labelledby="records-title">
+    <div class="section-heading"><p class="eyebrow">02 / Original parser evidence</p><h2 id="records-title">Three records. <em>An honest starting point.</em></h2><p>These fictional pages demonstrate the parser’s record shape and source fallbacks. They are neither live products nor an analytics mart.</p></div>
+    <ul class="record-list">
+      <li><a class="card" href="samples/acme-toolkit" data-sample="acme-toolkit"><span class="eyebrow">Original fictional fixture</span><strong>Acme Toolkit</strong><span>Embedded fields, structured data and metadata</span><span class="record-link">Inspect source evidence ↗</span></a></li>
+      <li><a class="card" href="samples/pixelboard" data-sample="pixelboard"><span class="eyebrow">Original fictional fixture</span><strong>Pixelboard</strong><span>Structured fields with a metadata tagline</span><span class="record-link">Inspect source evidence ↗</span></a></li>
+      <li><a class="card" href="samples/quantify" data-sample="quantify"><span class="eyebrow">Original fictional fixture</span><strong>Quantify</strong><span>Metadata fallback and an illustrative destination</span><span class="record-link">Inspect source evidence ↗</span></a></li>
+    </ul>
   </section>
-  <footer>A Significant Hobbies experiment.</footer>
+  <section class="local-run" id="run-locally" aria-labelledby="local-title">
+    <div><p class="eyebrow">03 / Your machine, your chosen mart</p><h2 id="local-title">Run Atlas <em>locally.</em></h2><p>The operational Atlas UI is a read-only local analytics interface. It needs an <strong>already-built analytics mart</strong>; the three-record source catalogue alone is not that mart.</p><p>Follow the repository’s <a href="https://github.com/Significant-Hobbies/ph-catalog/blob/main/site/README.md" data-repository>site/README.md</a> and <a href="https://github.com/Significant-Hobbies/ph-catalog/blob/main/docs/internal-analytics.md" data-repository>internal-analytics documentation</a> to prepare the mart and open the loopback UI yourself.</p></div>
+    <div class="run-command"><p class="eyebrow">With the analytics mart already built</p><pre><code>uv run python tools/serve_analytics.py --database data/analytics/catalog-analytics.duckdb --port 8765</code></pre><p>The public fixtures stay static. This page does not start collection or open a local service.</p><a class="secondary" href="https://github.com/Significant-Hobbies/ph-catalog" data-repository>Read the source &amp; documentation ↗</a></div>
+  </section>
+  <footer><span>Atlas / PH Catalog</span><span>A Significant Hobbies local catalogue experiment.</span></footer>
 </main>
 <script>
   document.querySelectorAll('a[data-sample]').forEach((link) => {
@@ -95,7 +98,7 @@
   }, { once: true });
 </script>
 <fleet-footer-extension>
-  <saas-maker-newsletter-capture slot="capture" catalog-id="ph-catalog" project-key="pk_f0b2e58b3705f48ff52ddfa347eecad4776407b6cd789cce" product-name="PH Catalog" kind="newsletter" source="fleet-footer" privacy-url="https://sassmaker.com/privacy" theme="dark"></saas-maker-newsletter-capture>
+  <saas-maker-newsletter-capture slot="capture" catalog-id="ph-catalog" project-key="pk_f0b2e58b3705f48ff52ddfa347eecad4776407b6cd789cce" product-name="PH Catalog" kind="newsletter" source="fleet-footer" privacy-url="https://sassmaker.com/privacy" theme="light"></saas-maker-newsletter-capture>
 </fleet-footer-extension>
 <script type="module" src="https://sassmaker.com/newsletter-capture.js"></script>
 <script src="https://sassmaker.com/project-strip.js" data-project="ph-catalog" defer></script>
