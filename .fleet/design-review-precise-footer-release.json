@@ -1,0 +1,283 @@
+{
+  "$schema": "fleet.design-review.v2",
+  "version": 2,
+  "project": "ph-catalog",
+  "target": "Atlas / PH Catalog Precise footer on home and three original fictional public fixtures",
+  "surfaceMode": "read",
+  "mode": "overhaul",
+  "register": "product",
+  "context": {
+    "product": "PRODUCT.md",
+    "design": "DESIGN.md"
+  },
+  "direction": {
+    "productSurfaces": {
+      "scope": "paired",
+      "landing": "landing/index.html",
+      "app": "landing/samples/pixelboard.html",
+      "reason": "Public fictional evidence page is the paired browser reading context. Private loopback Atlas remains untouched and is not deployed."
+    },
+    "pairedPreview": {
+      "landing": ".fleet-local/precise-footer-release/directions/c-Atlas-font-study.html",
+      "app": ".fleet-local/precise-footer-release/directions/c-Atlas-app-font-study.html"
+    },
+    "source": "comparison",
+    "references": [
+      "https://www.footer.design/sites/leedlime",
+      "https://leedlime.com/",
+      "https://vercel.com/geist/typography"
+    ],
+    "probes": [
+      {
+        "id": "a",
+        "name": "Quiet editorial",
+        "path": ".fleet-local/precise-footer-release/directions/a-Atlas-font-study.html",
+        "thesis": "Uniform regular directory links and real monospace editorial labels make the existing split feel quieter; medium sans utility headings and a Newsreader Atlas signature give deliberate contrast.",
+        "layout": "Existing product-left/services-right split, personalized full-width scene and distributed final strip; type hierarchy changes emphasis and density without replacing owner-specified section architecture.",
+        "typography": "Inter14px routes/18px medium services/16px controls; Geist Mono12px tracked caps; Newsreader Atlas signature.",
+        "surfaces": {
+          "landing": ".fleet-local/precise-footer-release/directions/a-Atlas-font-study.html",
+          "app": ".fleet-local/precise-footer-release/directions/a-Atlas-app-font-study.html"
+        },
+        "contract": ".fleet-local/precise-footer-release/directions/direction-a.json"
+      },
+      {
+        "id": "b",
+        "name": "Studio",
+        "path": ".fleet-local/precise-footer-release/directions/b-Atlas-font-study.html",
+        "thesis": "Instrument Sans makes the existing split more human and open; larger primary destinations, natural-case labels and lighter service emphasis establish an editorial studio hierarchy.",
+        "layout": "Existing product-left/services-right split, personalized full-width scene and distributed final strip; type hierarchy changes emphasis and density without replacing owner-specified section architecture.",
+        "typography": "Instrument Sans18px primary/15px secondary/20px medium services/16px controls/13px natural-case labels; Newsreader Atlas signature.",
+        "surfaces": {
+          "landing": ".fleet-local/precise-footer-release/directions/b-Atlas-font-study.html",
+          "app": ".fleet-local/precise-footer-release/directions/b-Atlas-app-font-study.html"
+        },
+        "contract": ".fleet-local/precise-footer-release/directions/direction-b.json"
+      },
+      {
+        "id": "c",
+        "name": "Precise",
+        "path": ".fleet-local/precise-footer-release/directions/c-Atlas-font-study.html",
+        "thesis": "A compact Geist hierarchy gives technical product navigation a measured primary emphasis; monospace labels and smaller semibold utility headings favor functional precision.",
+        "layout": "Existing product-left/services-right split, personalized full-width scene and distributed final strip; type hierarchy changes emphasis and density without replacing owner-specified section architecture.",
+        "typography": "Geist15px primary/14px secondary/16px semibold services/16px controls; Geist Mono12px tracked caps; Newsreader Atlas signature.",
+        "surfaces": {
+          "landing": ".fleet-local/precise-footer-release/directions/c-Atlas-font-study.html",
+          "app": ".fleet-local/precise-footer-release/directions/c-Atlas-app-font-study.html"
+        },
+        "contract": ".fleet-local/precise-footer-release/directions/direction-c.json"
+      }
+    ],
+    "selected": "c",
+    "approval": "approved",
+    "ownerEvidence": {
+      "path": ".fleet-local/precise-footer-release/directions/owner-selection.md",
+      "quote": "Okay let's go with precise. Release it for every project. I guess we have done improving things. Now we have deprecating returns."
+    },
+    "supplied": "",
+    "before": ".fleet-local/precise-footer-release/directions/h1-ph-landing.html",
+    "library": {
+      "strategy": "upstream-first",
+      "primary": "existing-project-system",
+      "sources": [
+        "https://vercel.com/geist/typography"
+      ],
+      "runtime": "none",
+      "customReplacement": {
+        "used": false,
+        "authorization": "not-required",
+        "reason": "Native project-owned controls and routes preserved. Fonts are OFL preview assets, not new runtime dependencies or proprietary reference code."
+      }
+    },
+    "contract": {
+      "purpose": "PH Catalog helps developers and product researchers import, verify, snapshot and inspect a local catalogue with explicit provenance, while the public site uses three original fictional records.",
+      "purposeSource": "PRODUCT.md; site/README.md; README.md; canonical project dossier ph-catalog.yaml",
+      "canonicalPurpose": "Build one resumable, deduplicated local product catalogue with explicit provenance and bounded analytical enrichment.",
+      "purposeAlignment": "match",
+      "driftNote": "",
+      "audience": "Developers and product researchers exploring reproducible catalogue and market-analysis workflows.",
+      "job": "Find actual fictional sample and local-workflow links, optionally open a product question in an assistant or consent to product updates, then discover other studio projects.",
+      "thesis": "Implement selected Precise: compact Geist navigation, Geist Mono category labels, open AI and updates, product-native signature bleeding into original art, final full-width studio line.",
+      "system": "C Precise footer-only type roles: Geist UI, Geist Mono labels, Newsreader Atlas signature, existing Atlas paper/night/lime/coral semantic tokens. Native route groups left; actual editable AI and existing consented updates right; original personalized artwork and the final studio line.",
+      "signature": "Newsreader Atlas wordmark dissolves into the approved original PH research-cabinet artwork.",
+      "risk": "Typeface width changes wrapping; browser font/load/responsive behavior remains unverified.",
+      "qualityBar": "Preserve all four public routes, original fictional evidence and parser fields, native experiment/local boundaries and existing metrics listeners; loaded licensed fonts; scoped 14/15px links, 16px controls, 12px labels, 44px targets; no footer overflow at390/768/1440; native typed question, unchecked consent and truthful failures."
+    }
+  },
+  "evidence": {
+    "platform": "web",
+    "productContinuity": {
+      "status": "pending",
+      "reason": "Source pair uses coherent fonts and preserves product truth; integrated render and entry-path checks remain unknown.",
+      "reviewer": "root",
+      "report": ".fleet-local/precise-footer-release/product-continuity.md",
+      "surfaces": {
+        "landing": ".fleet-local/precise-footer-release/landing-1440.png",
+        "app": ".fleet-local/precise-footer-release/sample-1440.png"
+      },
+      "checks": {
+        "designSystem": {
+          "status": "pending",
+          "observation": "Existing paired content and routes preserved; actual browser review pending."
+        },
+        "identity": {
+          "status": "pending",
+          "observation": "Existing paired content and routes preserved; actual browser review pending."
+        },
+        "vocabulary": {
+          "status": "pending",
+          "observation": "Existing paired content and routes preserved; actual browser review pending."
+        },
+        "productTruth": {
+          "status": "pending",
+          "observation": "Existing paired content and routes preserved; actual browser review pending."
+        },
+        "handoff": {
+          "status": "pending",
+          "observation": "Existing paired content and routes preserved; actual browser review pending."
+        }
+      }
+    },
+    "slopScale": {
+      "platform": "web",
+      "posture": "advisory",
+      "reason": "No browser/scanner render or score invented; native letterform specimen is separate evidence.",
+      "checkpoints": [
+        {
+          "stage": "directions",
+          "direction": "a",
+          "status": "blocked",
+          "command": "Pinned slop-score not executed: browser-policy limitation",
+          "report": ".fleet-local/precise-footer-release/directions/direction-a-scan-blocked.json",
+          "reason": "Prior native browser action rejected file:// preview URLs by security policy and explicitly forbade browser/CDP/alternate-surface workarounds. No such workaround or browser/scanner launch attempted in this font-study round.",
+          "findingsReview": "Actual glyph specimen and source/asset guards reviewed; integrated rendered hierarchy and mobile behavior remain unknown."
+        },
+        {
+          "stage": "directions",
+          "direction": "b",
+          "status": "blocked",
+          "command": "Pinned slop-score not executed: browser-policy limitation",
+          "report": ".fleet-local/precise-footer-release/directions/direction-b-scan-blocked.json",
+          "reason": "Prior native browser action rejected file:// preview URLs by security policy and explicitly forbade browser/CDP/alternate-surface workarounds. No such workaround or browser/scanner launch attempted in this font-study round.",
+          "findingsReview": "Actual glyph specimen and source/asset guards reviewed; integrated rendered hierarchy and mobile behavior remain unknown."
+        },
+        {
+          "stage": "directions",
+          "direction": "c",
+          "status": "blocked",
+          "command": "Pinned slop-score not executed: browser-policy limitation",
+          "report": ".fleet-local/precise-footer-release/directions/direction-c-scan-blocked.json",
+          "reason": "Prior native browser action rejected file:// preview URLs by security policy and explicitly forbade browser/CDP/alternate-surface workarounds. No such workaround or browser/scanner launch attempted in this font-study round.",
+          "findingsReview": "Actual glyph specimen and source/asset guards reviewed; integrated rendered hierarchy and mobile behavior remain unknown."
+        }
+      ]
+    },
+    "visualReview": {
+      "status": "pending",
+      "reviewer": "root",
+      "direction": "c",
+      "report": ".fleet-local/precise-footer-release/visual-review.md",
+      "checks": {
+        "hierarchy": {
+          "status": "pending",
+          "observation": "Typeface specimen reviewed; this does not verify integrated browser rendering."
+        },
+        "typography": {
+          "status": "pending",
+          "observation": "Typeface specimen reviewed; this does not verify integrated browser rendering."
+        },
+        "composition": {
+          "status": "pending",
+          "observation": "Typeface specimen reviewed; this does not verify integrated browser rendering."
+        },
+        "identity": {
+          "status": "pending",
+          "observation": "Typeface specimen reviewed; this does not verify integrated browser rendering."
+        },
+        "interaction": {
+          "status": "pending",
+          "observation": "Typeface specimen reviewed; this does not verify integrated browser rendering."
+        },
+        "responsive": {
+          "status": "pending",
+          "observation": "Typeface specimen reviewed; this does not verify integrated browser rendering."
+        }
+      }
+    },
+    "screenshots": [
+      {
+        "width": 390,
+        "path": ".fleet-local/precise-footer-release/after-390.png"
+      },
+      {
+        "width": 768,
+        "path": ".fleet-local/precise-footer-release/after-768.png"
+      },
+      {
+        "width": 1440,
+        "path": ".fleet-local/precise-footer-release/after-1440.png"
+      }
+    ],
+    "projectCheck": {
+      "command": "uv run --frozen pytest tests/test_landing.py; node --test tests/test_site_state.cjs",
+      "status": "pending"
+    },
+    "critique": {
+      "score": 0,
+      "maximum": 40,
+      "dimensions": {
+        "hierarchy": 0,
+        "typography": 0,
+        "composition": 0,
+        "identity": 0,
+        "interaction": 0,
+        "responsive": 0
+      }
+    },
+    "audit": {
+      "score": 0,
+      "maximum": 20,
+      "dimensions": {
+        "purpose": 0,
+        "accessibility": 0,
+        "behavior": 0,
+        "responsive": 0,
+        "performance": 0
+      }
+    },
+    "unresolved": {
+      "p0": 0,
+      "p1": 0
+    },
+    "detector": {
+      "posture": "advisory",
+      "findings": []
+    },
+    "comprehension": {
+      "status": "not-applicable",
+      "reviewer": "",
+      "answers": {
+        "product": "",
+        "audience": "",
+        "value": "",
+        "mechanism": "",
+        "proof": "",
+        "nextAction": ""
+      },
+      "purposeScore": {
+        "product": 0,
+        "audience": 0,
+        "value": 0,
+        "mechanism": 0,
+        "proof": 0,
+        "nextAction": 0,
+        "total": 0
+      },
+      "mismatches": []
+    }
+  },
+  "ownerFeedback": {
+    "decision": "keep",
+    "note": "Okay let's go with precise. Release it for every project. I guess we have done improving things. Now we have deprecating returns."
+  }
+}

@@ -113,3 +113,28 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding-block
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
 }
+
+/* Precise footer: Atlas retains its paper, ink and research-cabinet identity. */
+.atlas-footer { display: block; padding: 0; color: var(--ink); }
+.atlas-footer fleet-footer-extension { --fleet-footer-canvas: var(--paper); --fleet-footer-lower: #e3e6d6; --fleet-footer-border: var(--line); --fleet-footer-focus: var(--ink); --fleet-footer-edge: clamp(20px, 5vw, 72px); --fleet-footer-max-width: 1296px; }
+.precise-native { min-width: 0; font-family: var(--fleet-footer-ui-font, system-ui, sans-serif); }
+.precise-brand { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 9px; min-height: 44px; color: var(--ink); font-size: 20px; font-weight: 600; text-decoration: none; letter-spacing: -.02em; }
+.precise-brand span { color: var(--muted); font-size: 13px; font-weight: 400; letter-spacing: 0; }
+.precise-groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 20px; }
+.precise-groups > div { min-width: 0; }
+.precise-groups h2 { margin: 0 0 8px; color: var(--muted); font: 400 12px/1.5 var(--fleet-footer-label-font, ui-monospace, monospace); letter-spacing: 0; }
+.precise-groups a { display: flex; min-height: 44px; width: fit-content; max-width: 100%; color: var(--ink); font-size: 14px; line-height: 1.5; text-decoration: none; }
+.precise-groups a:hover, .precise-brand:hover { text-decoration: underline; text-underline-offset: 4px; }
+.precise-note { margin: 22px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.atlas-footer saas-maker-newsletter-capture { --newsletter-capture-accent: var(--night); --newsletter-capture-focus: var(--ink); }
+.atlas-footer fleet-footer-extension:not(:defined) { display: block; max-width: 1440px; margin-inline: auto; padding: 28px clamp(20px, 5vw, 72px); border-top: 1px solid var(--line); }
+.atlas-footer fleet-footer-extension:not(:defined) > [slot="capture"] { display: block; margin-top: 24px; }
+@media (max-width: 900px) {
+  .precise-native { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .precise-brand, .precise-groups, .precise-note { grid-column: 1; width: 100%; }
+  .precise-groups, .precise-note { margin-top: 0; }
+}
+@media (max-width: 700px) {
+  .precise-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 18px; }
+  .precise-groups > div { display: grid; align-content: start; row-gap: 8px; }
+}
