@@ -129,6 +129,11 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding-block
 .atlas-footer saas-maker-newsletter-capture { --newsletter-capture-accent: var(--night); --newsletter-capture-focus: var(--ink); }
 .atlas-footer fleet-footer-extension:not(:defined) { display: block; max-width: 1440px; margin-inline: auto; padding: 28px clamp(20px, 5vw, 72px); border-top: 1px solid var(--line); }
 .atlas-footer fleet-footer-extension:not(:defined) > [slot="capture"] { display: block; margin-top: 24px; }
+@media (max-width: 900px) {
+  .precise-native { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .precise-brand, .precise-groups, .precise-note { grid-column: 1; width: 100%; }
+  .precise-groups, .precise-note { margin-top: 0; }
+}
 @media (max-width: 700px) {
   .precise-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 18px; }
 }
