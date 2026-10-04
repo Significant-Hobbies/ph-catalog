@@ -19,3 +19,6 @@ runtime
 proxies.txt
 *.proxy
 .wrangler/
+
+# Private local evidence for the owner-selected public footer release.
+/.fleet-local/precise-footer-release/

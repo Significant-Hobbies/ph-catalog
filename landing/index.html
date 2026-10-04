@@ -68,7 +68,6 @@
     <div><p class="eyebrow">03 / Your machine, your chosen mart</p><h2 id="local-title">Run Atlas <em>locally.</em></h2><p>The operational Atlas UI is a read-only local analytics interface. It needs an <strong>already-built analytics mart</strong>; the three-record source catalogue alone is not that mart.</p><p>Follow the repository’s <a href="https://github.com/Significant-Hobbies/ph-catalog/blob/main/site/README.md" data-repository>site/README.md</a> and <a href="https://github.com/Significant-Hobbies/ph-catalog/blob/main/docs/internal-analytics.md" data-repository>internal-analytics documentation</a> to prepare the mart and open the loopback UI yourself.</p></div>
     <div class="run-command"><p class="eyebrow">With the analytics mart already built</p><pre><code>uv run python tools/serve_analytics.py --database data/analytics/catalog-analytics.duckdb --port 8765</code></pre><p>The public fixtures stay static. This page does not start collection or open a local service.</p><a class="secondary" href="https://github.com/Significant-Hobbies/ph-catalog" data-repository>Read the source &amp; documentation ↗</a></div>
   </section>
-  <footer><span>Atlas / PH Catalog</span><span>A Significant Hobbies local catalogue experiment.</span></footer>
 </main>
 <script>
   document.querySelectorAll('a[data-sample]').forEach((link) => {
@@ -97,11 +96,22 @@
     newsletterWidget?.addEventListener('focusin', trackNewsletterInteraction);
   }, { once: true });
 </script>
-<fleet-footer-extension>
-  <saas-maker-newsletter-capture slot="capture" catalog-id="ph-catalog" project-key="pk_f0b2e58b3705f48ff52ddfa347eecad4776407b6cd789cce" product-name="PH Catalog" kind="newsletter" source="fleet-footer" privacy-url="https://sassmaker.com/privacy" theme="light"></saas-maker-newsletter-capture>
-</fleet-footer-extension>
+<div class="atlas-footer">
+  <fleet-footer-extension product-name="PH Catalog" signature-name="Atlas" signature-font="newsreader" theme="light" surface="landing" art-src="https://sassmaker.com/footer-art/ph-catalog.webp" art-width="2172" art-height="724" art-position="50% 50%" art-alt="Finely drawn research cabinet containing original product objects and separate source cards, with a central structured folio and separate annotation slip." art-credit="Original illustration for PH Catalog">
+    <footer slot="navigation" data-fleet-footer-navigation class="precise-native">
+      <a class="precise-brand" href="./" data-fleet-footer-primary>Atlas <span>/ PH Catalog</span></a>
+      <nav class="precise-groups" aria-label="Atlas resources">
+        <div><h2 data-fleet-footer-group-label>Explore</h2><a href="#records">Original fixtures</a><a href="samples/acme-toolkit">Acme Toolkit</a><a href="samples/pixelboard">Pixelboard</a><a href="samples/quantify">Quantify</a></div>
+        <div><h2 data-fleet-footer-group-label>Run locally</h2><a href="#run-locally">Local setup</a><a href="https://github.com/Significant-Hobbies/ph-catalog/blob/main/site/README.md">Atlas UI guide</a><a href="https://github.com/Significant-Hobbies/ph-catalog/blob/main/docs/internal-analytics.md">Analytics documentation</a></div>
+        <div><h2 data-fleet-footer-group-label>Project</h2><a href="https://github.com/Significant-Hobbies/ph-catalog">Source &amp; documentation</a><a href="#how-it-works">How it works</a><a href="https://sassmaker.com/privacy">Updates privacy</a></div>
+      </nav>
+      <p class="precise-note" data-fleet-footer-legal>A Significant Hobbies local catalogue experiment.</p>
+    </footer>
+    <saas-maker-newsletter-capture slot="capture" layout="compact" integrated catalog-id="ph-catalog" project-key="pk_f0b2e58b3705f48ff52ddfa347eecad4776407b6cd789cce" product-name="PH Catalog" kind="newsletter" source="fleet-footer" privacy-url="https://sassmaker.com/privacy" theme="light"></saas-maker-newsletter-capture>
+  </fleet-footer-extension>
+</div>
 <script type="module" src="https://sassmaker.com/newsletter-capture.js"></script>
-<script src="https://sassmaker.com/project-strip.js" data-project="ph-catalog" defer></script>
-<script src="https://sassmaker.com/ai-chat-footer.js?v=20260928" data-name="PH Catalog" defer></script>
+<script src="https://sassmaker.com/project-strip.js" data-project="ph-catalog" data-layout="studio" data-host-only="true" data-theme="light" defer></script>
+<script src="https://sassmaker.com/ai-chat-footer.js" data-name="PH Catalog" data-layout="question" data-host-only="true" data-theme="light" defer></script>
 </body>
 </html>
