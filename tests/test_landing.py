@@ -93,3 +93,10 @@ def test_public_record_layout_preserves_original_parser_evidence():
         )
         assert b"Original fictional fixture" in public
         assert b"Back to original fixtures" in public
+
+
+def test_pages_extensionless_sample_routes_rewrite_to_real_html_evidence():
+    redirects = (LANDING / "_redirects").read_text().splitlines()
+    for slug in ("acme-toolkit", "pixelboard", "quantify"):
+        assert f"/samples/{slug} /samples/{slug}.html 200" in redirects
+        assert (LANDING / "samples" / f"{slug}.html").is_file()
