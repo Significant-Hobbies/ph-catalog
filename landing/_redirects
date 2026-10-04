@@ -1,5 +1,0 @@
-# Pages normalizes .html URLs to extensionless paths. Keep the three native
-# evidence routes backed by their original HTML fixtures after that redirect.
-/samples/acme-toolkit /samples/acme-toolkit.html 200
-/samples/pixelboard /samples/pixelboard.html 200
-/samples/quantify /samples/quantify.html 200

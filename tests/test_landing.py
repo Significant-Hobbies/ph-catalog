@@ -1,7 +1,7 @@
 import json
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urljoin, urlparse
 from xml.etree import ElementTree
 
 LANDING = Path(__file__).resolve().parents[1] / "landing"
@@ -31,6 +31,19 @@ class HeadParser(HTMLParser):
     def handle_endtag(self, tag):
         if tag == "script":
             self.in_schema = False
+
+
+class LocalReferences(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.references = []
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        for attribute in ("href", "src"):
+            value = attrs.get(attribute)
+            if value:
+                self.references.append(value)
 
 
 def test_landing_has_consistent_canonical_social_and_structured_identity():
@@ -95,8 +108,27 @@ def test_public_record_layout_preserves_original_parser_evidence():
         assert b"Back to original fixtures" in public
 
 
-def test_pages_extensionless_sample_routes_rewrite_to_real_html_evidence():
-    redirects = (LANDING / "_redirects").read_text().splitlines()
+def test_pages_sample_directory_indexes_are_generated_and_resolve_local_references():
+    assert not (LANDING / "_redirects").exists()
     for slug in ("acme-toolkit", "pixelboard", "quantify"):
-        assert f"/samples/{slug} /samples/{slug}.html 200" in redirects
-        assert (LANDING / "samples" / f"{slug}.html").is_file()
+        original = LANDING / "samples" / f"{slug}.html"
+        route = LANDING / "samples" / slug / "index.html"
+        assert original.is_file()  # Pages' built-in .html canonical redirect remains valid.
+        expected = original.read_text().replace('href="../', 'href="../../')
+        for target in ("acme-toolkit", "pixelboard", "quantify"):
+            expected = expected.replace(f'href="{target}"', f'href="../{target}/"')
+        page = route.read_text()
+        assert page == expected
+        parser = LocalReferences()
+        parser.feed(page)
+        for reference in parser.references:
+            resolved = urlparse(urljoin(f"https://example.test/samples/{slug}/", reference))
+            if resolved.scheme not in ("http", "https") or resolved.netloc != "example.test":
+                continue
+            if resolved.path in ("", "/"):
+                local_path = LANDING / "index.html"
+            else:
+                local_path = LANDING / resolved.path.lstrip("/")
+                if local_path.is_dir():
+                    local_path /= "index.html"
+            assert local_path.is_file(), f"{slug} has a broken local reference: {reference}"
