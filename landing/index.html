@@ -4,7 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="PH Catalog — a resumable local Product Hunt catalogue and analytics experiment with a privacy-safe synthetic demo.">
-<title>PH Catalog</title>
+<title>PH Catalog — local Product Hunt analytics</title>
+<link rel="canonical" href="https://ph.significanthobbies.com/">
+<meta property="og:title" content="PH Catalog — local Product Hunt analytics">
+<meta property="og:description" content="Explore a privacy-safe synthetic demo of a resumable local Product Hunt catalogue and analytics pipeline.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ph.significanthobbies.com/">
+<meta property="og:site_name" content="PH Catalog">
+<meta property="og:image" content="https://opengraph.githubassets.com/1/Significant-Hobbies/ph-catalog">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PH Catalog — local Product Hunt analytics">
+<meta name="twitter:description" content="Explore a privacy-safe synthetic demo of a resumable local Product Hunt catalogue and analytics pipeline.">
+<meta name="twitter:image" content="https://opengraph.githubassets.com/1/Significant-Hobbies/ph-catalog">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PH Catalog","url":"https://ph.significanthobbies.com/","description":"A resumable local Product Hunt catalogue and analytics experiment with a privacy-safe synthetic demo.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","isAccessibleForFree":true,"codeRepository":"https://github.com/Significant-Hobbies/ph-catalog","author":{"@type":"Person","name":"Sarthak Agrawal","url":"https://sarthakagrawal.dev"}}</script>
+<!-- Microsoft Clarity — session replay + heatmaps for the public synthetic demo only. -->
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/ymdtaonrgw";y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","ymdtaonrgw");window.clarity("set","project_id","ph-catalog");</script>
 <script src="https://health.sassmaker.com/tracker.js" data-key="ahk_pub_6ffe706f72e7394a34115b53b1e09e058009afab54b22e0f585f67ad678978a3" data-project="app-import-101d8097b05706b4c10bc776b5171149282e31994ee1557e248e78bc20375d6a" data-identity="session" defer></script>
 <style>
   * { margin:0; box-sizing:border-box; }
@@ -18,6 +32,9 @@
   a.card:hover { border-color:#4f8cff; }
   a.card strong { display:block; }
   a.card span { color:#9aa0ad; font-size:.9rem; }
+  .copy { color:#c1c5ce; line-height:1.7; }
+  .copy p { margin:0 0 14px; }
+  .copy a { color:#8fb4ff; }
   p.note { color:#9aa0ad; font-size:.9rem; margin-top:8px; }
   footer { margin-top:56px; color:#7f8592; font-size:.82rem; }
 </style>
@@ -33,12 +50,34 @@
     <li><a class="card" href="samples/quantify.html" data-sample="quantify"><strong>Quantify</strong><span>Synthetic sample product</span></a></li>
   </ul>
   <p class="note">The full catalogue stays local. Public pages show only synthetic fixtures.</p>
+  <section class="copy" aria-labelledby="how-it-works">
+    <h2 id="how-it-works">How it works</h2>
+    <p>PH Catalog is a local-first research pipeline for collecting public Product Hunt records into one consistent analytical dataset. The importer normalizes product identities, follows canonical aliases, deduplicates repeated records, and saves resumable progress so a long collection run can continue after interruption instead of starting over.</p>
+    <p>The normalized records live in DuckDB for exploration and can be exported to compressed Parquet snapshots. Each snapshot carries provenance and verification checks so analysis can distinguish a complete, tested export from an incomplete scrape. The repository also includes a read-only analytics path for asking aggregate questions without turning the experiment into another hosted Product Hunt clone.</p>
+  </section>
+  <section class="copy" aria-labelledby="public-demo">
+    <h2 id="public-demo">What the public demo proves</h2>
+    <p>This site runs the same parsing and presentation path against three original fictional products. It demonstrates the shape of a catalogue record, the link between a product page and the analytical workflow, and the boundary between reproducible code and data that should remain local. No real Product Hunt catalogue, private database, or generated research snapshot is published here.</p>
+    <p>The synthetic fixture is deliberately small. It is evidence that the pipeline can be exercised safely, not a claim that three records reproduce the scale or messiness of the full local catalogue. The project’s tests cover importing, alias resolution, snapshots, recovery, analytics, and the refusal to overwrite a non-sample catalogue accidentally.</p>
+  </section>
+  <section class="copy" aria-labelledby="use-cases">
+    <h2 id="use-cases">Who it is for</h2>
+    <p>PH Catalog is useful to developers and product researchers who want a transparent starting point for local market analysis: studying launch patterns, comparing categories, testing enrichment ideas, or learning how to build a resumable public-data workflow without republishing the source dataset. It is an experiment and reference implementation, not a commercial analytics service.</p>
+    <p><a href="https://github.com/Significant-Hobbies/ph-catalog" data-repository>Read the source and documentation on GitHub</a> to inspect the pipeline, run the synthetic demo, and reproduce the verified local workflow.</p>
+  </section>
   <footer>A Significant Hobbies experiment.</footer>
 </main>
 <script>
   document.querySelectorAll('a[data-sample]').forEach((link) => {
     link.addEventListener('click', () => {
       window.appHealth?.track('sample_opened');
+      window.clarity?.('event', 'sample_opened');
+    });
+  });
+  document.querySelectorAll('a[data-repository]').forEach((link) => {
+    link.addEventListener('click', () => {
+      window.appHealth?.track('source_repository_opened');
+      window.clarity?.('event', 'source_repository_opened');
     });
   });
 </script>
