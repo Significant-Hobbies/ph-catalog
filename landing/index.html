@@ -84,7 +84,7 @@
   });
 
   document.addEventListener('DOMContentLoaded', () => {
-    const newsletterWidget = document.querySelector('saas-maker-newsletter-capture');
+    const newsletterWidget = document.querySelector('studio-footer');
     let newsletterInteractionTracked = false;
     const trackNewsletterInteraction = () => {
       if (newsletterInteractionTracked) return;
@@ -96,22 +96,10 @@
     newsletterWidget?.addEventListener('focusin', trackNewsletterInteraction);
   }, { once: true });
 </script>
-<div class="atlas-footer">
-  <fleet-footer-extension product-name="PH Catalog" signature-name="Atlas" signature-font="newsreader" theme="light" surface="landing" art-src="https://sassmaker.com/footer-art/ph-catalog.webp" art-width="2172" art-height="724" art-position="50% 50%" art-alt="Finely drawn research cabinet containing original product objects and separate source cards, with a central structured folio and separate annotation slip." art-credit="Original illustration for PH Catalog">
-    <footer slot="navigation" data-fleet-footer-navigation class="precise-native">
-      <a class="precise-brand" href="./" data-fleet-footer-primary>Atlas <span>/ PH Catalog</span></a>
-      <nav class="precise-groups" aria-label="Atlas resources">
-        <div><h2 data-fleet-footer-group-label>Explore</h2><a href="#records">Original fixtures</a><a href="samples/acme-toolkit">Acme Toolkit</a><a href="samples/pixelboard">Pixelboard</a><a href="samples/quantify">Quantify</a></div>
-        <div><h2 data-fleet-footer-group-label>Run locally</h2><a href="#run-locally">Local setup</a><a href="https://github.com/Significant-Hobbies/ph-catalog/blob/main/site/README.md">Atlas UI guide</a><a href="https://github.com/Significant-Hobbies/ph-catalog/blob/main/docs/internal-analytics.md">Analytics documentation</a></div>
-        <div><h2 data-fleet-footer-group-label>Project</h2><a href="https://github.com/Significant-Hobbies/ph-catalog">Source &amp; documentation</a><a href="#how-it-works">How it works</a><a href="https://sassmaker.com/privacy">Updates privacy</a></div>
-      </nav>
-      <p class="precise-note" data-fleet-footer-legal>A Significant Hobbies local catalogue experiment.</p>
-    </footer>
-    <saas-maker-newsletter-capture slot="capture" layout="compact" integrated catalog-id="ph-catalog" project-key="pk_f0b2e58b3705f48ff52ddfa347eecad4776407b6cd789cce" product-name="PH Catalog" kind="newsletter" source="fleet-footer" privacy-url="https://sassmaker.com/privacy" theme="light"></saas-maker-newsletter-capture>
-  </fleet-footer-extension>
-</div>
-<script type="module" src="https://sassmaker.com/newsletter-capture.js?v=precise-b0adaa67"></script>
-<script src="https://sassmaker.com/project-strip.js?v=precise-b0adaa67" data-project="ph-catalog" data-layout="studio" data-host-only="true" data-theme="light" defer></script>
-<script src="https://sassmaker.com/ai-chat-footer.js?v=precise-b0adaa67" data-name="PH Catalog" data-layout="question" data-host-only="true" data-theme="light" defer></script>
+<link rel="stylesheet" href="/footer.css">
+<script type="module" src="/footer.js"></script>
+<studio-footer product="PH Catalog" url="https://ph.significanthobbies.com" catalog-id="ph-catalog" capture="newsletter" variant="studio" art-mode="panel" wordmark="poster">
+<script type="application/json">{"summary": "A resumable local Product Hunt catalogue and analytics experiment with a privacy-safe synthetic demo.", "legal": "A Significant Hobbies local catalogue experiment.", "groups": [{"title": "Explore", "links": [{"label": "Original fixtures", "href": "/#records"}, {"label": "Acme Toolkit", "href": "/samples/acme-toolkit"}, {"label": "Pixelboard", "href": "/samples/pixelboard"}, {"label": "Quantify", "href": "/samples/quantify"}]}, {"title": "Run locally", "links": [{"label": "Local setup", "href": "/#run-locally"}, {"label": "Atlas UI guide", "href": "https://github.com/Significant-Hobbies/ph-catalog/blob/main/site/README.md"}, {"label": "Analytics documentation", "href": "https://github.com/Significant-Hobbies/ph-catalog/blob/main/docs/internal-analytics.md"}]}, {"title": "Project", "links": [{"label": "Source & documentation", "href": "https://github.com/Significant-Hobbies/ph-catalog"}, {"label": "How it works", "href": "/#how-it-works"}, {"label": "Updates privacy", "href": "https://sassmaker.com/privacy"}]}], "art": {"src": "https://sassmaker.com/footer-art/ph-catalog.webp", "alt": "Finely drawn research cabinet containing original product objects and separate source cards, with a central structured folio and separate annotation slip.", "position": "50% 50%"}}</script>
+</studio-footer>
 </body>
 </html>
