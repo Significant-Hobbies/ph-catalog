@@ -44,7 +44,12 @@ def _row(slug, tagline, description, *, website="https://example.com", entities=
 def _reservation_bundles(tmp_path, monkeypatch):
     bundles = []
     pins = {}
-    for name, slug in (("main", "c"), ("home", "home"), ("sparse", "sparse")):
+    for name, slug in (
+        ("main", "c"),
+        ("home", "home"),
+        ("sparse", "sparse"),
+        ("support", "support"),
+    ):
         bundle = tmp_path / "reservations" / name
         bundle.mkdir(parents=True)
         key = json.dumps([{"slug": slug}]).encode()
@@ -54,7 +59,7 @@ def _reservation_bundles(tmp_path, monkeypatch):
         )
         pins[name] = routing.sha256_file(bundle / "manifest.json")
         bundles.append((name, bundle))
-    monkeypatch.setattr(routing, "FROZEN_SAMPLE_MANIFESTS", pins)
+    monkeypatch.setattr(routing, "RESERVATION_MANIFESTS", pins)
     return tuple(bundles)
 
 
@@ -205,7 +210,7 @@ def test_mart_router_streams_candidates_and_respects_exclusions(tmp_path, monkey
     assert rows[1]["primary_category"] is None
     assert "source_categories" not in output.read_text()
     assert json.loads((tmp_path / "routed.jsonl.manifest.json").read_text()) == report
-    with pytest.raises(ValueError, match="all three"):
+    with pytest.raises(ValueError, match="all four"):
         routing.route_mart(
             mart,
             tmp_path / "taxonomy.json",
@@ -225,8 +230,8 @@ def test_mart_router_streams_candidates_and_respects_exclusions(tmp_path, monkey
 
 def test_reservation_exclusions_require_pinned_keys(tmp_path, monkeypatch):
     bundles = _reservation_bundles(tmp_path, monkeypatch)
-    assert routing.reserved_slugs(bundles) == {"c", "home", "sparse"}
-    with pytest.raises(ValueError, match="all three"):
+    assert routing.reserved_slugs(bundles) == {"c", "home", "sparse", "support"}
+    with pytest.raises(ValueError, match="all four"):
         routing.reserved_slugs(bundles[:2])
     (bundles[0][1] / "source-key.json").write_text("[]")
     with pytest.raises(ValueError, match="source key changed"):

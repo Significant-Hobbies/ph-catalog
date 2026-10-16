@@ -16,6 +16,7 @@ from typing import Any
 
 import duckdb
 
+from ph_catalog.primary_augmented_heldout import SUPPORT_MANIFEST_SHA
 from ph_catalog.primary_classifier import _top_two, text_input
 from ph_catalog.primary_heldout import (
     FROZEN_SAMPLE_MANIFESTS,
@@ -26,6 +27,7 @@ from ph_catalog.primary_taxonomy import load_taxonomy
 from ph_catalog.primary_taxonomy_review import sha256_file
 
 ROUTING_POLICY = "primary-confidence-routing-v1-candidate"
+RESERVATION_MANIFESTS = {**FROZEN_SAMPLE_MANIFESTS, "support": SUPPORT_MANIFEST_SHA}
 PLACEHOLDER = re.compile(r"\b(?:lorem ipsum|coming soon|under construction|tbd)\b", re.I)
 FIELD_MINIMUM = {"tagline": 25, "description": 80}
 FIELD_CONFIDENCE_FLOOR = 0.75
@@ -35,12 +37,12 @@ MINIMUM_SOURCE_CHARS = 40
 
 def reserved_slugs(bundles: tuple[tuple[str, Path], ...]) -> set[str]:
     """Exclude every frozen development/holdout slug from routing rehearsals."""
-    if len(bundles) != 3 or {name for name, _ in bundles} != set(FROZEN_SAMPLE_MANIFESTS):
-        raise ValueError("all three frozen reservation bundles must be excluded")
+    if len(bundles) != 4 or {name for name, _ in bundles} != set(RESERVATION_MANIFESTS):
+        raise ValueError("all four frozen reservation bundles must be excluded")
     slugs = set()
     for name, bundle in bundles:
         manifest_path = bundle / "manifest.json"
-        if sha256_file(manifest_path) != FROZEN_SAMPLE_MANIFESTS[name]:
+        if sha256_file(manifest_path) != RESERVATION_MANIFESTS[name]:
             raise ValueError(f"frozen sample manifest changed in {name}")
         manifest = json.loads(manifest_path.read_text())
         key_path = bundle / "source-key.json"
