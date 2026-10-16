@@ -386,6 +386,23 @@ copy. Stage 4 promotion waits for the independent Stage 2 audit.
 
 ## Stage 5 — Selective website evidence
 
+Status: a provisional routed-only evidence fetcher is implemented
+in `tools/primary_website_evidence.py`; no live product-site run or category
+promotion has occurred. It consumes a hash-checked Stage 4 JSONL/manifest,
+rejects altered routes and all four reserved review/holdout bundles, and
+refuses to overwrite prior output. The actual TCP backend pins a freshly
+resolved global address, with HTTPX redirects disabled and every redirect URL
+rechecked. Robots parsing uses patched Protego >=0.6.2 for RFC 9309 rule
+matching; the fetcher handles robots status, five redirects, 24-hour cache,
+Retry-After, persistent denial, 2 RPS, request/page/byte/redirect/time caps,
+and HTML Content-Type before streaming body. It extracts ordered structured,
+social, standard, and short section fields, and fetches at most one obvious
+same-origin about/features/product page when the first page yields no fields.
+Its ignored JSONL keeps each field's page role, source URL, fetch time,
+response hash, and outcome. It never updates Product Hunt source fields.
+Live product-site validation and a combined evidence classification view
+remain open before Stage 5 acceptance.
+
 Fetch only public pages for routed products. Respect robots directives,
 Retry-After, persistent denial, and the existing global request cap. Do not
 download media or bypass access controls.
