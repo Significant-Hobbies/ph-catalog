@@ -130,6 +130,8 @@ def evaluate(
         or ledger_manifest["audit_manifest_sha256"] != sha256_file(audit_bundle / "manifest.json")
         or ledger_manifest["decision_rule"] != RULE
         or ledger_manifest["output_sha256"] != sha256_file(ledger_path)
+        or ledger_manifest["ledger_code_sha256"]
+        != sha256_file(Path(__file__).with_name("primary_final_audit_ledger.py"))
         or ledger_manifest["evaluator_code_sha256"] != sha256_file(Path(__file__))
     ):
         raise ValueError("frozen audit or prediction provenance changed")

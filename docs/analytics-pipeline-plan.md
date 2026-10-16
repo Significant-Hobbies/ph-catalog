@@ -508,6 +508,17 @@ Ignored reservation manifest SHA-256: `f8c3fc478236acd898a9929063fb56af4d108c036
 It pins sampler code SHA-256 `1a9f213fb4a2637316165179d108dc892842d72204e558ed0e1a0a64bfaa9318`;
 changing the selector requires a new sealed reservation before annotation.
 
+The selected-only Stage 4 replay matched all 320 screening rows exactly:
+155 local candidates, 139 website routes, and 26 non-web routes. Selected
+route SHA-256 is `41cd17cbd97421b8d2b2fc7b4d6e127b23da591970a893c723d70ab3cec2860a`;
+selected-path manifest SHA-256 is `47bc728fea3be911e78b3335c63e51c9ab210d365bb9baf11e3af3ecf5e43201`.
+The bounded selected-only Stage 5 run recorded one outcome for each of 139
+website routes using 285 requests under a 450-request cap and 2 RPS:
+82 fetched, 19 unsafe URL, three no metadata, 13 HTTP status, and 22 robots
+disallowed. Evidence SHA-256 is `1ea8f8054260ae0996e7efac341ee48089eaaf58433dba1db25baf8000c6c5ef`.
+The unresolved handoff covers all 165 routed records with no pending website
+route; handoff SHA-256 is `cec9e3004aaadd63375e5a3ab4c4081e8e417d5879b055f0149a5c63f1ee71e9`.
+
 The random 200 contain 61 Stage 4 local source-text accept candidates, 120
 website-evidence routes, and 19 non-web routes; the separate 120 stratified
 records contain 94, 19, and 7 respectively. These are routing counts, not
@@ -560,6 +571,17 @@ opens. The final unlabeled ledger pins the evaluator source SHA along with its
 own code/model/prompt/output hashes; the evaluator refuses a changed source
 file, blind bundle, prediction ledger, taxonomy, or incomplete independent
 annotations. No scoring run has occurred yet.
+
+Independent annotators receive only `blind-review.json` and frozen category
+definitions, never the source/stratum key, Stage 4–6 predictions, website
+fetch outcomes, or earlier verdicts. They label all 320 records with exact
+product-text evidence and explicit single, co-primary, or null decisions.
+A second reviewer independently labels 32 deterministic IDs selected by the
+lowest SHA-256 of `stage7-qa-v1:<review_id>`; all category disagreements receive
+blind third review and an adjudication log before import. Validate IDs, frozen
+taxonomy categories, evidence spans, and complete review provenance before
+joining gold to the already-pinned ledger. The QA selection and any annotation
+artifacts remain ignored and must not alter candidate decisions.
 
 Candidate decision mapping is fixed before gold: a Stage 4 `candidate_accept`
 uses its pinned `primary_category`; routed website evidence alone makes no
