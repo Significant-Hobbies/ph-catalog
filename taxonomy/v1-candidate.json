@@ -5,7 +5,7 @@
     {
       "id": "business_operations",
       "name": "Business operations",
-      "boundary": "Tools for running an organization, its projects, documents, customers, or compliance; excludes selling and recruiting.",
+      "boundary": "Tools for running an organization, its projects, staff, customers, documents, compliance, and workplace/customer operational communication; excludes selling, recruiting, and finance-specific money flows.",
       "rationale": "The source category names an organizational operations workflow.",
       "source_categories": [
         "Project management software",
@@ -13,14 +13,12 @@
         "Knowledge base software",
         "Customer support tools",
         "Scheduling software",
-        "CRM software",
         "Meeting software",
         "Customer loyalty platforms",
         "Issue tracking software",
         "E-signature apps",
         "Survey and form builders",
         "Compliance software",
-        "Legal services",
         "Remote workforce tools",
         "Virtual office platforms",
         "Virtual events",
@@ -29,13 +27,8 @@
         "Customer Success",
         "customer-success",
         "customer-communication",
-        "meetings",
-        "Meetings",
         "change-management",
-        "Payroll software",
         "Startup incorporation",
-        "crm",
-        "legal",
         "events"
       ]
     },
@@ -81,7 +74,7 @@
     {
       "id": "design_creative",
       "name": "Design and creative",
-      "boundary": "Visual design, prototyping, graphics, photography, video production, and creative asset tools; excludes entertainment consumption.",
+      "boundary": "Visual and audio creative production, including design, prototyping, graphics, photography, video, and music creation; excludes entertainment consumption.",
       "rationale": "The source category names a creative production workflow or asset.",
       "source_categories": [
         "Design resources",
@@ -113,8 +106,6 @@
         "photo-video",
         "photography",
         "Photography",
-        "Art",
-        "art",
         "graphics",
         "Design",
         "design",
@@ -141,9 +132,6 @@
       "source_categories": [
         "Online learning",
         "Language Learning",
-        "Apps for kids",
-        "education",
-        "Education",
         "online-learning",
         "languages",
         "Languages",
@@ -151,15 +139,13 @@
         "startup-lessons",
         "Startup Books",
         "startup-books",
-        "cookbooks",
-        "books",
         "Sales training"
       ]
     },
     {
       "id": "finance",
       "name": "Finance",
-      "boundary": "Money management, payments, accounting, investing, banking, insurance, and crypto finance; excludes sales analytics.",
+      "boundary": "Money management, payments, accounting, investing, banking, insurance, crypto finance, and finance-specific money flows; excludes sales analytics and general staff/workflow operations.",
       "rationale": "The source category names a financial product or workflow.",
       "source_categories": [
         "Investing",
@@ -181,7 +167,6 @@
         "Online banking",
         "Crowdfunding",
         "NFT marketplaces",
-        "NFT creation tools",
         "Neobanks",
         "Health Insurance",
         "Credit score tools",
@@ -240,7 +225,7 @@
     {
       "id": "marketing_sales",
       "name": "Marketing and sales",
-      "boundary": "Acquisition, advertising, SEO, marketing content and automation, sales operations; excludes social interaction for its own sake.",
+      "boundary": "Acquisition, advertising, SEO, marketing content and automation, sales operations, and acquisition-specific measurement; excludes social interaction for its own sake.",
       "rationale": "The source category names customer acquisition, promotion, or sales.",
       "source_categories": [
         "Marketing automation platforms",
@@ -261,10 +246,6 @@
         "AI SDR",
         "marketing",
         "Marketing",
-        "advertising",
-        "Advertising",
-        "sales",
-        "Sales",
         "email-marketing",
         "Email Marketing",
         "seo",
@@ -290,13 +271,10 @@
       "source_categories": [
         "Games",
         "News",
-        "Blogging platforms",
         "Live streaming platforms",
         "Streaming Services",
         "streaming-services",
         "Video Streaming",
-        "Music",
-        "music",
         "movies",
         "news",
         "tech-news",
@@ -330,9 +308,7 @@
       "rationale": "The source category names an individual information or task workflow.",
       "source_categories": [
         "Note and writing apps",
-        "Writing assistants",
         "Calendar apps",
-        "Time tracking apps",
         "File storage and sharing apps",
         "PDF Editor",
         "Screenshots and screen recording apps",
@@ -342,14 +318,11 @@
         "AI Dictation Apps",
         "Transcription",
         "AI Presentation Software",
-        "writing",
-        "Writing",
         "notes",
         "calendar",
         "Calendar",
         "task-management",
         "Task Management",
-        "time-tracking",
         "spreadsheets",
         "text-editors",
         "Email clients"
@@ -382,14 +355,11 @@
       "rationale": "The source category names retail shopping or a commerce storefront.",
       "source_categories": [
         "Ecommerce platforms",
-        "Marketplace sites",
         "Shopping",
         "Ecommerce",
-        "Shopify Apps",
         "shopping",
         "e-commerce",
         "E-Commerce",
-        "delivery",
         "food-delivery",
         "personal-shopper",
         "fashion",
@@ -399,7 +369,7 @@
     {
       "id": "social_community",
       "name": "Social and community",
-      "boundary": "Interpersonal communication, social networks, dating, and community management; excludes marketing-channel tools.",
+      "boundary": "General interpersonal communication, social networks, dating, and peer communities; excludes workplace/customer operations and marketing-channel tools.",
       "rationale": "The source category names people interacting with one another.",
       "source_categories": [
         "Social Networking",
@@ -413,7 +383,6 @@
         "Social bookmarking",
         "Social audio apps",
         "Video and Voice calling",
-        "Twitter apps",
         "social-networking",
         "Social Network",
         "social-network",
@@ -471,7 +440,7 @@
     {
       "id": "data_analytics",
       "name": "Data and analytics",
-      "boundary": "Data analysis, business intelligence, visualization, research, and measurement; excludes generic AI technology.",
+      "boundary": "General-purpose data analysis, business intelligence, visualization, research, and measurement; excludes acquisition-specific analytics and ad-campaign measurement.",
       "rationale": "The source category names a measurement or data-analysis workflow.",
       "source_categories": [
         "Business intelligence software",
@@ -490,11 +459,9 @@
     {
       "id": "home_lifestyle",
       "name": "Home and lifestyle",
-      "boundary": "Home, food, family lifestyle, real estate and physical living spaces; excludes medical care and retail tools.",
+      "boundary": "Products for living in, caring for, planning, or improving a home, plus food and family lifestyle; excludes property finance, real estate lead generation, property-business operations, and retail storefronts.",
       "rationale": "The source category names a home, food, or lifestyle purpose.",
       "source_categories": [
-        "Real estate",
-        "Furniture",
         "home",
         "Home",
         "home-improvement",

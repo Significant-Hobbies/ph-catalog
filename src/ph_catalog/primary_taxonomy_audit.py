@@ -9,7 +9,11 @@ from pathlib import Path
 
 import duckdb
 
-from ph_catalog.primary_taxonomy import load_taxonomy, primary_from_sources
+from ph_catalog.primary_taxonomy import (
+    load_taxonomy,
+    normalized_source_value,
+    primary_from_sources,
+)
 
 
 def audit(
@@ -41,6 +45,15 @@ def audit(
     absent = sorted(set(taxonomy.source_map) - set(source_counts))
     if absent and require_complete_source_snapshot:
         raise ValueError(f"mapped source categories absent from snapshot: {absent}")
+    normalized_mapped = {normalized_source_value(source) for source in taxonomy.source_map}
+    mixed_case = sorted(
+        source
+        for source in source_counts
+        if source not in taxonomy.source_map
+        and normalized_source_value(source) in normalized_mapped
+    )
+    if mixed_case:
+        raise ValueError(f"case-equivalent source categories mapped and unmapped: {mixed_case}")
     return {
         "taxonomy_version": taxonomy.version,
         "taxonomy_sha256": taxonomy.sha256,
