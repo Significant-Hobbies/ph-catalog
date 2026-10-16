@@ -52,8 +52,8 @@ Stage 6 v2 prompt **before gold labels opened**. Its failed output is retained
 but excluded; the v3 prompt repaired the null format and was frozen before
 annotation. Thus the LLM path is **not a pristine untouched holdout**, even
 though no correctness label informed the repair. The 33 citation failures
-across all 320 v3 outputs remained fail-closed; this audit did not retry or
-change the prompt after seeing gold.
+among the 165 v3 Stage 6 outputs remained fail-closed; this audit did not
+retry or change the prompt after seeing gold.
 
 Generated data and label files stay ignored under
 `data/primary-final-audit-v1-2026-10-16/`. The immutable inputs and results
