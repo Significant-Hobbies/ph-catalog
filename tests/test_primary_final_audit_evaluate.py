@@ -2,7 +2,9 @@
 
 import pytest
 
+from ph_catalog import primary_final_audit_evaluate as audit
 from ph_catalog.primary_final_audit_evaluate import score, wilson_95
+from ph_catalog.primary_taxonomy_review import sha256_file
 
 
 def test_random_denominator_and_ambiguous_gold_are_conservative():
@@ -43,3 +45,21 @@ def test_random_denominator_and_ambiguous_gold_are_conservative():
     assert wilson_95(0, 0) == (0.0, 1.0)
     with pytest.raises(ValueError, match="incomplete"):
         score(ledger, [{**labels[0], "decision": "unreviewed"}, *labels[1:]])
+
+
+def test_external_pins_reject_coordinated_ledger_and_manifest_mutation(tmp_path, monkeypatch):
+    bundle = tmp_path / "bundle"
+    bundle.mkdir()
+    audit_manifest = bundle / "manifest.json"
+    audit_manifest.write_text('{"sample":"frozen"}\n')
+    ledger = tmp_path / "ledger.jsonl"
+    ledger.write_text('{"candidate":"frozen"}\n')
+    monkeypatch.setattr(audit, "EXPECTED_AUDIT_MANIFEST_SHA", sha256_file(audit_manifest))
+    monkeypatch.setattr(audit, "EXPECTED_LEDGER_OUTPUT_SHA", sha256_file(ledger))
+    audit.verify_external_pins(bundle, ledger)
+    ledger.write_text('{"candidate":"changed"}\n')
+    ledger.with_suffix(".jsonl.manifest.json").write_text(
+        '{"output_sha256":"new companion hash"}\n'
+    )
+    with pytest.raises(ValueError, match="published"):
+        audit.verify_external_pins(bundle, ledger)

@@ -570,7 +570,9 @@ this audit.
 opens. The final unlabeled ledger pins the evaluator source SHA along with its
 own code/model/prompt/output hashes; the evaluator refuses a changed source
 file, blind bundle, prediction ledger, taxonomy, or incomplete independent
-annotations. No scoring run has occurred yet.
+annotations. The evaluator also hard-pins the external audit manifest and
+ledger output SHA-256 values, so changing a ledger and its companion manifest
+together still fails before gold is read. No scoring run has occurred yet.
 
 Independent annotators receive only `blind-review.json` and frozen category
 definitions, never the source/stratum key, Stage 4–6 predictions, website
@@ -614,7 +616,10 @@ candidate ledger reconciles the original random 200 (153 category candidates:
 biased diagnostics (112 candidates, three errors, five nulls). These are
 candidate/coverage counts, not correctness or precision. Its output SHA-256 is
 `d2ed7b26c778f8efb561eac7e5f2d3fdbe7d6c995f3b2fc27f2e420027a1f17a`;
-manifest SHA-256 is `e8e53f7bf2daf5da7c2b46e20fc8b44d2d06f1a117e146afb9667216375925b2`.
+current manifest SHA-256 is `ad383ac4ca894aed57512c592c4dd51600d5544feebe4e749d894f4c57b8d3f9`.
+The earlier manifest `e8e53f7...` is retained as a pre-pin diagnostic; its
+ledger bytes are identical, but only the current manifest pins the evaluator
+that enforces the external SHA values.
 The manifest pins v3 prompt SHA-256
 `51396b8a262bba2cef12b3c3079cc1394833397972a932c48c362d8a3fcbfac7`,
 model digest, all seven batch outputs/manifests, route/evidence/handoff,

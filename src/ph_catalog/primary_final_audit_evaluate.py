@@ -14,6 +14,17 @@ from ph_catalog.primary_taxonomy import load_taxonomy
 from ph_catalog.primary_taxonomy_review import sha256_file
 
 RULE = "stage7-prelabel-v1-exact-unique-primary"
+EXPECTED_AUDIT_MANIFEST_SHA = "f8c3fc478236acd898a9929063fb56af4d108c036a98e1de1a5a2c277870479d"
+EXPECTED_LEDGER_OUTPUT_SHA = "d2ed7b26c778f8efb561eac7e5f2d3fdbe7d6c995f3b2fc27f2e420027a1f17a"
+
+
+def verify_external_pins(audit_bundle: Path, ledger_path: Path) -> None:
+    """Reject coordinated ledger/companion-manifest mutation before reading gold."""
+    if (
+        sha256_file(audit_bundle / "manifest.json") != EXPECTED_AUDIT_MANIFEST_SHA
+        or sha256_file(ledger_path) != EXPECTED_LEDGER_OUTPUT_SHA
+    ):
+        raise ValueError("published Stage 7 audit or candidate ledger pin changed")
 
 
 def wilson_95(correct: int, accepted: int) -> tuple[float, float]:
@@ -118,6 +129,7 @@ def score(ledger: list[dict], annotations: list[dict]) -> dict:
 def evaluate(
     audit_bundle: Path, ledger_path: Path, annotations_path: Path, taxonomy_path: Path
 ) -> dict:
+    verify_external_pins(audit_bundle, ledger_path)
     audit_manifest = json.loads((audit_bundle / "manifest.json").read_text())
     blind_path = audit_bundle / "blind-review.json"
     key_path = audit_bundle / "source-key.json"
