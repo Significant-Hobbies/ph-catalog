@@ -171,12 +171,16 @@ co-primary judgments are ground-truth abstentions; predicting a class for
 them is a false positive. No `evaluate` report exists for the present
 candidate because its gate is closed.
 
-On the 2026-10-15 archive, this candidate protocol reserved 680 development,
+On the 2026-10-15 archive, the pre-freeze candidate protocol reserved 680 development,
 200 random-holdout, and 341 source-stratified-holdout records, excluding all
 109 prior tuning slugs. Only one product remains in the source-derived
 `home_lifestyle` stratum after exclusion; it went to the stratified holdout,
 leaving zero in development. The present mapping is still `v1-candidate` and
-none of these 1,221 records has an adjudicated label. The `check` gate
+none of these 1,221 records has an adjudicated label. A subsequent source-map
+revision changed the taxonomy hash, so this preserved local bundle is now a
+protocol rehearsal rather than final evaluation evidence. Generate a fresh,
+disjoint bundle under the frozen taxonomy before annotation and evaluation.
+The `check` gate
 requires a frozen taxonomy, completed development labels, at least 30 true
 single-label development examples per class, at least 20 true single-label
 stratified-holdout examples per class, and a 200-record random holdout before

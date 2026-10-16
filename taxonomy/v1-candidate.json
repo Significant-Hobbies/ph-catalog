@@ -5,28 +5,19 @@
     {
       "id": "business_operations",
       "name": "Business operations",
-      "boundary": "Tools for running an organization, its projects, staff, customers, documents, compliance, and workplace/customer operational communication; excludes selling, recruiting, and finance-specific money flows.",
+      "boundary": "Tools for running an organization, its projects, staff, customers, documents, compliance, and workplace/customer operational communication; excludes selling, recruiting, customer loyalty/retention, and finance-specific money flows.",
       "rationale": "The source category names an organizational operations workflow.",
       "source_categories": [
         "Project management software",
         "Team collaboration software",
         "Knowledge base software",
         "Customer support tools",
-        "Scheduling software",
-        "Meeting software",
-        "Customer loyalty platforms",
         "Issue tracking software",
         "E-signature apps",
-        "Survey and form builders",
         "Compliance software",
         "Remote workforce tools",
         "Virtual office platforms",
-        "Virtual events",
-        "Event software",
         "Membership software",
-        "Customer Success",
-        "customer-success",
-        "customer-communication",
         "change-management",
         "Startup incorporation",
         "events"
@@ -55,7 +46,6 @@
         "AI Code Editors",
         "Git clients",
         "Static site generators",
-        "Browser Automation",
         "Real-time collaboration infra",
         "AI Code Testing",
         "AI Voice Agent Infrastructure",
@@ -183,14 +173,13 @@
         "credit-card",
         "venture-capital",
         "fundraising",
-        "Fundraising resources",
         "Travel Insurance"
       ]
     },
     {
       "id": "health_wellness",
       "name": "Health and wellness",
-      "boundary": "Physical and mental health, medical care, fitness, sleep, nutrition, and family care; excludes general productivity tracking.",
+      "boundary": "Physical and mental health, medical and elder caregiving, fitness, sleep, and nutrition; excludes general productivity tracking and everyday family-life planning.",
       "rationale": "The source category names a health, care, or fitness purpose.",
       "source_categories": [
         "Health & Fitness",
@@ -200,7 +189,6 @@
         "Therapy apps",
         "Meditation apps",
         "Fitness",
-        "Family Care",
         "Sleep apps",
         "Senior care",
         "Pregnancy apps",
@@ -218,8 +206,8 @@
     {
       "id": "marketing_sales",
       "name": "Marketing and sales",
-      "boundary": "Acquisition, advertising, SEO, marketing content and automation, sales operations, and acquisition-specific measurement; excludes social interaction for its own sake.",
-      "rationale": "The source category names customer acquisition, promotion, or sales.",
+      "boundary": "Acquisition, advertising, SEO, marketing content and automation, sales operations, customer loyalty/retention and lifecycle, and acquisition-specific measurement; excludes social interaction for its own sake.",
+      "rationale": "The source category names customer acquisition, promotion, sales, or retention.",
       "source_categories": [
         "Marketing automation platforms",
         "Advertising tools",
@@ -228,6 +216,7 @@
         "SEO tools",
         "Email marketing",
         "Marketing & Sales",
+        "Customer loyalty platforms",
         "AI sales tools",
         "Affiliate marketing",
         "Influencer marketing platforms",
@@ -264,7 +253,6 @@
       "source_categories": [
         "Games",
         "News",
-        "Live streaming platforms",
         "Streaming Services",
         "streaming-services",
         "Video Streaming",
@@ -301,17 +289,12 @@
         "Calendar apps",
         "File storage and sharing apps",
         "PDF Editor",
-        "Screenshots and screen recording apps",
         "Presentation Software",
-        "Digital whiteboards",
         "AI Dictation Apps",
-        "Transcription",
         "AI Presentation Software",
         "notes",
         "calendar",
         "Calendar",
-        "task-management",
-        "Task Management",
         "text-editors",
         "Email clients"
       ]
@@ -373,8 +356,7 @@
         "Messaging",
         "community",
         "Dating",
-        "dating",
-        "Video conferencing"
+        "dating"
       ]
     },
     {
@@ -420,7 +402,6 @@
         "Business intelligence software",
         "Data analysis tools",
         "Data visualization tools",
-        "Website analytics",
         "Analytics Databases",
         "analytics",
         "Analytics",
@@ -433,7 +414,7 @@
     {
       "id": "home_lifestyle",
       "name": "Home and lifestyle",
-      "boundary": "Products for living in, caring for, planning, or improving a home, plus food and family lifestyle; excludes property finance, real estate lead generation, property-business operations, and retail storefronts.",
+      "boundary": "Products for living in, caring for, planning, or improving a home, plus food and everyday family-life planning; excludes medical caregiving, property finance, real estate lead generation, property-business operations, and retail storefronts.",
       "rationale": "The source category names a home, food, or lifestyle purpose.",
       "source_categories": [
         "home-improvement",
