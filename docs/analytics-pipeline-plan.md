@@ -508,6 +508,17 @@ Ignored reservation manifest SHA-256: `f8c3fc478236acd898a9929063fb56af4d108c036
 It pins sampler code SHA-256 `1a9f213fb4a2637316165179d108dc892842d72204e558ed0e1a0a64bfaa9318`;
 changing the selector requires a new sealed reservation before annotation.
 
+The selected-only Stage 4 replay matched all 320 screening rows exactly:
+155 local candidates, 139 website routes, and 26 non-web routes. Selected
+route SHA-256 is `41cd17cbd97421b8d2b2fc7b4d6e127b23da591970a893c723d70ab3cec2860a`;
+selected-path manifest SHA-256 is `47bc728fea3be911e78b3335c63e51c9ab210d365bb9baf11e3af3ecf5e43201`.
+The bounded selected-only Stage 5 run recorded one outcome for each of 139
+website routes using 285 requests under a 450-request cap and 2 RPS:
+82 fetched, 19 unsafe URL, three no metadata, 13 HTTP status, and 22 robots
+disallowed. Evidence SHA-256 is `1ea8f8054260ae0996e7efac341ee48089eaaf58433dba1db25baf8000c6c5ef`.
+The unresolved handoff covers all 165 routed records with no pending website
+route; handoff SHA-256 is `cec9e3004aaadd63375e5a3ab4c4081e8e417d5879b055f0149a5c63f1ee71e9`.
+
 The random 200 contain 61 Stage 4 local source-text accept candidates, 120
 website-evidence routes, and 19 non-web routes; the separate 120 stratified
 records contain 94, 19, and 7 respectively. These are routing counts, not
@@ -536,6 +547,87 @@ and uncertainty interval. Stage 6 confidence is uncalibrated and must not be
 pooled with the Stage 4 confidence bands. The current frozen model's earlier
 random heldout precision remains below a broad publication bar, so no category
 is promoted by this reservation.
+
+Pre-registered decision rule for this audit, fixed before any labels open:
+an accepted categorical decision is correct only when it exactly equals the
+independent unique-primary gold category. A category on a gold co-primary or
+null record is counted wrong; abstention, fetch denial, timeout, malformed
+model output, and missing path output remain uncovered and stay in the random
+200 denominator. Report accepted/correct counts, coverage, and the 95% Wilson
+precision interval over accepted random records. Broad publication requires
+at least 50% random coverage and a Wilson lower precision bound of at least
+90%. Each path admitted to publication additionally needs at least 30
+accepted random decisions and the same 90% lower bound; a class-specific
+claim requires at least 30 independently true-class records in the random
+sample. Report source-text-only, website-evidence-only, and LLM-final paths
+separately, with LLM-after-website as a subgroup, and count each product once.
+The 120 biased diagnostic records can reveal errors but cannot replace these
+population gates or establish class precision. A failed gate remains a
+reported limitation of #17, not an automatic new task or a reason to tune on
+this audit.
+
+`tools/primary_final_audit_evaluate.py` implements this fixed rule before gold
+opens. The final unlabeled ledger pins the evaluator source SHA along with its
+own code/model/prompt/output hashes; the evaluator refuses a changed source
+file, blind bundle, prediction ledger, taxonomy, or incomplete independent
+annotations. The evaluator also hard-pins the external audit manifest and
+ledger output SHA-256 values, so changing a ledger and its companion manifest
+together still fails before gold is read. No scoring run has occurred yet.
+
+Independent annotators receive only `blind-review.json` and frozen category
+definitions, never the source/stratum key, Stage 4–6 predictions, website
+fetch outcomes, or earlier verdicts. They label all 320 records with exact
+product-text evidence and explicit single, co-primary, or null decisions.
+A second reviewer independently labels 32 deterministic IDs selected by the
+lowest SHA-256 of `stage7-qa-v1:<review_id>`; all category disagreements receive
+blind third review and an adjudication log before import. Validate IDs, frozen
+taxonomy categories, evidence spans, and complete review provenance before
+joining gold to the already-pinned ledger. The QA selection and any annotation
+artifacts remain ignored and must not alter candidate decisions.
+
+Candidate decision mapping is fixed before gold: a Stage 4 `candidate_accept`
+uses its pinned `primary_category`; routed website evidence alone makes no
+categorical decision, so website-only accepted count is zero under the current
+implementation. A Stage 6 schema-valid cited `candidate` is a final audit
+category regardless of its uncalibrated numeric confidence. Stage 6 `null`,
+`error`, or an explicitly unattempted record is uncovered. A website route
+subsequently classified by Stage 6 belongs only to the LLM-final path, with a
+website-evidence subgroup. This mapping assesses current candidates; it does
+not authorize publication if any promotion gate fails.
+
+Protocol provenance: the first 25 selected unresolved products were run with
+the prior v2 local prompt while gold labels were still sealed. Six output
+rows failed closed across two batches on null formatting: the validator
+required zero confidence and empty citations for null, while the prompt had
+not explicitly said so. The v2 first-25 output is retained as a failed
+diagnostic and excluded from the final candidate ledger. The v3 prompt states
+the null format rule; its first 25 rerun yielded 21 schema-valid category
+candidates, four nulls, and zero
+format errors. This was an unlabeled schema repair informed by selected audit
+inputs, so the Stage 6 path is not a fully untouched holdout. No correctness
+labels were inspected or used to tune either prompt. The v3 prompt/model
+hashes are pinned before independent labels open.
+
+The final v3 run used seven disjoint local 27B batches over all 165 unresolved
+records. It produced 110 cited category candidates, 22 nulls, and 33
+fail-closed exact-citation errors; no labels were read. The immutable 320-row
+candidate ledger reconciles the original random 200 (153 category candidates:
+61 Stage 4 source-text and 92 LLM; 30 errors; 17 nulls) and the separate 120
+biased diagnostics (112 candidates, three errors, five nulls). These are
+candidate/coverage counts, not correctness or precision. Its output SHA-256 is
+`d2ed7b26c778f8efb561eac7e5f2d3fdbe7d6c995f3b2fc27f2e420027a1f17a`;
+current manifest SHA-256 is `ad383ac4ca894aed57512c592c4dd51600d5544feebe4e749d894f4c57b8d3f9`.
+The earlier manifest `e8e53f7...` is retained as a pre-pin diagnostic; its
+ledger bytes are identical, but only the current manifest pins the evaluator
+that enforces the external SHA values.
+The manifest pins v3 prompt SHA-256
+`51396b8a262bba2cef12b3c3079cc1394833397972a932c48c362d8a3fcbfac7`,
+model digest, all seven batch outputs/manifests, route/evidence/handoff,
+ledger code, and the pre-gold evaluator code. A website route in the
+LLM-after-website subgroup means a public fetch was attempted; it includes
+denials and no-metadata outcomes, so website-only remains a non-additive
+exposure subgroup with zero categorical acceptances. The 33 citation errors
+remain uncovered, with no retry or prompt adjustment on this audit.
 
 Every taxonomy/model/prompt version produces immutable candidate outputs. It is
 promoted only after:
