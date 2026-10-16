@@ -72,8 +72,14 @@ distinct), then reserves 680 development, 200 random holdout, and 340
 source-stratified holdout records. Blind files contain only product
 text; original tags and strata stay in the ignored source key. Source strata
 are **not true-label strata**. After the exclusions, `home_lifestyle` has zero
-source-stratum records in development and the stratified holdout. All 1,220
-annotations are unreviewed, so the training and evaluation gates are closed.
+source-stratum records in development and the stratified holdout. Independent
+blind review has completed all 680 main development records: 605 single,
+14 co-primary, and 61 null after a separate deterministic 64-record
+development QA (7 disagreements, 4 adjudicated changes). True single-label
+main support remains below the 30-per-class floor for `social_community` (18),
+`data_analytics` (25), and `home_lifestyle` (7). The 200 random and 340
+source-stratified main holdouts remain unreviewed, so training and evaluation
+gates are closed.
 Stage 2 needs independent product-text discovery and resampling for home and
 any other class without sufficient true-label support; weak source tags must
 not be forced into gold. Stages 4–7 remain dependent work in issue #17.
@@ -95,11 +101,15 @@ query group: 160 development, 80 heldout, all disjoint from the main frozen
 bundle. The four post-exclusion candidate pools contain 350, 553, 1,472, and
 441 products respectively. Its manifest records the frozen taxonomy/source
 hashes, seed, exact queries, exclusions, selection counts, and file hashes.
-The key contains **no source tags**. Its 240 annotations are unreviewed.
-Query matches are candidate discovery, not true home labels, class support,
-or population prevalence; the heldout records must stay sealed during model
-work and cannot replace the original random holdout. An independent reviewer
-must assign product-text labels before any of these records can support Stage 2.
+The key contains **no source tags**. All 160 development records now have
+independent product-text labels: 136 single (80 `home_lifestyle`), 5
+co-primary, and 19 null. Its 80 supplemental heldout records remain
+unreviewed. Query matches are candidate discovery, not population prevalence
+or model accuracy; the heldout records must stay sealed during model work and
+cannot replace the original random holdout. Main plus supplemental development
+has 87 true single home labels, but an explicit combined training protocol is
+still required before using them. Incidental social/data labels in this biased
+sample leave those two classes below the development floor.
 
 To reproduce it against the ignored verified `data/products.csv` archive,
 use a new empty output directory with the same seed and exclusions:
@@ -114,4 +124,41 @@ uv run python tools/primary_home_discovery.py \
   --exclude-key data/primary-label-v1-frozen-2026-10-16-r3/source-key.json \
   --output-dir data/primary-home-discovery-v1-2026-10-16 \
   --seed primary-home-discovery-v1-2026-10-16
+```
+
+## Supplemental social/data discovery
+
+After main and home development review, true single-label support is 21 for
+`social_community` and 27 for `data_analytics`, including 3 and 2 incidental
+labels from the home bundle. `tools/primary_sparse_discovery.py` uses four
+fixed name/tagline query groups for peer networks, community spaces, business
+intelligence, and general measurement. It reads product text only. Original
+source tags are neither input features nor labels; its blind files omit slugs,
+query groups, and source tags. Its ignored key records only slugs/splits/groups.
+
+The 2026-10-16 ignored bundle at
+`data/primary-sparse-discovery-v1-2026-10-16/` excludes 5,230 distinct prior
+sample slugs, including the main and home bundles. Post-exclusion candidate
+pools are 1,609, 697, 283, and 312 respectively. It reserves 40 development
+and 20 supplemental heldout records per group: 160 development and 80 heldout,
+all disjoint. The manifest pins taxonomy SHA, source archive SHA, seed, queries,
+exclusion-key SHAs, counts, and blind/key file hashes. All 240 annotations are
+currently unreviewed. Query groups are biased candidate retrieval, not true
+category strata or population evidence; independent product-text annotation
+must establish support before any classifier trains. Both main and supplemental
+heldouts stay sealed until model and thresholds are fixed.
+
+Reproduce with a new empty output directory and the same verified archive:
+
+```bash
+uv run python tools/primary_sparse_discovery.py \
+  --taxonomy taxonomy/v1.json --products data/products.csv \
+  --exclude-key data/taxonomy-review-v1/source-key.json \
+  --exclude-key data/primary-label-v1-2026-10-16/source-key.json \
+  --exclude-key data/primary-label-v1-frozen-2026-10-16/source-key.json \
+  --exclude-key data/primary-label-v1-frozen-2026-10-16-r2/source-key.json \
+  --exclude-key data/primary-label-v1-frozen-2026-10-16-r3/source-key.json \
+  --exclude-key data/primary-home-discovery-v1-2026-10-16/source-key.json \
+  --output-dir data/primary-sparse-discovery-v1-2026-10-16 \
+  --seed sparse-social-data-v1-2026-10-16
 ```

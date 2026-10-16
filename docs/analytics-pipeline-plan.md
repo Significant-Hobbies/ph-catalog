@@ -185,8 +185,10 @@ Those old bundles remain protocol rehearsals, not final evaluation evidence.
 The disjoint frozen-hash bundle
 reserves 680 development, 200 random-holdout, and 340 source-stratified-
 holdout records. After 3,770 exclusions, zero source-derived `home_lifestyle`
-records remain for development or stratified holdout. All 1,220 new
-annotations are unreviewed. The `check` gate requires a frozen taxonomy,
+records remain for development or stratified holdout. Independent product-text
+review and a 64-record development QA have completed the 680 development
+labels: 605 single, 14 co-primary, 61 null. The 540 main holdouts remain
+unreviewed. The `check` gate requires a frozen taxonomy,
 completed development labels, at least 30 true
 single-label development examples per class, at least 20 true single-label
 stratified-holdout examples per class, and a 200-record random holdout before
@@ -197,11 +199,15 @@ adjudication are needed for `home_lifestyle`; mapping coverage must never be
 substituted for that evidence. If the taxonomy changes, version it and reserve
 new holdouts under the new hash.
 
-The supplemental text-only home discovery protocol and its ignored local
-160-development/80-heldout candidate reservation are recorded in
-`docs/primary-taxonomy-v1.md`. Keyword matches and source strata remain
-sampling aids only; neither is an independent product label. Keep its heldout
-records sealed until development labels and model choices are fixed.
+The supplemental text-only home discovery protocol has 160 independently
+reviewed development records, including 80 true single home labels, and an
+untouched 80-record heldout. Main plus home development support is still short
+for social (21) and data (27), so a second text-only discovery protocol reserves
+160 development/80 sealed heldout social/data candidates disjoint from every
+earlier sample. Both protocols and their biased-sample limits are documented
+in `docs/primary-taxonomy-v1.md`. Source tags and keyword matches are sampling
+aids only; neither is an independent product label. Do not open any heldout
+until model and thresholds are fixed.
 
 ## Stage 3 — Concrete local NER labels
 
