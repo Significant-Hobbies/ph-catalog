@@ -71,11 +71,16 @@ def select_bundle(
     random_count: int,
     heldout_per_stratum: int,
     development_per_stratum: int,
+    additional_exclusion_keys: tuple[Path, ...] = (),
 ) -> tuple[dict[str, list[dict[str, Any]]], list[dict[str, Any]], dict[str, Any]]:
     """Select disjoint samples; all ranks are by slug, independent of row order."""
     if not seed or random_count < 1 or heldout_per_stratum < 1 or development_per_stratum < 1:
         raise ValueError("seed and sample sizes must be positive")
-    excluded = _excluded_slugs(previous_tuning_key)
+    tuning_excluded = _excluded_slugs(previous_tuning_key)
+    additional_excluded = set().union(
+        *(_excluded_slugs(path) for path in additional_exclusion_keys)
+    )
+    excluded = tuning_excluded | additional_excluded
     strata = [f"class:{category}" for category in taxonomy.category_names]
     strata += ["conflicting_source_categories", "no_unambiguous_source_category"]
     source_support: Counter[str] = Counter()
@@ -162,14 +167,19 @@ def select_bundle(
     }
     manifest = {
         "protocol": "primary-label-protocol-v1",
-        "purpose": "pre-registered label collection; taxonomy tuning sample excluded",
+        "purpose": "pre-registered label collection; prior review samples excluded",
         "taxonomy_version": taxonomy.version,
         "taxonomy_sha256": taxonomy.sha256,
         "products_csv_sha256": sha256_file(products_csv),
         "previous_tuning_key_sha256": sha256_file(previous_tuning_key),
+        "additional_exclusion_key_sha256": [
+            sha256_file(path) for path in additional_exclusion_keys
+        ],
         "seed": seed,
         "total_products": total,
-        "excluded_tuning_slugs": len(excluded),
+        "excluded_tuning_slugs": len(tuning_excluded),
+        "excluded_additional_slugs": len(additional_excluded),
+        "excluded_distinct_slugs": len(excluded),
         "requested": {
             "holdout_random": random_count,
             "holdout_stratified_per_stratum": heldout_per_stratum,
@@ -527,6 +537,13 @@ def main() -> None:
     sample.add_argument("--taxonomy", type=Path, required=True)
     sample.add_argument("--products", type=Path, required=True)
     sample.add_argument("--previous-tuning-key", type=Path, required=True)
+    sample.add_argument(
+        "--exclude-key",
+        type=Path,
+        action="append",
+        default=[],
+        help="exclude every slug in another preserved review source key",
+    )
     sample.add_argument("--output-dir", type=Path, required=True)
     sample.add_argument("--seed", default="primary-label-v1-2026-10-16")
     sample.add_argument("--random-count", type=int, default=200)
@@ -562,6 +579,7 @@ def main() -> None:
             random_count=args.random_count,
             heldout_per_stratum=args.heldout_per_stratum,
             development_per_stratum=args.development_per_stratum,
+            additional_exclusion_keys=tuple(args.exclude_key),
         )
         write_bundle(args.output_dir, blind, key, manifest)
         print(json.dumps(manifest, indent=2))

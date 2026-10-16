@@ -1,6 +1,7 @@
 """Tests for conservative primary source mapping."""
 
 import csv
+import hashlib
 import json
 from pathlib import Path
 
@@ -9,7 +10,18 @@ import pytest
 from ph_catalog.primary_taxonomy import load_taxonomy, primary_from_sources
 from ph_catalog.primary_taxonomy_audit import audit
 
-TAXONOMY = Path(__file__).resolve().parents[1] / "taxonomy" / "v1-candidate.json"
+ROOT = Path(__file__).resolve().parents[1]
+TAXONOMY = ROOT / "taxonomy" / "v1.json"
+
+
+def test_frozen_taxonomy_matches_archive_audit() -> None:
+    taxonomy = load_taxonomy(TAXONOMY)
+    report = json.loads((ROOT / "docs" / "primary-taxonomy-v1-audit.json").read_text())
+    assert taxonomy.version == "v1"
+    assert taxonomy.sha256 == "3f160113db54be27e59eb9b366b656154525f1f0aa6cd6abb9da29d180ca8270"
+    assert taxonomy.sha256 == hashlib.sha256(TAXONOMY.read_bytes()).hexdigest()
+    assert report["taxonomy_sha256"] == taxonomy.sha256
+    assert report["taxonomy_version"] == taxonomy.version
 
 
 def test_source_evidence_must_agree() -> None:
@@ -127,6 +139,24 @@ def test_source_evidence_must_agree() -> None:
         "Customer Success",
         "customer-success",
         "customer-communication",
+        "events",
+        "messaging",
+        "Messaging",
+        "Video Streaming",
+        "analytics",
+        "Analytics",
+        "A/B testing tools",
+        "File storage and sharing apps",
+        "change-management",
+        "Branding",
+        "branding",
+        "Design",
+        "design",
+        "intimacy",
+        "community",
+        "Calendar",
+        "calendar",
+        "text-editors",
     ],
 )
 def test_ambiguous_source_is_unmapped(source: str) -> None:

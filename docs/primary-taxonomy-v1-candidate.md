@@ -1,5 +1,8 @@
 # Primary taxonomy v1 candidate
 
+Frozen successor: `docs/primary-taxonomy-v1.md`. This document preserves the
+candidate review history and its final pre-freeze audit.
+
 This is a review candidate, not a frozen training taxonomy or a promoted
 product-level classification. The canonical source mapping is
 `taxonomy/v1-candidate.json`. Its 16 top-level market categories have explicit
