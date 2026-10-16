@@ -195,7 +195,8 @@ single-label development examples per class, at least 20 true single-label
 stratified-holdout examples per class, and a 200-record random holdout before
 evaluation. These are conservative local readiness floors, not measured model
 quality. The later combined development gate passed and a classifier was
-frozen, but the original targeted heldout support gate remains closed. Mapping
+frozen. The original targeted heldout support gate was short; the separate
+125-record support supplement subsequently opened the combined gate. Mapping
 coverage must never be substituted for independently reviewed labels. If the
 taxonomy changes, version it and reserve new holdouts under the new hash.
 
@@ -301,10 +302,14 @@ precision. The supplemental manifest SHA-256 is
 `tools/primary_augmented_heldout.py predict-support` replayed the same frozen
 candidate on all 125 still-sealed texts, producing ignored predictions SHA-256
 `456ba7200a937116ac17edce043ab1220b51d28771e5e4500008575a24b63642`.
-Independent labeling must follow this pinned output. Its augmented evaluator
-replays both prediction sets and holds every metric until all 16 classes have
-at least 20 true single labels across 625 targeted records; if open, it
-reports the original random 200 separately from each biased stratum.
+Independent labeling followed this pinned output. The augmented evaluator
+replayed both prediction sets; all 16 classes reached at least 20 true single
+labels across 625 targeted records, so its label gate opened. The ignored
+`data/primary-model-v1/augmented-heldout-evaluation-v1.json` has SHA-256
+`10ea7764acaca6a6a686e7b4bdf1cb546b02f62069d6fd7a955e9e01a981ff58`.
+Its original random 200 had 45 correct among 61 accepted categories (73.77%
+precision, 30.5% coverage); the biased strata remain separate. This result
+does not qualify the classifier for broad publication.
 
 ## Stage 3 — Concrete local NER labels
 
@@ -382,13 +387,15 @@ evaluation examples cannot influence routing rules. Spam and taxonomy-level
 label/category conflict checks remain open rather than inferred from weak NER
 signals. A three-product synthetic run with the pinned model accepted clear
 developer copy, routed placeholder copy, and abstained on technology-only
-copy. Stage 4 promotion waits for the independent Stage 2 audit.
+copy. Stage 4 promotion is blocked by the independently scored Stage 2 and
+Stage 7 random audits, rather than by missing labels.
 
 ## Stage 5 — Selective website evidence
 
 Status: a provisional routed-only evidence fetcher is implemented
-in `tools/primary_website_evidence.py`; no live product-site run or category
-promotion has occurred. It consumes a hash-checked Stage 4 JSONL/manifest,
+in `tools/primary_website_evidence.py`; a 139-route live audit run is complete,
+but no category has been promoted. It consumes a hash-checked Stage 4
+JSONL/manifest,
 rejects altered routes and all four reserved review/holdout bundles, and
 refuses to overwrite prior output. The actual TCP backend pins a freshly
 resolved global address, with HTTPX redirects disabled and every redirect URL
@@ -404,8 +411,11 @@ same-origin about/features/product page when the first page yields no fields;
 that secondary page's redirects cannot leave the primary page's origin.
 Its ignored JSONL keeps each field's page role, source URL, fetch time,
 response hash, and outcome. It never updates Product Hunt source fields.
-Live product-site validation and a combined evidence classification view
-remain open before Stage 5 acceptance.
+The selected Stage 7 run produced one outcome for every 139 website route
+using 285 requests: 82 fetched, 19 unsafe URL, three no metadata, 13 HTTP
+status, and 22 robots disallowed. Its ignored output SHA-256 is
+`1ea8f8054260ae0996e7efac341ee48089eaaf58433dba1db25baf8000c6c5ef`.
+A combined-evidence category decision and publication validation remain open.
 
 A bounded 2026-10-16 live pilot used five hand-picked weak-copy products from
 the verified `catalog-handoff-v1` analytics mart. A five-row mini-mart kept
@@ -470,7 +480,12 @@ and no errors (output SHA-256
 `d40f6e7bbf97fd47b00ee7fcece3604c204a08d347c4e41c237d9ef4d3f9662d`).
 This is a protocol smoke test on five hand-picked products, with no
 independent gold labels, calibrated confidence, or quality estimate.
-Promotion and wider Stage 6 evaluation remain open.
+The subsequent frozen v3 27B run covered all 165 selected unresolved Stage 7
+records: 110 cited category candidates, 22 nulls, and 33 fail-closed citation
+errors, pinned in the Stage 7 ledger SHA-256
+`d2ed7b26c778f8efb561eac7e5f2d3fdbe7d6c995f3b2fc27f2e420027a1f17a`.
+Its independent random-path audit did not meet the publication gate; broader
+promotion remains closed.
 
 Run only on products still unresolved after website enrichment. Batch multiple
 products per prompt and require schema-constrained output. Do not store verbose
@@ -488,8 +503,10 @@ The model must be allowed to return null/unknown.
 
 ## Stage 7 — Validation and promotion
 
-Status: a new, sealed independent audit reservation exists locally; no audit
-labels or precision result exist. `tools/primary_final_audit_sample.py` first
+Status: the independent audit is complete; the frozen candidate fails the
+pre-registered publication gates. The scored results and evidence hashes are
+in [`primary-stage7-audit-v1.md`](primary-stage7-audit-v1.md).
+`tools/primary_final_audit_sample.py` first
 excluded all eight earlier tuning/development/holdout source-key bundles and
 the five Stage 5/6 pilot slugs: 5,600 distinct reserved slugs, of which 31
 are absent from the archived analytics mart. It then ranked the full mart
@@ -500,7 +517,8 @@ run through the frozen Stage 4 model and yielded 120 model-stratified audit
 records selected by category (or explicit abstention), confidence band, and
 Stage 4 path. These 120 are a biased diagnostic, not part of the random
 denominator. The 320 text-only blind records and private source/stratum key
-are ignored; all 320 annotation templates remain `unreviewed`. The
+are ignored; the original 320 annotation templates remain `unreviewed`, while
+completed independent annotations are preserved separately. The
 recomputation check `tools/primary_final_audit_check.py` verifies the population,
 exclusions, deterministic selection, source text, route hashes, and seal.
 Blind SHA-256: `f4eb461c92dd4dede831646a72986d7387830ca01c5da03d29735ff6df5843e4`.
@@ -527,19 +545,19 @@ as the representative coverage/precision denominator and show separate
 source-text-only, website-evidence, and LLM candidate slices. If Stage 6 is
 used after website evidence, report it in the LLM slice with a website-evidence
 subgroup; never count it twice as a website-only decision. No Stage 5 HTML or
-Stage 6 output for these 320 has been used to choose the sample, and their
-labels must stay sealed until all relevant outputs, model/prompt versions, and
-decision rules are fixed. The 1,825 frozen development/heldout rows and
-five-product pilot are excluded from this final audit. Completing website and
-LLM candidate paths, independent annotation/QA, and Stage 7 confusion and
-precision analysis remain open; do not tune frozen decisions on these labels.
+Stage 6 output for these 320 was used to choose the sample. Labels stayed
+sealed until outputs, model/prompt versions, and decision rules were fixed.
+The 1,825 frozen development/heldout rows and five-product pilot were excluded.
+Independent annotation, QA, and scoring are complete; do not tune frozen
+decisions on these labels.
 
-This reservation is not a promotion audit result. The 120 diagnostic records
+This reservation alone was not a promotion audit result. The 120 diagnostic records
 were selected using predicted category and have at most three records per
 category/confidence/path cell; they cannot estimate true-category recall or
-population precision. Before opening any of the 320 labels, produce immutable
-Stage 4/5/6 outputs or explicit null/error outcomes for every reserved record,
-pin their hashes and decision rules, and pre-register acceptance thresholds.
+population precision. Before opening any of the 320 labels, the protocol
+required immutable Stage 4/5/6 outputs or explicit null/error outcomes for
+every reserved record, pinned hashes and decision rules, and pre-registered
+acceptance thresholds.
 Fetches must select the reserved website-route subset rather than the first
 website routes in the 5,200-product screening file. The random 200 alone form
 the representative precision and coverage frame; report its accepted count
@@ -572,7 +590,8 @@ own code/model/prompt/output hashes; the evaluator refuses a changed source
 file, blind bundle, prediction ledger, taxonomy, or incomplete independent
 annotations. The evaluator also hard-pins the external audit manifest and
 ledger output SHA-256 values, so changing a ledger and its companion manifest
-together still fails before gold is read. No scoring run has occurred yet.
+together still fails before gold is read. The first score ran after blind
+annotation, second-pass QA, and blind adjudication were complete.
 
 Independent annotators receive only `blind-review.json` and frozen category
 definitions, never the source/stratum key, Stage 4–6 predictions, website
