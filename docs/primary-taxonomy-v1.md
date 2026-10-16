@@ -108,8 +108,8 @@ unreviewed. Query matches are candidate discovery, not population prevalence
 or model accuracy; the heldout records must stay sealed during model work and
 cannot replace the original random holdout. Main plus supplemental development
 has 87 true single home labels, but an explicit combined training protocol is
-still required before using them. Incidental social/data labels in this biased
-sample leave those two classes below the development floor.
+still required before using them. At the home-only checkpoint, incidental
+social/data labels left those two classes below the development floor.
 
 To reproduce it against the ignored verified `data/products.csv` archive,
 use a new empty output directory with the same seed and exclusions:
@@ -142,11 +142,40 @@ sample slugs, including the main and home bundles. Post-exclusion candidate
 pools are 1,609, 697, 283, and 312 respectively. It reserves 40 development
 and 20 supplemental heldout records per group: 160 development and 80 heldout,
 all disjoint. The manifest pins taxonomy SHA, source archive SHA, seed, queries,
-exclusion-key SHAs, counts, and blind/key file hashes. All 240 annotations are
-currently unreviewed. Query groups are biased candidate retrieval, not true
-category strata or population evidence; independent product-text annotation
-must establish support before any classifier trains. Both main and supplemental
-heldouts stay sealed until model and thresholds are fixed.
+exclusion-key SHAs, counts, and blind/key file hashes. Independent blind review
+of all 160 development candidates yielded 144 single, 10 co-primary, and 6
+null decisions, including 57 true single `social_community` and 47
+`data_analytics` labels. Its 80 heldout candidates remain unreviewed. Query
+groups are biased candidate retrieval, not true category strata or population
+evidence. The three development bundles together now have at least 30 true
+single labels in every class, pending an explicit combined gate and training
+protocol. All 700 main and supplemental heldouts stay sealed until model and
+thresholds are fixed.
+
+True single-label development support across the three disjoint bundles:
+
+| Category | Main | Home discovery | Social/data discovery | Combined |
+| --- | ---: | ---: | ---: | ---: |
+| business_operations | 38 | 8 | 4 | 50 |
+| developer_tools | 60 | 1 | 6 | 67 |
+| design_creative | 42 | 8 | 1 | 51 |
+| education_learning | 40 | 7 | 2 | 49 |
+| finance | 37 | 8 | 11 | 56 |
+| health_wellness | 30 | 2 | 3 | 35 |
+| marketing_sales | 49 | 2 | 4 | 55 |
+| media_entertainment | 57 | 2 | 2 | 61 |
+| personal_productivity | 60 | 1 | 3 | 64 |
+| security_privacy | 32 | 1 | 2 | 35 |
+| shopping_commerce | 34 | 8 | 1 | 43 |
+| social_community | 18 | 3 | 57 | 78 |
+| travel_local | 36 | 3 | 0 | 39 |
+| work_careers | 40 | 0 | 1 | 41 |
+| data_analytics | 25 | 2 | 47 | 74 |
+| home_lifestyle | 7 | 80 | 0 | 87 |
+
+These are developmental label counts, not precision, recall, or archive
+prevalence estimates. The main-only gate remains closed until a separately
+validated combined training gate is implemented.
 
 Reproduce with a new empty output directory and the same verified archive:
 

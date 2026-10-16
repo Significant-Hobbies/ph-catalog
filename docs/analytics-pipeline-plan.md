@@ -204,8 +204,13 @@ reviewed development records, including 80 true single home labels, and an
 untouched 80-record heldout. Main plus home development support is still short
 for social (21) and data (27), so a second text-only discovery protocol reserves
 160 development/80 sealed heldout social/data candidates disjoint from every
-earlier sample. Both protocols and their biased-sample limits are documented
-in `docs/primary-taxonomy-v1.md`. Source tags and keyword matches are sampling
+earlier sample. Its 160 development records have independent product-text
+labels: 144 single, 10 co-primary, 6 null. Combined true single-label support
+across all three development bundles now reaches at least 30 in all 16
+categories (35 minimum), but training still requires an explicit combined
+gate and slug-split protocol. All 700 heldouts remain unreviewed. Both
+protocols and their biased-sample limits are documented in
+`docs/primary-taxonomy-v1.md`. Source tags and keyword matches are sampling
 aids only; neither is an independent product label. Do not open any heldout
 until model and thresholds are fixed.
 
