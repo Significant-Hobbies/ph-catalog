@@ -71,17 +71,45 @@ def select_home_discovery(
     development_per_group: int = 40,
     heldout_per_group: int = 20,
 ) -> tuple[dict[str, list[dict[str, str]]], list[dict[str, str]], dict[str, Any]]:
+    return select_text_discovery(
+        products_csv,
+        taxonomy_path,
+        exclusion_keys,
+        patterns=PATTERNS,
+        protocol="home-text-discovery-v1",
+        purpose="supplemental product-text discovery; groups are not true labels",
+        seed=seed,
+        development_per_group=development_per_group,
+        heldout_per_group=heldout_per_group,
+    )
+
+
+def select_text_discovery(
+    products_csv: Path,
+    taxonomy_path: Path,
+    exclusion_keys: tuple[Path, ...],
+    *,
+    patterns: dict[str, str],
+    protocol: str,
+    purpose: str,
+    seed: str,
+    development_per_group: int = 40,
+    heldout_per_group: int = 20,
+) -> tuple[dict[str, list[dict[str, str]]], list[dict[str, str]], dict[str, Any]]:
+    """Reserve disjoint, title-matched candidates without reading source tags."""
     if not seed or development_per_group < 1 or heldout_per_group < 1:
         raise ValueError("seed and sample sizes must be positive")
+    if not patterns or not protocol or not purpose:
+        raise ValueError("patterns, protocol, and purpose are required")
     if not exclusion_keys:
         raise ValueError("previous sample keys are required for disjoint selection")
     taxonomy = load_taxonomy(taxonomy_path)
     if taxonomy.version != "v1":
-        raise ValueError("home discovery requires frozen v1 taxonomy")
+        raise ValueError("text discovery requires frozen v1 taxonomy")
     exclusions = [_excluded_slugs(path) for path in exclusion_keys]
     excluded = set().union(*exclusions)
-    compiled = {group: re.compile(pattern, re.IGNORECASE) for group, pattern in PATTERNS.items()}
-    pools: dict[str, list[tuple[str, str, str, str]]] = {group: [] for group in PATTERNS}
+    compiled = {group: re.compile(pattern, re.IGNORECASE) for group, pattern in patterns.items()}
+    pools: dict[str, list[tuple[str, str, str, str]]] = {group: [] for group in patterns}
     total = 0
     for row in text_rows(products_csv):
         total += 1
@@ -142,8 +170,8 @@ def select_home_discovery(
             key.append({"review_id": review_id, "slug": slug, "split": split, "group": group})
 
     manifest = {
-        "protocol": "home-text-discovery-v1",
-        "purpose": "supplemental product-text discovery; groups are not true labels",
+        "protocol": protocol,
+        "purpose": purpose,
         "taxonomy_version": taxonomy.version,
         "taxonomy_sha256": taxonomy.sha256,
         "products_csv_sha256": sha256_file(products_csv),
@@ -151,7 +179,7 @@ def select_home_discovery(
         "excluded_distinct_slugs": len(excluded),
         "seed": seed,
         "total_products": total,
-        "title_patterns": PATTERNS,
+        "title_patterns": patterns,
         "candidate_pool_size_by_group": {group: len(rows) for group, rows in pools.items()},
         "requested_per_group": {
             "development": development_per_group,
