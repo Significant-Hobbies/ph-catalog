@@ -1,5 +1,6 @@
 """Strong clean candidates stay local; only concrete uncertainty is routed."""
 
+import hashlib
 import json
 import sys
 from contextlib import nullcontext
@@ -40,6 +41,23 @@ def _row(slug, tagline, description, *, website="https://example.com", entities=
     }
 
 
+def _reservation_bundles(tmp_path, monkeypatch):
+    bundles = []
+    pins = {}
+    for name, slug in (("main", "c"), ("home", "home"), ("sparse", "sparse")):
+        bundle = tmp_path / "reservations" / name
+        bundle.mkdir(parents=True)
+        key = json.dumps([{"slug": slug}]).encode()
+        (bundle / "source-key.json").write_bytes(key)
+        (bundle / "manifest.json").write_text(
+            json.dumps({"file_sha256": {"source-key.json": hashlib.sha256(key).hexdigest()}})
+        )
+        pins[name] = routing.sha256_file(bundle / "manifest.json")
+        bundles.append((name, bundle))
+    monkeypatch.setattr(routing, "FROZEN_SAMPLE_MANIFESTS", pins)
+    return tuple(bundles)
+
+
 def test_strong_clean_candidate_accepts_without_ner_labels():
     row = _row("clean", "Alpha workflow for creating plans", "Alpha workflow for managing work")
     result = routing.route_candidate(
@@ -50,6 +68,7 @@ def test_strong_clean_candidate_accepts_without_ner_labels():
         fields_disagree=False,
     )
     assert result["primary_category"] == "alpha"
+    assert result["candidate_category"] == "alpha"
     assert result["route"] is False
     assert result["reasons"] == []
     assert result["next_step"] == "candidate_accept"
@@ -81,6 +100,8 @@ def test_weak_or_poor_copy_routes_with_reasons_and_abstention():
         fields_disagree=False,
     )
     assert result["route"] is True
+    assert result["primary_category"] is None
+    assert result["candidate_category"] == "alpha"
     assert "placeholder_copy" in result["reasons"]
     assert result["next_step"] == "website_evidence_candidate"
 
@@ -101,6 +122,7 @@ def test_batch_field_disagreement_is_conservative():
 
 
 def test_mart_router_streams_candidates_and_respects_exclusions(tmp_path, monkeypatch):
+    bundles = _reservation_bundles(tmp_path, monkeypatch)
     taxonomy = Taxonomy(
         version="v1",
         source_snapshot="test",
@@ -170,7 +192,7 @@ def test_mart_router_streams_candidates_and_respects_exclusions(tmp_path, monkey
         tmp_path / "candidate",
         output,
         batch_size=2,
-        excluded_slugs={"c"},
+        reservation_bundles=bundles,
     )
     rows = [json.loads(line) for line in output.read_text().splitlines()]
     assert report["seen"] == 3
@@ -179,37 +201,33 @@ def test_mart_router_streams_candidates_and_respects_exclusions(tmp_path, monkey
     assert report["candidate_accept"] == 1
     assert report["routed"] == 1
     assert [row["slug"] for row in rows] == ["a", "b"]
+    assert rows[0]["primary_category"] == "alpha"
+    assert rows[1]["primary_category"] is None
     assert "source_categories" not in output.read_text()
     assert json.loads((tmp_path / "routed.jsonl.manifest.json").read_text()) == report
+    with pytest.raises(ValueError, match="all three"):
+        routing.route_mart(
+            mart,
+            tmp_path / "taxonomy.json",
+            tmp_path / "candidate",
+            tmp_path / "unsafe.jsonl",
+            reservation_bundles=bundles[:1],
+        )
     with pytest.raises(FileExistsError):
         routing.route_mart(
             mart,
             tmp_path / "taxonomy.json",
             tmp_path / "candidate",
             output,
-            excluded_slugs={"c"},
+            reservation_bundles=bundles,
         )
 
 
 def test_reservation_exclusions_require_pinned_keys(tmp_path, monkeypatch):
-    import hashlib
-
-    bundles = []
-    pins = {}
-    for name in ("main", "home", "sparse"):
-        bundle = tmp_path / name
-        bundle.mkdir()
-        key = json.dumps([{"slug": name}]).encode()
-        (bundle / "source-key.json").write_bytes(key)
-        (bundle / "manifest.json").write_text(
-            json.dumps({"file_sha256": {"source-key.json": hashlib.sha256(key).hexdigest()}})
-        )
-        pins[name] = routing.sha256_file(bundle / "manifest.json")
-        bundles.append((name, bundle))
-    monkeypatch.setattr(routing, "FROZEN_SAMPLE_MANIFESTS", pins)
-    assert routing.reserved_slugs(tuple(bundles)) == {"main", "home", "sparse"}
+    bundles = _reservation_bundles(tmp_path, monkeypatch)
+    assert routing.reserved_slugs(bundles) == {"c", "home", "sparse"}
     with pytest.raises(ValueError, match="all three"):
-        routing.reserved_slugs(tuple(bundles[:2]))
+        routing.reserved_slugs(bundles[:2])
     (bundles[0][1] / "source-key.json").write_text("[]")
     with pytest.raises(ValueError, match="source key changed"):
-        routing.reserved_slugs(tuple(bundles))
+        routing.reserved_slugs(bundles)

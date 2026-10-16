@@ -128,7 +128,8 @@ def route_candidate(
     routed = bool(reasons)
     return {
         "slug": row["slug"],
-        "primary_category": category,
+        "primary_category": category if not routed else None,
+        "candidate_category": category,
         "runner_up": runner_up,
         "confidence": confidence,
         "margin": margin,
@@ -158,15 +159,14 @@ def route_mart(
     *,
     batch_size: int = 1_000,
     limit: int | None = None,
-    excluded_slugs: set[str],
+    reservation_bundles: tuple[tuple[str, Path], ...],
 ) -> dict[str, Any]:
     """Stream mart products through the pinned candidate and write atomic JSONL."""
     from threadpoolctl import threadpool_limits
 
     if batch_size < 1 or batch_size > 5_000 or limit is not None and limit < 1:
         raise ValueError("invalid routing batch size or limit")
-    if not excluded_slugs:
-        raise ValueError("routing rehearsal requires reserved-slug exclusions")
+    excluded_slugs = reserved_slugs(reservation_bundles)
     manifest_output = output.with_suffix(output.suffix + ".manifest.json")
     if (
         output.exists()
@@ -284,9 +284,7 @@ def main() -> None:
                 args.output,
                 batch_size=args.batch_size,
                 limit=args.limit,
-                excluded_slugs=reserved_slugs(
-                    tuple((name, Path(path)) for name, path in args.exclude_bundle)
-                ),
+                reservation_bundles=tuple((name, Path(path)) for name, path in args.exclude_bundle),
             ),
             indent=2,
         )

@@ -354,8 +354,10 @@ mentions never imply a market category. A routed record with an external URL
 is a website-evidence candidate; Stage 5 must validate that URL before
 fetching. One without an external URL remains unresolved for non-web review.
 The router emits candidate decisions and reasons to ignored JSONL; it does
-not publish a primary category. Its rehearsal command requires all
-three pinned development/holdout bundles as slug exclusions, so independent
+not publish a primary category. Routed rows keep the model suggestion only as
+`candidate_category`; `primary_category` is null until accepted. Both the
+library entrypoint and rehearsal command require all three pinned
+development/holdout bundles as slug exclusions, so independent
 evaluation examples cannot influence routing rules. Spam and taxonomy-level
 label/category conflict checks remain open rather than inferred from weak NER
 signals. A three-product synthetic run with the pinned model accepted clear
