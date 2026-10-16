@@ -97,8 +97,8 @@ def select_text_discovery(
     heldout_per_group: int = 20,
 ) -> tuple[dict[str, list[dict[str, str]]], list[dict[str, str]], dict[str, Any]]:
     """Reserve disjoint, title-matched candidates without reading source tags."""
-    if not seed or development_per_group < 1 or heldout_per_group < 1:
-        raise ValueError("seed and sample sizes must be positive")
+    if not seed or development_per_group < 0 or heldout_per_group < 1:
+        raise ValueError("seed and holdout size must be positive; development size may be zero")
     if not patterns or not protocol or not purpose:
         raise ValueError("patterns, protocol, and purpose are required")
     if not exclusion_keys:
@@ -133,6 +133,8 @@ def select_text_discovery(
         ("holdout_stratified", heldout_per_group),
         ("development", development_per_group),
     ):
+        if limit == 0:
+            continue
         for group, rows in pools.items():
             ranked = sorted(rows, key=lambda row: rank(f"{seed}:{split}:{group}", row[0]))
             for row in ranked:

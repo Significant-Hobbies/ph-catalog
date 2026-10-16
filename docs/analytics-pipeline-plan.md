@@ -189,31 +189,31 @@ holdout records. After 3,770 exclusions, zero source-derived `home_lifestyle`
 records remain for development or stratified holdout. Independent product-text
 review and a 64-record development QA have completed the 680 development
 labels: 605 single, 14 co-primary, 61 null. The 540 main holdouts remain
-unreviewed. The `check` gate requires a frozen taxonomy,
+independently reviewed. The `check` gate requires a frozen taxonomy,
 completed development labels, at least 30 true
 single-label development examples per class, at least 20 true single-label
 stratified-holdout examples per class, and a 200-record random holdout before
 evaluation. These are conservative local readiness floors, not measured model
-quality. The training and evaluation gates remain closed despite the frozen
-ontology. Additional product-text discovery, resampling, and independent
-adjudication are needed for `home_lifestyle`; mapping coverage must never be
-substituted for that evidence. If the taxonomy changes, version it and reserve
-new holdouts under the new hash.
+quality. The later combined development gate passed and a classifier was
+frozen, but the original targeted heldout support gate remains closed. Mapping
+coverage must never be substituted for independently reviewed labels. If the
+taxonomy changes, version it and reserve new holdouts under the new hash.
 
 The supplemental text-only home discovery protocol has 160 independently
 reviewed development records, including 80 true single home labels, and an
-untouched 80-record heldout. Main plus home development support is still short
+independently reviewed 80-record heldout. Main plus home development support was short
 for social (21) and data (27), so a second text-only discovery protocol reserves
-160 development/80 sealed heldout social/data candidates disjoint from every
+160 development/80 independently reviewed heldout social/data candidates disjoint from every
 earlier sample. Its 160 development records have independent product-text
 labels: 144 single, 10 co-primary, 6 null. Combined true single-label support
 across all three development bundles now reaches at least 30 in all 16
-categories (35 minimum), but training still requires an explicit combined
-gate and slug-split protocol. All 700 heldouts remain unreviewed. Both
+categories (35 minimum), and a combined gate and slug-split protocol were
+completed before training. All 700 heldouts were independently reviewed after
+the model and predictions were frozen. Both
 protocols and their biased-sample limits are documented in
 `docs/primary-taxonomy-v1.md`. Source tags and keyword matches are sampling
-aids only; neither is an independent product label. Do not open any heldout
-until model and thresholds are fixed.
+aids only; neither is an independent product label. New holdouts must remain
+sealed until their predictions are fixed.
 
 ### Combined development gate and local candidate
 
@@ -250,14 +250,15 @@ Feature configuration, fold seed, development export hash, and OOF report are
 in the ignored candidate manifest. A repeat run reproduced identical OOF and
 final development probabilities, though serialized joblib bytes differed; use
 the pinned artifact for subsequent inference. No heldout product text or
-labels informed this choice. Before Stage 2 can pass, generate predictions
-from that frozen artifact and independently label/evaluate the 700 reserved
-heldouts. The original random 200 must estimate coverage in that eligible
-archived CSV population separately from biased supplemental class-discovery
-samples. The 340
-source-stratified main holdouts may have insufficient true per-class support,
-especially home; add a new disjoint class-targeted heldout without retuning if
-the registered support gate fails. Stages 4–7 remain dependent work.
+labels informed this choice. Predictions from that frozen artifact were fixed
+before independent review of the 700 reserved heldouts (642 single, 14
+co-primary, 44 null). The
+500 targeted records had true single support below 20 in five classes:
+business operations 18, health/wellness 18, security/privacy 19, travel/local
+18, and work/careers 18. No model metrics were computed while this label gate
+was closed. The original random 200 must estimate coverage in its eligible
+archived CSV population separately from biased supplemental samples. Stages
+4–7 remain dependent work.
 
 `tools/primary_heldout.py predict` is the frozen candidate's inference path.
 It pins the taxonomy, development export, candidate manifest, model, and
@@ -272,7 +273,8 @@ The current ignored prediction file is
 `data/primary-model-v1/heldout-predictions-v1.json`, SHA-256
 `e97a8c855d09bcf53a607ca4965e63c177a326132f40668b9143c55e2403eef3`;
 two clean runs produced identical bytes. This fixes 700 predictions, not their
-correctness. Human heldout labels remain unreviewed.
+correctness. Independent first, second, and adjudication passes produced the
+final 700-label ignored artifact before any model metrics were computed.
 
 `tools/primary_heldout.py evaluate` requires completed independent labels and
 replays the pinned model on the same texts. It rejects predictions that differ
@@ -285,6 +287,24 @@ Only the original random set supports coverage estimates for the eligible
 archived CSV population after 3,770 prior-review exclusions; targeted and
 supplemental precision/recall are sample-specific diagnostics.
 All outputs and annotations stay under ignored `data/`, never in Git.
+
+To address the five support shortfalls without changing the classifier,
+`tools/primary_support_discovery.py` reserves 25 title-text candidates per
+class, zero development examples, and no random examples. Its fixed seed and
+seven prior source-key exclusions remove 5,470 distinct previously sampled
+slugs. The 125 blind records omit query groups and source tags; the ignored
+key and manifest retain reproducible selection evidence. The release archive
+SHA-256 matches the three frozen bundles. This is a deliberately biased
+supplement, so its class outcomes and performance cannot estimate population
+precision. The supplemental manifest SHA-256 is
+`d76f2a9233590585b6a699ff0945e801644bee1b08f001f1d26866a2c5b17cc2`.
+`tools/primary_augmented_heldout.py predict-support` replayed the same frozen
+candidate on all 125 still-sealed texts, producing ignored predictions SHA-256
+`456ba7200a937116ac17edce043ab1220b51d28771e5e4500008575a24b63642`.
+Independent labeling must follow this pinned output. Its augmented evaluator
+replays both prediction sets and holds every metric until all 16 classes have
+at least 20 true single labels across 625 targeted records; if open, it
+reports the original random 200 separately from each biased stratum.
 
 ## Stage 3 — Concrete local NER labels
 

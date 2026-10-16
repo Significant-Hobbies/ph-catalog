@@ -55,3 +55,14 @@ def test_text_discovery_is_blind_deterministic_and_disjoint(
     assert "source_categories" not in (output / "source-key.json").read_text()
     with pytest.raises(FileExistsError):
         write_bundle(output, blind, key, manifest)
+
+    heldout_only, heldout_key, heldout_manifest = discovery.select_home_discovery(
+        *args, seed="holdout-only", development_per_group=0, heldout_per_group=1
+    )
+    assert heldout_only["development"] == []
+    assert heldout_manifest["selected"] == {
+        "development": 0,
+        "holdout_random": 0,
+        "holdout_stratified": 4,
+    }
+    assert len(heldout_key) == 4
