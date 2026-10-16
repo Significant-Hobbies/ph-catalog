@@ -11,19 +11,25 @@ format, platform, and generic AI tags remain unmapped.
 The 2026-10-15 `catalog-state` source archive (SHA-256
 `39cc62acf1c8927363fb47abad5032362b08fe99e9b6bc549ad4d770f7955ded`)
 contains 575,622 products and 544 distinct source-category values. The current
-candidate maps 411 values. Product-level coverage has not been recalculated
-after the mapping review; the checked-in audit still describes the earlier
-421-value candidate and must not be used as a current coverage or precision
-estimate. Products without source categories remain unlabeled.
+candidate maps 373 values. The matching checked-in audit finds 94,036 products
+with source categories: 54,633 have one source-derived candidate, 27,611 have
+conflicting mapped categories, and 11,792 have no mapped category. These are
+coverage counts, not classifier accuracy or precision. Products without source
+categories remain unlabeled.
 
 In particular, `AI Chatbots`, `LLMs`, `AI Agents`, `Chrome Extensions`,
 `Search`, and `Physical Products` are unmapped: their names do not establish
 a unique product market. Review also removed `Productivity` and its lowercase
 alias, `No-code Platforms` and its `No-Code`/`no-code` aliases,
 `Newsletter platforms`, `Video hosting platforms`, `AI notetakers`,
-`Microblogging platforms`, and `Figma Plugins`. These can span multiple markets
-or describe a technology, content format, or plug-in surface rather than a
-unique market.
+`Microblogging platforms`, and `Figma Plugins`. A second independent semantic
+pass removed 38 more broad or platform-only labels, including `AI Generative
+Media`, `Books`, `sports`, `email`, `Newsletters`, and their relevant aliases.
+Archive examples span several markets for these terms: `Books` includes a book
+discovery catalogue and a marketing guide, while `AI Generative Media` includes
+creative tools, a team workspace, and interview-answer software. These labels
+cannot establish one primary market by themselves. The excluded values can
+still accompany a more specific mapped category as original source evidence.
 `uncategorized` may be used by a presentation but is never stored as a primary
 category. A product with two mapped categories in different markets has a null
 primary training label; it is not arbitrarily assigned by source order.
@@ -37,9 +43,8 @@ uv run python tools/audit_primary_taxonomy.py \
   --output data/taxonomy-v1-candidate-report.json
 ```
 
-The checked-in `primary-taxonomy-v1-candidate-audit.json` is a stale validation
-report from the prior map, retained as review evidence. Regenerate it from the
-source archive before using its counts. Generated product datasets stay in
-ignored `data/`. Independent review of the mapping and its low-support classes
-is required before renaming this `v1` and training the primary-category
-classifier.
+The checked-in `primary-taxonomy-v1-candidate-audit.json` was regenerated from
+the source archive above after the mapping review; its taxonomy SHA-256 matches
+the candidate file. Generated product datasets stay in ignored `data/`. A
+separate low-support class and product-level precision audit is still required
+before freezing `v1` and training the primary-category classifier.

@@ -31,11 +31,7 @@
         "customer-communication",
         "meetings",
         "Meetings",
-        "remote-work",
-        "Remote Work",
-        "Operations",
         "change-management",
-        "All-in-one Workspace",
         "Payroll software",
         "Startup incorporation",
         "crm",
@@ -132,11 +128,9 @@
         "typography",
         "icons",
         "design-templates",
-        "AI Generative Media",
         "AI Video Editor",
         "AI Generative Art",
-        "Music Generation",
-        "Podcasting Tools"
+        "Music Generation"
       ]
     },
     {
@@ -148,7 +142,6 @@
         "Online learning",
         "Language Learning",
         "Apps for kids",
-        "Books",
         "education",
         "Education",
         "online-learning",
@@ -208,9 +201,6 @@
         "Crypto",
         "bitcoin",
         "ethereum",
-        "blockchain",
-        "web3",
-        "Web3",
         "venture-capital",
         "fundraising",
         "Fundraising resources",
@@ -243,7 +233,6 @@
         "nutrition",
         "quantified-self",
         "FemTech",
-        "family",
         "kids-parenting",
         "intimacy"
       ]
@@ -306,13 +295,9 @@
         "Streaming Services",
         "streaming-services",
         "Video Streaming",
-        "video",
-        "Video",
         "Music",
         "music",
         "movies",
-        "Newsletters",
-        "newsletters",
         "news",
         "tech-news",
         "audio",
@@ -332,13 +317,7 @@
         "Funny Games",
         "Funny",
         "funny",
-        "sports",
-        "Sports",
-        "basketball",
-        "football",
         "tabletop-games",
-        "youtube",
-        "spotify",
         "tv",
         "eBook Reader",
         "ebook-reader"
@@ -372,11 +351,7 @@
         "Task Management",
         "time-tracking",
         "spreadsheets",
-        "storage",
-        "Storage",
         "text-editors",
-        "email",
-        "Email",
         "Email clients"
       ]
     },
@@ -439,16 +414,11 @@
         "Social audio apps",
         "Video and Voice calling",
         "Twitter apps",
-        "social-media",
-        "Social Media",
         "social-networking",
         "Social Network",
         "social-network",
         "messaging",
         "Messaging",
-        "telegram",
-        "Telegram",
-        "instagram",
         "community",
         "Dating",
         "dating",
@@ -495,8 +465,7 @@
         "hiring",
         "career",
         "Freelance",
-        "freelance",
-        "human-resources"
+        "freelance"
       ]
     },
     {
@@ -509,7 +478,6 @@
         "Data analysis tools",
         "Data visualization tools",
         "Website analytics",
-        "User research",
         "Analytics Databases",
         "analytics",
         "Analytics",
@@ -527,18 +495,12 @@
       "source_categories": [
         "Real estate",
         "Furniture",
-        "Space design apps",
-        "Toys",
         "home",
         "Home",
         "home-improvement",
         "interior-design",
-        "food-drink",
         "cooking",
-        "lifestyle",
-        "moving-storage",
-        "farming",
-        "Cats"
+        "moving-storage"
       ]
     }
   ]

@@ -41,6 +41,12 @@ def test_source_evidence_must_agree() -> None:
         "AI notetakers",
         "Microblogging platforms",
         "Figma Plugins",
+        "AI Generative Media",
+        "Books",
+        "sports",
+        "Email",
+        "Telegram",
+        "Space design apps",
     ],
 )
 def test_ambiguous_source_is_unmapped(source: str) -> None:

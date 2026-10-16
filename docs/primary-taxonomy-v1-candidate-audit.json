@@ -1,14 +1,16 @@
 {
-  "audit_status": "stale_after_mapping_review",
-  "audit_note": "Counts and taxonomy_sha256 describe the prior 421-value candidate, not the current 411-value mapping. Regenerate from the source archive before use.",
   "taxonomy_version": "v1-candidate",
-  "taxonomy_sha256": "03ab419a2c3862e4cb017a58e4de89ad48a92d15f14d1ffe33dd358ac4fd82a1",
+  "taxonomy_sha256": "d826b410a7143c1579f51ddfe27b7dceec9e6488fd8ade1197ea4382c8a0c5bd",
   "source_snapshot": "catalog-state:2026-10-15T23:53:43.847299+00:00",
   "source_category_values": 544,
-  "mapped_source_values": 421,
+  "mapped_source_values": 373,
   "categorized_products": 94036,
   "total_products": 575622,
   "unmapped_source_values": [
+    {
+      "source": "Productivity",
+      "assignments": 6204
+    },
     {
       "source": "AI Chatbots",
       "assignments": 4997
@@ -18,12 +20,20 @@
       "assignments": 4157
     },
     {
+      "source": "AI Generative Media",
+      "assignments": 3826
+    },
+    {
       "source": "LLMs",
       "assignments": 2596
     },
     {
       "source": "Activity tracking",
       "assignments": 1897
+    },
+    {
+      "source": "No-code Platforms",
+      "assignments": 1853
     },
     {
       "source": "AI Workflow Automation",
@@ -62,6 +72,10 @@
       "assignments": 900
     },
     {
+      "source": "AI notetakers",
+      "assignments": 899
+    },
+    {
       "source": "Web browsers",
       "assignments": 858
     },
@@ -74,12 +88,20 @@
       "assignments": 688
     },
     {
+      "source": "User research",
+      "assignments": 589
+    },
+    {
       "source": "AI Characters",
       "assignments": 559
     },
     {
       "source": "AI Content Detection",
       "assignments": 553
+    },
+    {
+      "source": "Newsletter platforms",
+      "assignments": 518
     },
     {
       "source": "App switcher",
@@ -90,12 +112,24 @@
       "assignments": 483
     },
     {
+      "source": "Podcasting Tools",
+      "assignments": 430
+    },
+    {
+      "source": "Books",
+      "assignments": 410
+    },
+    {
       "source": "Text-to-Speech Software",
       "assignments": 376
     },
     {
       "source": "Slack apps",
       "assignments": 360
+    },
+    {
+      "source": "Video hosting platforms",
+      "assignments": 349
     },
     {
       "source": "AI Engineer",
@@ -114,8 +148,16 @@
       "assignments": 322
     },
     {
+      "source": "Microblogging platforms",
+      "assignments": 309
+    },
+    {
       "source": "Wallpapers",
       "assignments": 306
+    },
+    {
+      "source": "Figma Plugins",
+      "assignments": 289
     },
     {
       "source": "Realtime Voice AI",
@@ -128,6 +170,10 @@
     {
       "source": "No-Code Website Builder",
       "assignments": 241
+    },
+    {
+      "source": "Web3",
+      "assignments": 238
     },
     {
       "source": "LLM Memory",
@@ -150,8 +196,16 @@
       "assignments": 180
     },
     {
+      "source": "Space design apps",
+      "assignments": 168
+    },
+    {
       "source": "Headless CMS software",
       "assignments": 159
+    },
+    {
+      "source": "Toys",
+      "assignments": 150
     },
     {
       "source": "DAOs",
@@ -164,6 +218,10 @@
     {
       "source": "Foundation Models",
       "assignments": 110
+    },
+    {
+      "source": "productivity",
+      "assignments": 109
     },
     {
       "source": "Translation",
@@ -202,8 +260,16 @@
       "assignments": 30
     },
     {
+      "source": "social-media",
+      "assignments": 25
+    },
+    {
       "source": "Artificial Intelligence",
       "assignments": 24
+    },
+    {
+      "source": "All-in-one Workspace",
+      "assignments": 22
     },
     {
       "source": "Open Source",
@@ -246,6 +312,14 @@
       "assignments": 10
     },
     {
+      "source": "video",
+      "assignments": 10
+    },
+    {
+      "source": "Social Media",
+      "assignments": 9
+    },
+    {
       "source": "ios",
       "assignments": 9
     },
@@ -254,11 +328,27 @@
       "assignments": 7
     },
     {
+      "source": "youtube",
+      "assignments": 7
+    },
+    {
+      "source": "email",
+      "assignments": 6
+    },
+    {
       "source": "maker-tools",
       "assignments": 6
     },
     {
+      "source": "Email",
+      "assignments": 5
+    },
+    {
       "source": "GitHub",
+      "assignments": 5
+    },
+    {
+      "source": "Newsletters",
       "assignments": 5
     },
     {
@@ -267,6 +357,18 @@
     },
     {
       "source": "development",
+      "assignments": 5
+    },
+    {
+      "source": "lifestyle",
+      "assignments": 5
+    },
+    {
+      "source": "no-code",
+      "assignments": 5
+    },
+    {
+      "source": "telegram",
       "assignments": 5
     },
     {
@@ -286,6 +388,14 @@
       "assignments": 4
     },
     {
+      "source": "sports",
+      "assignments": 4
+    },
+    {
+      "source": "Storage",
+      "assignments": 3
+    },
+    {
       "source": "business",
       "assignments": 3
     },
@@ -295,6 +405,10 @@
     },
     {
       "source": "menu-bar-apps",
+      "assignments": 3
+    },
+    {
+      "source": "newsletters",
       "assignments": 3
     },
     {
@@ -322,6 +436,14 @@
       "assignments": 2
     },
     {
+      "source": "No-Code",
+      "assignments": 2
+    },
+    {
+      "source": "Remote Work",
+      "assignments": 2
+    },
+    {
       "source": "climate-tech",
       "assignments": 2
     },
@@ -342,11 +464,19 @@
       "assignments": 2
     },
     {
+      "source": "spotify",
+      "assignments": 2
+    },
+    {
       "source": "wallpaper",
       "assignments": 2
     },
     {
       "source": "wearables",
+      "assignments": 2
+    },
+    {
+      "source": "web3",
       "assignments": 2
     },
     {
@@ -374,6 +504,10 @@
       "assignments": 1
     },
     {
+      "source": "Cats",
+      "assignments": 1
+    },
+    {
       "source": "Celebrities",
       "assignments": 1
     },
@@ -390,7 +524,19 @@
       "assignments": 1
     },
     {
+      "source": "Operations",
+      "assignments": 1
+    },
+    {
       "source": "Social Impact",
+      "assignments": 1
+    },
+    {
+      "source": "Sports",
+      "assignments": 1
+    },
+    {
+      "source": "Telegram",
       "assignments": 1
     },
     {
@@ -399,6 +545,10 @@
     },
     {
       "source": "Vibe coding",
+      "assignments": 1
+    },
+    {
+      "source": "Video",
       "assignments": 1
     },
     {
@@ -422,6 +572,14 @@
       "assignments": 1
     },
     {
+      "source": "basketball",
+      "assignments": 1
+    },
+    {
+      "source": "blockchain",
+      "assignments": 1
+    },
+    {
       "source": "charity-giving",
       "assignments": 1
     },
@@ -442,11 +600,35 @@
       "assignments": 1
     },
     {
+      "source": "family",
+      "assignments": 1
+    },
+    {
+      "source": "farming",
+      "assignments": 1
+    },
+    {
+      "source": "food-drink",
+      "assignments": 1
+    },
+    {
+      "source": "football",
+      "assignments": 1
+    },
+    {
       "source": "health-news",
       "assignments": 1
     },
     {
+      "source": "human-resources",
+      "assignments": 1
+    },
+    {
       "source": "iPhone",
+      "assignments": 1
+    },
+    {
+      "source": "instagram",
       "assignments": 1
     },
     {
@@ -459,6 +641,10 @@
     },
     {
       "source": "on-demand",
+      "assignments": 1
+    },
+    {
+      "source": "remote-work",
       "assignments": 1
     },
     {
@@ -475,6 +661,10 @@
     },
     {
       "source": "space",
+      "assignments": 1
+    },
+    {
+      "source": "storage",
       "assignments": 1
     },
     {
@@ -503,26 +693,26 @@
     }
   ],
   "product_outcomes": {
-    "conflicting_source_categories": 32980,
-    "no_unambiguous_source_category": 488748,
-    "unique_source_mapping": 53894
+    "conflicting_source_categories": 27611,
+    "no_unambiguous_source_category": 493378,
+    "unique_source_mapping": 54633
   },
   "uniquely_labeled_products_by_category": {
-    "business_operations": 4454,
-    "data_analytics": 1486,
-    "design_creative": 7805,
-    "developer_tools": 6823,
-    "education_learning": 1696,
-    "finance": 4981,
-    "health_wellness": 3216,
-    "home_lifestyle": 351,
-    "marketing_sales": 5122,
-    "media_entertainment": 1248,
-    "personal_productivity": 7173,
-    "security_privacy": 1151,
-    "shopping_commerce": 1958,
-    "social_community": 3447,
-    "travel_local": 1588,
-    "work_careers": 1395
+    "business_operations": 5253,
+    "data_analytics": 1573,
+    "design_creative": 7149,
+    "developer_tools": 7146,
+    "education_learning": 1760,
+    "finance": 5243,
+    "health_wellness": 3611,
+    "home_lifestyle": 284,
+    "marketing_sales": 5807,
+    "media_entertainment": 1184,
+    "personal_productivity": 5103,
+    "security_privacy": 1211,
+    "shopping_commerce": 2102,
+    "social_community": 4079,
+    "travel_local": 1654,
+    "work_careers": 1474
   }
 }
