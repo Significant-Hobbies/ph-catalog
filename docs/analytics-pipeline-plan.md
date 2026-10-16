@@ -393,11 +393,15 @@ rejects altered routes and all four reserved review/holdout bundles, and
 refuses to overwrite prior output. The actual TCP backend pins a freshly
 resolved global address, with HTTPX redirects disabled and every redirect URL
 rechecked. Robots parsing uses patched Protego >=0.6.2 for RFC 9309 rule
-matching; the fetcher handles robots status, five redirects, 24-hour cache,
+matching; the fetcher handles robots status, the RFC's five-redirect minimum
+for robots even when the page-redirect cap is lower, 24-hour cache,
 Retry-After, persistent denial, 2 RPS, request/page/byte/redirect/time caps,
-and HTML Content-Type before streaming body. It extracts ordered structured,
+and HTML Content-Type before streaming body. It requests identity encoding and
+rejects unexpected compressed responses before reading them, so the byte cap
+applies to the decoded body without unbounded decompression. It extracts ordered structured,
 social, standard, and short section fields, and fetches at most one obvious
-same-origin about/features/product page when the first page yields no fields.
+same-origin about/features/product page when the first page yields no fields;
+that secondary page's redirects cannot leave the primary page's origin.
 Its ignored JSONL keeps each field's page role, source URL, fetch time,
 response hash, and outcome. It never updates Product Hunt source fields.
 Live product-site validation and a combined evidence classification view

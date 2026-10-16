@@ -180,6 +180,42 @@ def test_media_header_prevents_body_read_and_redirect_rechecks_url(monkeypatch):
     assert unsafe["outcome"] == "unsafe_url"
 
 
+def test_compressed_body_is_rejected_before_decompression(monkeypatch):
+    async def allow_test_url(_url):
+        return None
+
+    monkeypatch.setattr(evidence, "_validate_public_url", allow_test_url)
+
+    class ForbiddenBody(httpx.AsyncByteStream):
+        async def __aiter__(self):
+            raise AssertionError("encoded bytes were read")
+            yield b""
+
+    def handler(request):
+        assert request.headers["accept-encoding"] == "identity"
+        if request.url.path == "/robots.txt":
+            return httpx.Response(404)
+        return httpx.Response(
+            200,
+            headers={"Content-Type": "text/html", "Content-Encoding": "gzip"},
+            stream=ForbiddenBody(),
+        )
+
+    async def scenario():
+        async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+            fetcher = evidence.WebsiteEvidenceFetcher(client, evidence.FetchConfig())
+
+            async def no_wait():
+                return None
+
+            fetcher.rate.wait = no_wait
+            return await fetcher.fetch("encoded", "https://example.com/", "route", "text")
+
+    result = asyncio.run(scenario())
+    assert result["outcome"] == "encoded_body_rejected"
+    assert result["fields"] == []
+
+
 def test_redirect_retry_after_defers_follow_up(monkeypatch):
     async def allow_test_url(_url):
         return None
@@ -264,6 +300,48 @@ def test_one_justified_same_origin_secondary_page_with_field_provenance(monkeypa
         and field["outcome"] == "fetched"
         for field in result["fields"]
     )
+    assert seen == [
+        "https://example.com/robots.txt",
+        "https://example.com/",
+        "https://example.com/features",
+    ]
+
+
+def test_secondary_redirect_cannot_escape_primary_origin(monkeypatch):
+    async def allow_test_url(_url):
+        return None
+
+    monkeypatch.setattr(evidence, "_validate_public_url", allow_test_url)
+    seen = []
+
+    def handler(request):
+        seen.append(str(request.url))
+        if request.url.path == "/robots.txt":
+            return httpx.Response(404)
+        if request.url.path == "/":
+            return httpx.Response(
+                200,
+                headers={"content-type": "text/html"},
+                text="<a href='/features'>Features</a>",
+            )
+        if request.url.path == "/features":
+            return httpx.Response(302, headers={"Location": "https://third.example/about"})
+        raise AssertionError("third-party secondary redirect was followed")
+
+    async def scenario():
+        async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+            fetcher = evidence.WebsiteEvidenceFetcher(client, evidence.FetchConfig())
+
+            async def no_wait():
+                return None
+
+            fetcher.rate.wait = no_wait
+            return await fetcher.fetch("reader", "https://example.com/", "route", "text")
+
+    result = asyncio.run(scenario())
+    assert result["outcome"] == "no_metadata"
+    assert result["secondary_page"]["outcome"] == "secondary_cross_origin_redirect"
+    assert result["fields"] == []
     assert seen == [
         "https://example.com/robots.txt",
         "https://example.com/",

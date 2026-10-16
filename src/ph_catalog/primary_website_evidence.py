@@ -42,6 +42,7 @@ from ph_catalog.website_enrichment import extract_website_metadata
 USER_AGENT_TOKEN = "PHCatalogEvidence"
 USER_AGENT = f"{USER_AGENT_TOKEN}/1.0 (+https://github.com/Significant-Hobbies/ph-catalog)"
 ROBOT_CACHE_SECONDS = 24 * 60 * 60
+ROBOTS_MIN_REDIRECTS = 5  # RFC 9309 requires crawlers to follow at least five.
 
 
 def _public_ip(records: list[tuple]) -> str:
@@ -225,7 +226,9 @@ class WebsiteEvidenceFetcher:
         await self.rate.wait()
         self.requests += 1
         try:
-            async with self.client.stream("GET", url) as response:
+            async with self.client.stream(
+                "GET", url, headers={"Accept-Encoding": "identity"}
+            ) as response:
                 status = response.status_code
                 headers = {key.lower(): value for key, value in response.headers.items()}
                 final_url = str(response.url)
@@ -236,6 +239,8 @@ class WebsiteEvidenceFetcher:
                     self.cooldowns[origin(url)] = time.monotonic() + delay
                 if response.is_redirect or status >= 400:
                     return FetchResponse(final_url, status, headers, b"", "http_status")
+                if headers.get("content-encoding", "identity").lower() != "identity":
+                    return FetchResponse(final_url, status, headers, b"", "encoded_body_rejected")
                 if not robots and not any(
                     kind in headers.get("content-type", "").lower()
                     for kind in ("text/html", "application/xhtml+xml")
@@ -264,7 +269,9 @@ class WebsiteEvidenceFetcher:
         current = authority + "/robots.txt"
         parser: Protego | None = None
         outcome = "robots_unavailable"
-        for _ in range(max(5, self.config.max_redirects) + 1):
+        # This robots-specific floor overrides the smaller page-redirect cap;
+        # every redirect still consumes the shared request budget and URL check.
+        for _ in range(max(ROBOTS_MIN_REDIRECTS, self.config.max_redirects) + 1):
             try:
                 response = await self._request(current, robots=True)
             except UnsafeWebsiteUrl:
@@ -306,12 +313,16 @@ class WebsiteEvidenceFetcher:
         text_hash: str,
         *,
         allow_secondary: bool = True,
+        required_origin: str | None = None,
     ) -> dict:
         current = url
         outcome = "redirect_limit"
         response: FetchResponse | None = None
         robots_outcome = None
         for _ in range(self.config.max_redirects + 1):
+            if required_origin is not None and origin(current) != required_origin:
+                outcome = "secondary_cross_origin_redirect"
+                break
             try:
                 allowed, robots_outcome = await self._allowed(current)
                 if not allowed:
@@ -330,6 +341,9 @@ class WebsiteEvidenceFetcher:
                     outcome = "retry_after_deferred"
                     break
                 current = urljoin(response.url, response.headers["location"])
+                if required_origin is not None and origin(current) != required_origin:
+                    outcome = "secondary_cross_origin_redirect"
+                    break
                 continue
             outcome = response.outcome if response.outcome != "ok" else "fetched"
             break
@@ -372,6 +386,7 @@ class WebsiteEvidenceFetcher:
                     route_hash,
                     text_hash,
                     allow_secondary=False,
+                    required_origin=origin(response.url),
                 )
                 fields.extend(second["fields"])
                 secondary = {
