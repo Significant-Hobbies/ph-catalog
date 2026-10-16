@@ -197,6 +197,12 @@ adjudication are needed for `home_lifestyle`; mapping coverage must never be
 substituted for that evidence. If the taxonomy changes, version it and reserve
 new holdouts under the new hash.
 
+The supplemental text-only home discovery protocol and its ignored local
+160-development/80-heldout candidate reservation are recorded in
+`docs/primary-taxonomy-v1.md`. Keyword matches and source strata remain
+sampling aids only; neither is an independent product label. Keep its heldout
+records sealed until development labels and model choices are fixed.
+
 ## Stage 3 — Concrete local NER labels
 
 Status: implemented and benchmarked.
