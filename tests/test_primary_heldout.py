@@ -2,6 +2,9 @@
 
 import hashlib
 import json
+import sys
+from contextlib import nullcontext
+from types import SimpleNamespace
 
 import pytest
 
@@ -21,6 +24,17 @@ class FakeModel:
 
     def predict_proba(self, texts):
         return [[0.9, 0.1] if "Alpha" in text else [0.1, 0.9] for text in texts]
+
+
+@pytest.fixture
+def fake_optional_runtime(monkeypatch):
+    # Default CI intentionally does not install the optional classifier extra.
+    monkeypatch.setitem(sys.modules, "joblib", SimpleNamespace(load=lambda _path: FakeModel()))
+    monkeypatch.setitem(
+        sys.modules,
+        "threadpoolctl",
+        SimpleNamespace(threadpool_limits=lambda **_kwargs: nullcontext()),
+    )
 
 
 @pytest.fixture
@@ -190,9 +204,7 @@ def test_reservations_verify_seal_hashes_disjointness_and_counts(tmp_path, taxon
         )
 
 
-def test_frozen_predictions_replay_and_combined_gate(tmp_path, taxonomy, monkeypatch):
-    import joblib
-
+def test_frozen_predictions_replay_and_combined_gate(tmp_path, taxonomy, fake_optional_runtime):
     bundles, expected, manifest_hashes = _bundles(tmp_path, taxonomy, sealed=False)
     rows, manifests = load_reservations(
         taxonomy,
@@ -204,7 +216,6 @@ def test_frozen_predictions_replay_and_combined_gate(tmp_path, taxonomy, monkeyp
     candidate, model_sha, thresholds_sha, development_sha, manifest_sha = _candidate(
         tmp_path, taxonomy
     )
-    monkeypatch.setattr(joblib, "load", lambda _path: FakeModel())
     options = {
         "expected_model_sha": model_sha,
         "expected_thresholds_sha": thresholds_sha,
@@ -249,9 +260,9 @@ def test_frozen_predictions_replay_and_combined_gate(tmp_path, taxonomy, monkeyp
         load_candidate(taxonomy, candidate, **options)
 
 
-def test_missing_true_targeted_class_suppresses_all_metrics(tmp_path, taxonomy, monkeypatch):
-    import joblib
-
+def test_missing_true_targeted_class_suppresses_all_metrics(
+    tmp_path, taxonomy, fake_optional_runtime
+):
     bundles, expected, manifest_hashes = _bundles(tmp_path, taxonomy, sealed=False)
     rows, manifests = load_reservations(
         taxonomy,
@@ -263,7 +274,6 @@ def test_missing_true_targeted_class_suppresses_all_metrics(tmp_path, taxonomy, 
     candidate, model_sha, thresholds_sha, development_sha, manifest_sha = _candidate(
         tmp_path, taxonomy
     )
-    monkeypatch.setattr(joblib, "load", lambda _path: FakeModel())
     predictions = make_predictions(
         taxonomy,
         candidate,
