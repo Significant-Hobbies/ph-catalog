@@ -1,0 +1,718 @@
+{
+  "taxonomy_version": "v1-candidate",
+  "taxonomy_sha256": "d826b410a7143c1579f51ddfe27b7dceec9e6488fd8ade1197ea4382c8a0c5bd",
+  "source_snapshot": "catalog-state:2026-10-15T23:53:43.847299+00:00",
+  "source_category_values": 544,
+  "mapped_source_values": 373,
+  "categorized_products": 94036,
+  "total_products": 575622,
+  "unmapped_source_values": [
+    {
+      "source": "Productivity",
+      "assignments": 6204
+    },
+    {
+      "source": "AI Chatbots",
+      "assignments": 4997
+    },
+    {
+      "source": "Automation tools",
+      "assignments": 4157
+    },
+    {
+      "source": "AI Generative Media",
+      "assignments": 3826
+    },
+    {
+      "source": "LLMs",
+      "assignments": 2596
+    },
+    {
+      "source": "Activity tracking",
+      "assignments": 1897
+    },
+    {
+      "source": "No-code Platforms",
+      "assignments": 1853
+    },
+    {
+      "source": "AI Workflow Automation",
+      "assignments": 1837
+    },
+    {
+      "source": "Chrome Extensions",
+      "assignments": 1755
+    },
+    {
+      "source": "Search",
+      "assignments": 1754
+    },
+    {
+      "source": "Website builders",
+      "assignments": 1705
+    },
+    {
+      "source": "Prompt Engineering Tools",
+      "assignments": 1566
+    },
+    {
+      "source": "AI Agents",
+      "assignments": 1053
+    },
+    {
+      "source": "Physical Products",
+      "assignments": 1045
+    },
+    {
+      "source": "Predictive AI",
+      "assignments": 947
+    },
+    {
+      "source": "Content Management Systems",
+      "assignments": 900
+    },
+    {
+      "source": "AI notetakers",
+      "assignments": 899
+    },
+    {
+      "source": "Web browsers",
+      "assignments": 858
+    },
+    {
+      "source": "AI Voice Agents",
+      "assignments": 697
+    },
+    {
+      "source": "Platforms",
+      "assignments": 688
+    },
+    {
+      "source": "User research",
+      "assignments": 589
+    },
+    {
+      "source": "AI Characters",
+      "assignments": 559
+    },
+    {
+      "source": "AI Content Detection",
+      "assignments": 553
+    },
+    {
+      "source": "Newsletter platforms",
+      "assignments": 518
+    },
+    {
+      "source": "App switcher",
+      "assignments": 484
+    },
+    {
+      "source": "Notion Templates",
+      "assignments": 483
+    },
+    {
+      "source": "Podcasting Tools",
+      "assignments": 430
+    },
+    {
+      "source": "Books",
+      "assignments": 410
+    },
+    {
+      "source": "Text-to-Speech Software",
+      "assignments": 376
+    },
+    {
+      "source": "Slack apps",
+      "assignments": 360
+    },
+    {
+      "source": "Video hosting platforms",
+      "assignments": 349
+    },
+    {
+      "source": "AI Engineer",
+      "assignments": 330
+    },
+    {
+      "source": "Product add-ons",
+      "assignments": 328
+    },
+    {
+      "source": "Wordpress Plugins",
+      "assignments": 324
+    },
+    {
+      "source": "Wearables",
+      "assignments": 322
+    },
+    {
+      "source": "Microblogging platforms",
+      "assignments": 309
+    },
+    {
+      "source": "Wallpapers",
+      "assignments": 306
+    },
+    {
+      "source": "Figma Plugins",
+      "assignments": 289
+    },
+    {
+      "source": "Realtime Voice AI",
+      "assignments": 253
+    },
+    {
+      "source": "OpenClaw",
+      "assignments": 244
+    },
+    {
+      "source": "No-Code Website Builder",
+      "assignments": 241
+    },
+    {
+      "source": "Web3",
+      "assignments": 238
+    },
+    {
+      "source": "LLM Memory",
+      "assignments": 213
+    },
+    {
+      "source": "AI Data Scientist",
+      "assignments": 191
+    },
+    {
+      "source": "Weather apps",
+      "assignments": 187
+    },
+    {
+      "source": "AI Chief Of Staff",
+      "assignments": 185
+    },
+    {
+      "source": "Terminals",
+      "assignments": 180
+    },
+    {
+      "source": "Space design apps",
+      "assignments": 168
+    },
+    {
+      "source": "Headless CMS software",
+      "assignments": 159
+    },
+    {
+      "source": "Toys",
+      "assignments": 150
+    },
+    {
+      "source": "DAOs",
+      "assignments": 126
+    },
+    {
+      "source": "artificial-intelligence",
+      "assignments": 119
+    },
+    {
+      "source": "Foundation Models",
+      "assignments": 110
+    },
+    {
+      "source": "productivity",
+      "assignments": 109
+    },
+    {
+      "source": "Translation",
+      "assignments": 106
+    },
+    {
+      "source": "Voice AI Tools",
+      "assignments": 83
+    },
+    {
+      "source": "Wordpress themes",
+      "assignments": 78
+    },
+    {
+      "source": "Standup bots",
+      "assignments": 61
+    },
+    {
+      "source": "saas",
+      "assignments": 57
+    },
+    {
+      "source": "tech",
+      "assignments": 45
+    },
+    {
+      "source": "Webcams",
+      "assignments": 44
+    },
+    {
+      "source": "Web App",
+      "assignments": 37
+    },
+    {
+      "source": "github",
+      "assignments": 30
+    },
+    {
+      "source": "social-media",
+      "assignments": 25
+    },
+    {
+      "source": "Artificial Intelligence",
+      "assignments": 24
+    },
+    {
+      "source": "All-in-one Workspace",
+      "assignments": 22
+    },
+    {
+      "source": "Open Source",
+      "assignments": 21
+    },
+    {
+      "source": "android",
+      "assignments": 21
+    },
+    {
+      "source": "API",
+      "assignments": 17
+    },
+    {
+      "source": "iOS",
+      "assignments": 17
+    },
+    {
+      "source": "web-app",
+      "assignments": 16
+    },
+    {
+      "source": "SaaS",
+      "assignments": 15
+    },
+    {
+      "source": "open-source",
+      "assignments": 15
+    },
+    {
+      "source": "api-1",
+      "assignments": 13
+    },
+    {
+      "source": "Tech",
+      "assignments": 10
+    },
+    {
+      "source": "chrome-extensions",
+      "assignments": 10
+    },
+    {
+      "source": "video",
+      "assignments": 10
+    },
+    {
+      "source": "Social Media",
+      "assignments": 9
+    },
+    {
+      "source": "ios",
+      "assignments": 9
+    },
+    {
+      "source": "internet-of-things",
+      "assignments": 7
+    },
+    {
+      "source": "youtube",
+      "assignments": 7
+    },
+    {
+      "source": "email",
+      "assignments": 6
+    },
+    {
+      "source": "maker-tools",
+      "assignments": 6
+    },
+    {
+      "source": "Email",
+      "assignments": 5
+    },
+    {
+      "source": "GitHub",
+      "assignments": 5
+    },
+    {
+      "source": "Newsletters",
+      "assignments": 5
+    },
+    {
+      "source": "Slack",
+      "assignments": 5
+    },
+    {
+      "source": "development",
+      "assignments": 5
+    },
+    {
+      "source": "lifestyle",
+      "assignments": 5
+    },
+    {
+      "source": "no-code",
+      "assignments": 5
+    },
+    {
+      "source": "telegram",
+      "assignments": 5
+    },
+    {
+      "source": "Hardware",
+      "assignments": 4
+    },
+    {
+      "source": "apple",
+      "assignments": 4
+    },
+    {
+      "source": "bots",
+      "assignments": 4
+    },
+    {
+      "source": "money",
+      "assignments": 4
+    },
+    {
+      "source": "sports",
+      "assignments": 4
+    },
+    {
+      "source": "Storage",
+      "assignments": 3
+    },
+    {
+      "source": "business",
+      "assignments": 3
+    },
+    {
+      "source": "ipad",
+      "assignments": 3
+    },
+    {
+      "source": "menu-bar-apps",
+      "assignments": 3
+    },
+    {
+      "source": "newsletters",
+      "assignments": 3
+    },
+    {
+      "source": "notion",
+      "assignments": 3
+    },
+    {
+      "source": "product-hunt",
+      "assignments": 3
+    },
+    {
+      "source": "windows",
+      "assignments": 3
+    },
+    {
+      "source": "Browser Extensions",
+      "assignments": 2
+    },
+    {
+      "source": "Charity & Giving",
+      "assignments": 2
+    },
+    {
+      "source": "Menu Bar Apps",
+      "assignments": 2
+    },
+    {
+      "source": "No-Code",
+      "assignments": 2
+    },
+    {
+      "source": "Remote Work",
+      "assignments": 2
+    },
+    {
+      "source": "climate-tech",
+      "assignments": 2
+    },
+    {
+      "source": "construction",
+      "assignments": 2
+    },
+    {
+      "source": "database",
+      "assignments": 2
+    },
+    {
+      "source": "linux",
+      "assignments": 2
+    },
+    {
+      "source": "mac",
+      "assignments": 2
+    },
+    {
+      "source": "spotify",
+      "assignments": 2
+    },
+    {
+      "source": "wallpaper",
+      "assignments": 2
+    },
+    {
+      "source": "wearables",
+      "assignments": 2
+    },
+    {
+      "source": "web3",
+      "assignments": 2
+    },
+    {
+      "source": "3d-printer",
+      "assignments": 1
+    },
+    {
+      "source": "AI",
+      "assignments": 1
+    },
+    {
+      "source": "Android",
+      "assignments": 1
+    },
+    {
+      "source": "Apple",
+      "assignments": 1
+    },
+    {
+      "source": "Bots",
+      "assignments": 1
+    },
+    {
+      "source": "Business",
+      "assignments": 1
+    },
+    {
+      "source": "Cats",
+      "assignments": 1
+    },
+    {
+      "source": "Celebrities",
+      "assignments": 1
+    },
+    {
+      "source": "ChatGPT Prompts",
+      "assignments": 1
+    },
+    {
+      "source": "Custom Keyboards",
+      "assignments": 1
+    },
+    {
+      "source": "Notion",
+      "assignments": 1
+    },
+    {
+      "source": "Operations",
+      "assignments": 1
+    },
+    {
+      "source": "Social Impact",
+      "assignments": 1
+    },
+    {
+      "source": "Sports",
+      "assignments": 1
+    },
+    {
+      "source": "Telegram",
+      "assignments": 1
+    },
+    {
+      "source": "Vercel Day",
+      "assignments": 1
+    },
+    {
+      "source": "Vibe coding",
+      "assignments": 1
+    },
+    {
+      "source": "Video",
+      "assignments": 1
+    },
+    {
+      "source": "Weather",
+      "assignments": 1
+    },
+    {
+      "source": "Website Builder",
+      "assignments": 1
+    },
+    {
+      "source": "WordPress",
+      "assignments": 1
+    },
+    {
+      "source": "a-b-testing",
+      "assignments": 1
+    },
+    {
+      "source": "anonymous",
+      "assignments": 1
+    },
+    {
+      "source": "basketball",
+      "assignments": 1
+    },
+    {
+      "source": "blockchain",
+      "assignments": 1
+    },
+    {
+      "source": "charity-giving",
+      "assignments": 1
+    },
+    {
+      "source": "coloring",
+      "assignments": 1
+    },
+    {
+      "source": "data",
+      "assignments": 1
+    },
+    {
+      "source": "edge-extensions",
+      "assignments": 1
+    },
+    {
+      "source": "emoji",
+      "assignments": 1
+    },
+    {
+      "source": "family",
+      "assignments": 1
+    },
+    {
+      "source": "farming",
+      "assignments": 1
+    },
+    {
+      "source": "food-drink",
+      "assignments": 1
+    },
+    {
+      "source": "football",
+      "assignments": 1
+    },
+    {
+      "source": "health-news",
+      "assignments": 1
+    },
+    {
+      "source": "human-resources",
+      "assignments": 1
+    },
+    {
+      "source": "iPhone",
+      "assignments": 1
+    },
+    {
+      "source": "instagram",
+      "assignments": 1
+    },
+    {
+      "source": "kids",
+      "assignments": 1
+    },
+    {
+      "source": "nft",
+      "assignments": 1
+    },
+    {
+      "source": "on-demand",
+      "assignments": 1
+    },
+    {
+      "source": "remote-work",
+      "assignments": 1
+    },
+    {
+      "source": "robots",
+      "assignments": 1
+    },
+    {
+      "source": "search",
+      "assignments": 1
+    },
+    {
+      "source": "side-project",
+      "assignments": 1
+    },
+    {
+      "source": "space",
+      "assignments": 1
+    },
+    {
+      "source": "storage",
+      "assignments": 1
+    },
+    {
+      "source": "toys",
+      "assignments": 1
+    },
+    {
+      "source": "vercel-day",
+      "assignments": 1
+    },
+    {
+      "source": "virtual-assistants",
+      "assignments": 1
+    },
+    {
+      "source": "virtual-reality",
+      "assignments": 1
+    },
+    {
+      "source": "website-builder",
+      "assignments": 1
+    },
+    {
+      "source": "yc-application",
+      "assignments": 1
+    }
+  ],
+  "product_outcomes": {
+    "conflicting_source_categories": 27611,
+    "no_unambiguous_source_category": 493378,
+    "unique_source_mapping": 54633
+  },
+  "uniquely_labeled_products_by_category": {
+    "business_operations": 5253,
+    "data_analytics": 1573,
+    "design_creative": 7149,
+    "developer_tools": 7146,
+    "education_learning": 1760,
+    "finance": 5243,
+    "health_wellness": 3611,
+    "home_lifestyle": 284,
+    "marketing_sales": 5807,
+    "media_entertainment": 1184,
+    "personal_productivity": 5103,
+    "security_privacy": 1211,
+    "shopping_commerce": 2102,
+    "social_community": 4079,
+    "travel_local": 1654,
+    "work_careers": 1474
+  }
+}
