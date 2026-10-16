@@ -121,6 +121,72 @@ Acceptance gate:
 - Audit a fresh random sample and a stratified sample per category.
 - Do not infer a primary category merely from implementation technology.
 
+### Product-label gate before training
+
+Source tags are weak sampling strata, not gold labels. A blinded local protocol
+reserves three disjoint slug sets before annotation: 200 lowest SHA-256-ranked
+products from the full archive for a random holdout; up to 20 per provisional
+source category plus conflicting/no-map strata for a separate holdout; and up
+to 40 per stratum for development. The previous 109 taxonomy-tuning slugs are
+excluded from all three. Selection is independent of CSV row order. Blind
+files contain only name, tagline, and description; the local key keeps slugs,
+original tags, provisional source mapping, and strata separate. The random
+set includes sparse and uncategorized products so coverage claims can include
+abstention on the real archive, not only easy classified products.
+
+```bash
+uv run python tools/primary_label_protocol.py sample \
+  --taxonomy taxonomy/v1-candidate.json \
+  --products data/products.csv \
+  --previous-tuning-key data/taxonomy-review-v1/source-key.json \
+  --output-dir data/primary-label-v1-2026-10-16
+
+uv run python tools/primary_label_protocol.py check \
+  --taxonomy taxonomy/v1-candidate.json \
+  --bundle data/primary-label-v1-2026-10-16 \
+  --annotations data/primary-label-v1-2026-10-16/annotations-template.json
+```
+
+Annotators fill a separate copy of the annotations template without opening
+the source key. `single` requires exactly one taxonomy category and an exact
+product-text evidence span. `co_primary` requires at least two categories and
+an evidence span for each; it stays null for training. `null` requires one of
+`insufficient_text`, `underdetermined`, or `outside_taxonomy`. Every decision
+records a reviewer ID. `check` validates the blind-file hashes and decisions
+without opening the source key. Once development annotations are complete,
+`export-development` may join only their slugs after checking the private key
+hash; its output contains labels and text hashes, never source tags or product
+text. Holdout annotations remain sealed until the taxonomy, model, and
+thresholds are fixed. Generated data and annotations stay ignored outside Git.
+
+The `evaluate` command accepts a frozen local-classifier prediction file,
+model artifact, and threshold file. Each prediction names a heldout slug, a
+nullable category, runner-up, confidence, margin, and SHA-256 hash of the
+name/tagline/description input. The top-level prediction document names the
+taxonomy, model, and threshold hashes. Evaluation checks every heldout slug,
+all hashes, and the independent true-label support gate before writing a
+report. It reports random-sample coverage and abstention separately from
+stratified macro/per-category precision, recall, and confusion. Null and
+co-primary judgments are ground-truth abstentions; predicting a class for
+them is a false positive. No `evaluate` report exists for the present
+candidate because its gate is closed.
+
+On the 2026-10-15 archive, this candidate protocol reserved 680 development,
+200 random-holdout, and 341 source-stratified-holdout records, excluding all
+109 prior tuning slugs. Only one product remains in the source-derived
+`home_lifestyle` stratum after exclusion; it went to the stratified holdout,
+leaving zero in development. The present mapping is still `v1-candidate` and
+none of these 1,221 records has an adjudicated label. The `check` gate
+requires a frozen taxonomy, completed development labels, at least 30 true
+single-label development examples per class, at least 20 true single-label
+stratified-holdout examples per class, and a 200-record random holdout before
+evaluation. These are conservative local readiness floors, not measured model
+quality. The current gate is closed. Additional product-text discovery and
+independent adjudication are needed for `home_lifestyle`; mapping coverage
+must never be substituted for that evidence. If the taxonomy changes before
+freeze, reserve a new holdout under the frozen hash rather than reusing this
+candidate set as final promotion evidence.
+
 ## Stage 3 — Concrete local NER labels
 
 Status: implemented and benchmarked.
