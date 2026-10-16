@@ -603,8 +603,26 @@ the null format rule; its first 25 rerun yielded 21 schema-valid category
 candidates, four nulls, and zero
 format errors. This was an unlabeled schema repair informed by selected audit
 inputs, so the Stage 6 path is not a fully untouched holdout. No correctness
-labels were inspected or used to tune either prompt, and v3 prompt/model
-hashes must be pinned before independent labels open.
+labels were inspected or used to tune either prompt. The v3 prompt/model
+hashes are pinned before independent labels open.
+
+The final v3 run used seven disjoint local 27B batches over all 165 unresolved
+records. It produced 110 cited category candidates, 22 nulls, and 33
+fail-closed exact-citation errors; no labels were read. The immutable 320-row
+candidate ledger reconciles the original random 200 (153 category candidates:
+61 Stage 4 source-text and 92 LLM; 30 errors; 17 nulls) and the separate 120
+biased diagnostics (112 candidates, three errors, five nulls). These are
+candidate/coverage counts, not correctness or precision. Its output SHA-256 is
+`d2ed7b26c778f8efb561eac7e5f2d3fdbe7d6c995f3b2fc27f2e420027a1f17a`;
+manifest SHA-256 is `e8e53f7bf2daf5da7c2b46e20fc8b44d2d06f1a117e146afb9667216375925b2`.
+The manifest pins v3 prompt SHA-256
+`51396b8a262bba2cef12b3c3079cc1394833397972a932c48c362d8a3fcbfac7`,
+model digest, all seven batch outputs/manifests, route/evidence/handoff,
+ledger code, and the pre-gold evaluator code. A website route in the
+LLM-after-website subgroup means a public fetch was attempted; it includes
+denials and no-metadata outcomes, so website-only remains a non-additive
+exposure subgroup with zero categorical acceptances. The 33 citation errors
+remain uncovered, with no retry or prompt adjustment on this audit.
 
 Every taxonomy/model/prompt version produces immutable candidate outputs. It is
 promoted only after:
