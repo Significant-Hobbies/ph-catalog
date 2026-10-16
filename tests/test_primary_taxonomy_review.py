@@ -4,8 +4,8 @@ import hashlib
 
 import pytest
 
+from ph_catalog import primary_taxonomy_review as review
 from ph_catalog.primary_taxonomy import Taxonomy
-from tools import sample_primary_taxonomy_review as review
 
 
 def test_review_sampling_is_blinded_deterministic_and_excludes_conflicts(
