@@ -48,3 +48,49 @@ the source archive above after the mapping review; its taxonomy SHA-256 matches
 the candidate file. Generated product datasets stay in ignored `data/`. A
 separate low-support class and product-level precision audit is still required
 before freezing `v1` and training the primary-category classifier.
+
+## Product-text review before training
+
+The source archive is not a product-level gold standard. A deterministic
+64-product challenge found tags that clearly named the wrong market, including
+a Mac battery utility tagged `Apps for kids`. A subsequent class-stratified
+diagnostic found a scraping proxy tagged `Maps and GPS`. In the same archive,
+167 of the 373 mapped source values occur on ten or fewer products. These
+low-support mappings especially need direct product-text review.
+
+Generate a blinded diagnostic set from the verified `products.csv` (SHA-256
+`ade78b1994fc60d323e098c059e340270e81f369cc87cc06465af7a60e011dae`):
+
+```bash
+uv run python tools/sample_primary_taxonomy_review.py \
+  --taxonomy taxonomy/v1-candidate.json \
+  --products data/products.csv \
+  --output-dir data/taxonomy-review-v1
+```
+
+The default seed `taxonomy-review-v1-2026-10-16` selects five uniquely mapped
+products per class and two products from source values with at most ten
+assignments per class. The current set has 109 distinct products after overlap.
+Annotators read `blind-review.json` first and choose a primary market from the
+taxonomy boundaries or null, citing product-text evidence. `source-key.json`
+keeps the original tags, proposed source mapping, and sample strata separate
+until judgments are recorded. `manifest.json` records the seed and both source
+hashes. All three generated files remain ignored in local `data/`, outside Git.
+The generator refuses to overwrite existing review files so recorded judgments
+are not lost.
+
+An independent blind reviewer labeled 24 clear cases from this set before
+opening the source key. Twenty agreed with the proposed source mapping and
+four disagreed: `Career Switch To Coding` (career versus social), `XYLO`
+(personal productivity versus data analytics), `The Commons` (community versus
+design), and `Zoomyear` (game/media versus education). The reviewer skipped
+ambiguous products, so 20/24 is **not** a precision estimate. These cases
+show that product-level source tags can be wrong even when the tag-to-market
+mapping is semantically reasonable. They are tuning diagnostics, not held-out
+validation.
+
+This is a taxonomy-tuning set, **not** a classifier validation set. It cannot
+establish population precision. After adjudicating it and documenting any
+mapping changes, reserve a fresh random and stratified sample for Stage 2 and
+another independent sample for Stage 7 promotion. The taxonomy remains
+unfrozen until those gates are met.
