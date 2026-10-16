@@ -1,9 +1,9 @@
 {
   "taxonomy_version": "v1-candidate",
-  "taxonomy_sha256": "a6b66a33ef48ddec6ef440c4e0e1edd9fa37d35b585cc449b58ebeec9b87fd09",
+  "taxonomy_sha256": "7456639f87ea9b8f2838a4a87ad4d077f60f2d3212e5dbf40bfbf54faf96dd5a",
   "source_snapshot": "catalog-state:2026-10-15T23:53:43.847299+00:00",
   "source_category_values": 544,
-  "mapped_source_values": 340,
+  "mapped_source_values": 312,
   "categorized_products": 94036,
   "total_products": 575622,
   "unmapped_source_values": [
@@ -60,8 +60,16 @@
       "assignments": 1566
     },
     {
+      "source": "Community management",
+      "assignments": 1496
+    },
+    {
       "source": "Marketplace sites",
       "assignments": 1437
+    },
+    {
+      "source": "Messaging apps",
+      "assignments": 1322
     },
     {
       "source": "Time tracking apps",
@@ -112,6 +120,10 @@
       "assignments": 688
     },
     {
+      "source": "Maps and GPS",
+      "assignments": 613
+    },
+    {
       "source": "User research",
       "assignments": 589
     },
@@ -136,6 +148,10 @@
       "assignments": 518
     },
     {
+      "source": "Video and Voice calling",
+      "assignments": 512
+    },
+    {
       "source": "Real estate",
       "assignments": 492
     },
@@ -146,6 +162,10 @@
     {
       "source": "Notion Templates",
       "assignments": 483
+    },
+    {
+      "source": "Spreadsheets",
+      "assignments": 459
     },
     {
       "source": "Podcasting Tools",
@@ -396,6 +416,14 @@
       "assignments": 8
     },
     {
+      "source": "audio",
+      "assignments": 7
+    },
+    {
+      "source": "home",
+      "assignments": 7
+    },
+    {
       "source": "internet-of-things",
       "assignments": 7
     },
@@ -472,6 +500,10 @@
       "assignments": 4
     },
     {
+      "source": "crypto",
+      "assignments": 4
+    },
+    {
       "source": "legal",
       "assignments": 4
     },
@@ -484,11 +516,31 @@
       "assignments": 4
     },
     {
+      "source": "Funny",
+      "assignments": 3
+    },
+    {
       "source": "Storage",
       "assignments": 3
     },
     {
       "source": "business",
+      "assignments": 3
+    },
+    {
+      "source": "fashion",
+      "assignments": 3
+    },
+    {
+      "source": "freelance",
+      "assignments": 3
+    },
+    {
+      "source": "funny",
+      "assignments": 3
+    },
+    {
+      "source": "global-nomad",
       "assignments": 3
     },
     {
@@ -528,6 +580,10 @@
       "assignments": 2
     },
     {
+      "source": "Freelance",
+      "assignments": 2
+    },
+    {
       "source": "Meetings",
       "assignments": 2
     },
@@ -560,6 +616,10 @@
       "assignments": 2
     },
     {
+      "source": "couples",
+      "assignments": 2
+    },
+    {
       "source": "crm",
       "assignments": 2
     },
@@ -573,6 +633,14 @@
     },
     {
       "source": "mac",
+      "assignments": 2
+    },
+    {
+      "source": "photo-video",
+      "assignments": 2
+    },
+    {
+      "source": "quantified-self",
       "assignments": 2
     },
     {
@@ -636,7 +704,23 @@
       "assignments": 1
     },
     {
+      "source": "Crypto",
+      "assignments": 1
+    },
+    {
       "source": "Custom Keyboards",
+      "assignments": 1
+    },
+    {
+      "source": "Global Nomad",
+      "assignments": 1
+    },
+    {
+      "source": "Home",
+      "assignments": 1
+    },
+    {
+      "source": "Jewelry",
       "assignments": 1
     },
     {
@@ -696,6 +780,10 @@
       "assignments": 1
     },
     {
+      "source": "bitcoin",
+      "assignments": 1
+    },
+    {
       "source": "blockchain",
       "assignments": 1
     },
@@ -728,6 +816,10 @@
       "assignments": 1
     },
     {
+      "source": "ethereum",
+      "assignments": 1
+    },
+    {
       "source": "family",
       "assignments": 1
     },
@@ -741,6 +833,10 @@
     },
     {
       "source": "football",
+      "assignments": 1
+    },
+    {
+      "source": "gps",
       "assignments": 1
     },
     {
@@ -764,6 +860,14 @@
       "assignments": 1
     },
     {
+      "source": "kids-parenting",
+      "assignments": 1
+    },
+    {
+      "source": "maps",
+      "assignments": 1
+    },
+    {
       "source": "meetings",
       "assignments": 1
     },
@@ -773,6 +877,10 @@
     },
     {
       "source": "on-demand",
+      "assignments": 1
+    },
+    {
+      "source": "outdoors",
       "assignments": 1
     },
     {
@@ -793,6 +901,10 @@
     },
     {
       "source": "space",
+      "assignments": 1
+    },
+    {
+      "source": "spreadsheets",
       "assignments": 1
     },
     {
@@ -825,26 +937,26 @@
     }
   ],
   "product_outcomes": {
-    "conflicting_source_categories": 24037,
-    "no_unambiguous_source_category": 496705,
-    "unique_source_mapping": 54880
+    "conflicting_source_categories": 22617,
+    "no_unambiguous_source_category": 497630,
+    "unique_source_mapping": 55375
   },
   "uniquely_labeled_products_by_category": {
-    "business_operations": 5292,
-    "data_analytics": 1687,
-    "design_creative": 7394,
-    "developer_tools": 7322,
-    "education_learning": 1562,
-    "finance": 5499,
-    "health_wellness": 3839,
-    "home_lifestyle": 4,
-    "marketing_sales": 6695,
-    "media_entertainment": 1007,
-    "personal_productivity": 3872,
-    "security_privacy": 1262,
-    "shopping_commerce": 1664,
-    "social_community": 4418,
-    "travel_local": 1743,
-    "work_careers": 1620
+    "business_operations": 5703,
+    "data_analytics": 1773,
+    "design_creative": 7486,
+    "developer_tools": 7394,
+    "education_learning": 1630,
+    "finance": 5607,
+    "health_wellness": 3911,
+    "home_lifestyle": 2,
+    "marketing_sales": 6878,
+    "media_entertainment": 1057,
+    "personal_productivity": 3806,
+    "security_privacy": 1326,
+    "shopping_commerce": 1699,
+    "social_community": 3828,
+    "travel_local": 1641,
+    "work_careers": 1634
   }
 }
