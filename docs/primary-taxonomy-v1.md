@@ -77,3 +77,41 @@ annotations are unreviewed, so the training and evaluation gates are closed.
 Stage 2 needs independent product-text discovery and resampling for home and
 any other class without sufficient true-label support; weak source tags must
 not be forced into gold. Stages 4–7 remain dependent work in issue #17.
+
+## Supplemental home/lifestyle discovery
+
+The frozen source map leaves no `home_lifestyle` records in the label bundle's
+development or source-stratified holdout. `tools/primary_home_discovery.py`
+reserves a separate, ignored product-text discovery bundle using four fixed
+name/tagline query groups: living space, home improvement, food/gardening,
+and family life. It reads no original source categories, exposes only product
+text in blind files, and seals slugs and query groups in its local key. The
+selection is deterministic by seed and refuses to overwrite a prior bundle.
+
+The 2026-10-16 reservation is in ignored
+`data/primary-home-discovery-v1-2026-10-16/`. It excludes all 4,990 earlier
+review/sample slugs, then selects 40 development and 20 heldout candidates per
+query group: 160 development, 80 heldout, all disjoint from the main frozen
+bundle. The four post-exclusion candidate pools contain 350, 553, 1,472, and
+441 products respectively. Its manifest records the frozen taxonomy/source
+hashes, seed, exact queries, exclusions, selection counts, and file hashes.
+The key contains **no source tags**. Its 240 annotations are unreviewed.
+Query matches are candidate discovery, not true home labels, class support,
+or population prevalence; the heldout records must stay sealed during model
+work and cannot replace the original random holdout. An independent reviewer
+must assign product-text labels before any of these records can support Stage 2.
+
+To reproduce it against the ignored verified `data/products.csv` archive,
+use a new empty output directory with the same seed and exclusions:
+
+```bash
+uv run python tools/primary_home_discovery.py \
+  --taxonomy taxonomy/v1.json --products data/products.csv \
+  --exclude-key data/taxonomy-review-v1/source-key.json \
+  --exclude-key data/primary-label-v1-2026-10-16/source-key.json \
+  --exclude-key data/primary-label-v1-frozen-2026-10-16/source-key.json \
+  --exclude-key data/primary-label-v1-frozen-2026-10-16-r2/source-key.json \
+  --exclude-key data/primary-label-v1-frozen-2026-10-16-r3/source-key.json \
+  --output-dir data/primary-home-discovery-v1-2026-10-16 \
+  --seed primary-home-discovery-v1-2026-10-16
+```
