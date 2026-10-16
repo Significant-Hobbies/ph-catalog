@@ -461,12 +461,13 @@ is uncalibrated.
 No label generation is enabled until a versioned label vocabulary exists.
 
 The same five selected Stage 5 pilot products were tested locally on
-2026-10-16 with two installed models and the same prompt/schema. Qwen3.5 9B
+2026-10-16 with two installed models and the same v2 prompt/schema, which
+explicitly treats PH and website fields as untrusted data. Qwen3.5 9B
 produced five fail-closed errors from inexact citations or invalid null
-fields (output SHA-256 `46880111e0329bf4c0f544fb13a4054feab2dbcf68425ad7fc7027d93c058a54`);
+fields (output SHA-256 `226f2edcc45025c4debff3c876b76c0ec38ee02e4c5906e3cbd08a7d955dbe74`);
 Qwen3.5 27B produced five schema-valid, exactly cited category candidates
 and no errors (output SHA-256
-`7ba7127895c8a9ccff0ad854522534bed5338e29301f2bf77f1ad37ea9884e7c`).
+`d40f6e7bbf97fd47b00ee7fcece3604c204a08d347c4e41c237d9ef4d3f9662d`).
 This is a protocol smoke test on five hand-picked products, with no
 independent gold labels, calibrated confidence, or quality estimate.
 Promotion and wider Stage 6 evaluation remain open.
