@@ -342,6 +342,26 @@ one or more of these conditions:
 - No useful labels or a strong label/category conflict.
 - A destination type known to carry better structured metadata.
 
+The candidate router in `tools/primary_confidence_routing.py` reads the
+existing analytics mart's `product_facts` text, website URL, NER entity
+count when available, and trusted-label count. It loads the pinned v1
+classifier and thresholds, accepts a strong result with usable copy locally,
+and marks
+abstentions, explicit placeholder/duplicated/short copy, or strong
+tagline-versus-description model disagreement for later evidence. A lack of
+NER/other labels only adds context to an already abstained product; technology
+mentions never imply a market category. A routed record with an external URL
+is a website-evidence candidate; Stage 5 must validate that URL before
+fetching. One without an external URL remains unresolved for non-web review.
+The router emits candidate decisions and reasons to ignored JSONL; it does
+not publish a primary category. Its rehearsal command requires all
+three pinned development/holdout bundles as slug exclusions, so independent
+evaluation examples cannot influence routing rules. Spam and taxonomy-level
+label/category conflict checks remain open rather than inferred from weak NER
+signals. A three-product synthetic run with the pinned model accepted clear
+developer copy, routed placeholder copy, and abstained on technology-only
+copy. Stage 4 promotion waits for the independent Stage 2 audit.
+
 ## Stage 5 — Selective website evidence
 
 Fetch only public pages for routed products. Respect robots directives,
