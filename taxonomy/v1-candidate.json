@@ -103,7 +103,6 @@
         "web-design",
         "graphics-design",
         "photo-editing",
-        "photo-video",
         "photography",
         "Photography",
         "graphics",
@@ -182,10 +181,6 @@
         "accounting",
         "budgeting",
         "credit-card",
-        "crypto",
-        "Crypto",
-        "bitcoin",
-        "ethereum",
         "venture-capital",
         "fundraising",
         "Fundraising resources",
@@ -216,9 +211,7 @@
         "fitness",
         "biohacking",
         "nutrition",
-        "quantified-self",
         "FemTech",
-        "kids-parenting",
         "intimacy"
       ]
     },
@@ -278,7 +271,6 @@
         "movies",
         "news",
         "tech-news",
-        "audio",
         "entertainment",
         "games",
         "free-games",
@@ -293,8 +285,6 @@
         "rpgs",
         "Platformers",
         "Funny Games",
-        "Funny",
-        "funny",
         "tabletop-games",
         "tv",
         "eBook Reader",
@@ -313,7 +303,6 @@
         "PDF Editor",
         "Screenshots and screen recording apps",
         "Presentation Software",
-        "Spreadsheets",
         "Digital whiteboards",
         "AI Dictation Apps",
         "Transcription",
@@ -323,7 +312,6 @@
         "Calendar",
         "task-management",
         "Task Management",
-        "spreadsheets",
         "text-editors",
         "Email clients"
       ]
@@ -361,9 +349,7 @@
         "e-commerce",
         "E-Commerce",
         "food-delivery",
-        "personal-shopper",
-        "fashion",
-        "Jewelry"
+        "personal-shopper"
       ]
     },
     {
@@ -373,16 +359,13 @@
       "rationale": "The source category names people interacting with one another.",
       "source_categories": [
         "Social Networking",
-        "Community management",
         "Professional networking platforms",
-        "Messaging apps",
         "Social & Community",
         "Startup communities",
         "Photo sharing",
         "Dating apps",
         "Social bookmarking",
         "Social audio apps",
-        "Video and Voice calling",
         "social-networking",
         "Social Network",
         "social-network",
@@ -391,7 +374,6 @@
         "community",
         "Dating",
         "dating",
-        "couples",
         "Video conferencing"
       ]
     },
@@ -403,7 +385,6 @@
       "source_categories": [
         "Travel Planning",
         "Travel apps",
-        "Maps and GPS",
         "Outdoors platforms",
         "Flight booking apps",
         "Short term rentals",
@@ -412,19 +393,14 @@
         "Hiking apps",
         "Camping apps",
         "travel",
-        "maps",
-        "gps",
         "hotels",
-        "vacation",
-        "global-nomad",
-        "Global Nomad",
-        "outdoors"
+        "vacation"
       ]
     },
     {
       "id": "work_careers",
       "name": "Work and careers",
-      "boundary": "Finding work, hiring, resumes, recruiting and workforce training; excludes general project management.",
+      "boundary": "Finding work, hiring, resumes, recruiting, and career navigation; excludes general project management and skills training.",
       "rationale": "The source category names employment, recruitment, or career progression.",
       "source_categories": [
         "Hiring software",
@@ -432,9 +408,7 @@
         "Job boards",
         "Hiring",
         "hiring",
-        "career",
-        "Freelance",
-        "freelance"
+        "career"
       ]
     },
     {
@@ -462,8 +436,6 @@
       "boundary": "Products for living in, caring for, planning, or improving a home, plus food and family lifestyle; excludes property finance, real estate lead generation, property-business operations, and retail storefronts.",
       "rationale": "The source category names a home, food, or lifestyle purpose.",
       "source_categories": [
-        "home",
-        "Home",
         "home-improvement",
         "interior-design",
         "cooking",

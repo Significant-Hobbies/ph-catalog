@@ -11,9 +11,9 @@ format, platform, and generic AI tags remain unmapped.
 The 2026-10-15 `catalog-state` source archive (SHA-256
 `39cc62acf1c8927363fb47abad5032362b08fe99e9b6bc549ad4d770f7955ded`)
 contains 575,622 products and 544 distinct source-category values. The current
-candidate maps 340 values. The matching checked-in audit finds 94,036 products
-with source categories: 54,880 have one source-derived candidate, 24,037 have
-conflicting mapped categories, and 15,119 have no mapped category. These are
+candidate maps 312 values. The matching checked-in audit finds 94,036 products
+with source categories: 55,375 have one source-derived candidate, 22,617 have
+conflicting mapped categories, and 16,044 have no mapped category. These are
 coverage counts, not classifier accuracy or precision. Products without source
 categories remain unlabeled.
 
@@ -75,7 +75,7 @@ The source archive is not a product-level gold standard. A deterministic
 64-product challenge found tags that clearly named the wrong market, including
 a Mac battery utility tagged `Apps for kids`. A subsequent class-stratified
 diagnostic found a scraping proxy tagged `Maps and GPS`. In the same archive,
-148 of the 340 mapped source values occur on ten or fewer products. These
+125 of the 312 mapped source values occur on ten or fewer products. These
 low-support mappings especially need direct product-text review.
 
 For a **new** blinded diagnostic set from the verified `products.csv` (SHA-256
@@ -114,7 +114,7 @@ source values, and the clear cases are selected after seeing product text:
 retains all verdicts and a joined diagnostic report. These are tuning
 diagnostics, not held-out validation.
 
-The review and a separate scan of source-category examples found 33 values
+The first product-text review and a separate scan of source-category examples found 33 values
 whose names describe a format, audience, subject, or cross-market workflow
 rather than one primary market. The current candidate leaves them unmapped.
 The assignment counts below count source tags, not distinct products; a
@@ -156,12 +156,12 @@ product may carry several tags.
 | `Twitter apps` | 251 | Anewstip finds journalists; #AmazonCart supports shopping; the host platform does not define social workflow. |
 | `NFT creation tools` | 164 | avamaker creates avatars; 3mint mints and sells collectibles; creation does not define a finance workflow. |
 
-The 33 values account for 10,371 source-tag assignments in the archive. This
+The first 33 values account for 10,371 source-tag assignments in the archive. This
 is **not** the number of newly unlabeled products: another mapped tag may
-still classify the same product. Relative to the preceding candidate, 3,256
+still classify the same product. In that first pass, 3,256
 previously unique mappings became null, while 3,503 conflicting mappings
 became unique after removal of a competing broad tag; 71 conflicts became
-unmapped. The net unique count rose by 247. `home_lifestyle` now has only four
+unmapped. The net unique count rose by 247. `home_lifestyle` then had only four
 uniquely source-mapped products, down from 284. It is not a trainable class
 from source tags alone and needs separately adjudicated product labels or a
 taxonomy revision before Stage 2. Specific source values such as `Payment
@@ -169,12 +169,12 @@ processors` and `Professional networking platforms` remain mapped despite
 individual product-level mistags; those need label cleaning rather than a
 wrong semantic unmap. The taxonomy stays `v1-candidate` and unfrozen.
 
-Against the same 100 clear blind choices, the revised candidate agrees on 68,
+Against the same 100 clear blind choices, that first-pass candidate agrees on 68,
 disagrees on 19, and abstains on 13; nine of those abstentions remove a former
 disagreement and four remove a former agreement. This selected set is still
 not an accuracy estimate. The 3,503 conflict-to-unique transitions also need
 review before any training use: a deterministic 16-record spot check against
-this final candidate (lowest SHA-256 of `transition-review-v1:<slug>`) found
+that first-pass candidate (lowest SHA-256 of `transition-review-v1:<slug>`) found
 clear remaining wrong labels. For example, `Scriboryx` transcribes interviews
 and meetings but becomes developer tools from `LLM Developer Tools`; `Rkiez`
 is a study/work productivity timer but becomes health/wellness from `Mental
@@ -182,21 +182,62 @@ Health`; and `Safes` provides digital parental controls but becomes
 health/wellness from `Family Care`. The transition cohort is **not** clean training data merely
 because a broad competing tag was unmapped.
 
-The map cannot yet be frozen as a semantic ontology solely on these product
-label diagnostics. Remaining mapped source names still need boundary review:
-`Maps and GPS` (613 assignments) can mean travel navigation or a
-geospatial/data tool; `Spreadsheets` (459) can serve personal planning or BI;
-`Video and Voice calling` (512) can be social communication or team operations;
-`Messaging apps` (1,322) spans personal messaging, privacy tools, and
-messaging APIs; and `Community management` (1,496) spans peer interaction and
-household/organizational chores. `Payroll software` (130) was removed because
-it spans staff administration and finance-specific money flow. `Music
-Generation` remains mapped to design/creative; that boundary now explicitly
-includes creative audio production as well as visual production. The 148 mapped
-values with at most ten assignments also need a recorded independent semantic
-pass. This is distinct
-from product-level label cleaning: a well-mapped tag may still be attached to
-the wrong product.
+## Independent semantic follow-up
+
+A separate read-only reviewer examined the remaining mapped source names
+against original product text without opening the preserved blind-review key.
+The 28 values below name a subject, medium, host, or workflow spanning markets;
+the source value alone cannot assign a primary category. Original tags remain
+in the archive. Counts are source-tag assignments, not distinct products.
+
+| Unmapped source value | Assignments | Boundary evidence |
+| --- | ---: | --- |
+| `Maps and GPS` | 613 | Travel navigation and geospatial/dispatch tools have different workflows. |
+| `Spreadsheets` | 459 | Row Zero is team BI; spreadsheets also serve personal planning. |
+| `spreadsheets` | 1 | Case-equivalent to broad `Spreadsheets`. |
+| `Video and Voice calling` | 512 | Calls can be interpersonal, workplace, customer support, or an API. |
+| `Messaging apps` | 1,322 | Messaging spans personal chat, business operations, and developer APIs. |
+| `Community management` | 1,496 | Newsepick supports peer learning; other products manage customers or organizations. |
+| `bitcoin` | 1 | Bitcoin Deaths is a visualization/media product, not money management. |
+| `ethereum` | 1 | A Web3 events catalog does not itself provide finance. |
+| `Crypto`, `crypto` | 1, 4 | Dexzbitz is an exchange; Signet is a wallet API. |
+| `photo-video` | 2 | BOOKD is a location marketplace; Diloo creates photos. |
+| `audio` | 7 | Eadlyn creates voices; Pocket Coach keeps notes; Podttr transcribes. |
+| `Funny`, `funny` | 3, 3 | Tone does not imply entertainment; Netra is a Mac focus utility. |
+| `global-nomad`, `Global Nomad` | 3, 1 | REMOTE is news; Finance Jobs lists jobs; FreshRemote reports salaries. |
+| `outdoors` | 1 | PermitPal handles permits; outdoors is a subject, not a workflow. |
+| `maps`, `gps` | 1, 1 | Rightroute routes property viewings; Asterism manages fleets. |
+| `Freelance`, `freelance` | 2, 3 | Bedrok lists work; Quillbill handles invoicing. |
+| `couples` | 2 | TMap tracks people; Wings is a relationship journal. |
+| `kids-parenting` | 1 | FableSprout is a storytelling product. |
+| `quantified-self` | 2 | Hooplog records NBA game activity, not health. |
+| `Home`, `home` | 1, 7 | Interior planning and property job/permit workflows share the subject. |
+| `fashion` | 3 | Parivesh is a shop; StrikkeTavla organizes knitting recipes. |
+| `Jewelry` | 1 | A commodity noun spans retail and creation/design. |
+
+This pass removes 4,454 source-tag assignments from deterministic mapping.
+Relative to the first-pass candidate, 915 formerly unique products become
+unlabeled, 1,410 conflicting products become unique after a competing broad
+tag is removed, and 10 conflicts become unlabeled. Unique source-derived
+coverage rises by 495, from 54,880 to 55,375; this is **not a precision gain**.
+`home_lifestyle` now has only two uniquely source-mapped products. The same
+100 selected clear blind judgments give 67 agreements, 19 disagreements,
+14 abstentions, and nine held ambiguous records. This remains a tuning
+diagnostic, not population accuracy. A deterministic 16-record spot check of
+the 1,410 new conflict-to-unique cases (lowest SHA-256 of
+`semantic-review-v2:<slug>`) found six clear wrong labels, four ambiguous or
+co-primary cases, and six plausible matches. MirrorFly CPaaS becomes
+media/entertainment from `Live streaming platforms` despite being an API;
+corpX becomes developer tools from `Cloud Computing Platforms` despite being
+professional networking. This selected transition sample is diagnostic, not
+population precision. Source tags need product-level cleaning.
+
+The work/careers boundary now excludes skills training, matching the existing
+`Sales training` education mapping. `Music Generation` remains mapped to
+design/creative, whose boundary includes audio creative production. This
+semantic pass does not freeze the ontology: 125 low-support mapped values and
+other boundary cases remain to review. Product-level label cleaning and a
+fresh independent gold sample are separate gates before training.
 
 This is a taxonomy-tuning set, **not** a classifier validation set. It cannot
 establish population precision. After adjudicating it and documenting any
