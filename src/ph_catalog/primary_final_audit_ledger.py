@@ -149,6 +149,11 @@ def build(
             else:
                 raise ValueError("unknown Stage 6 status")
             predictions[row["slug"]] = row
+        status_counts = Counter(row["status"] for row in rows)
+        if manifest["counts"] != {
+            name: status_counts[name] for name in ("candidate", "null", "error")
+        }:
+            raise ValueError("Stage 6 batch status counts changed")
         batch_meta.append(
             {"output_sha256": sha256_file(path), "manifest_sha256": sha256_file(manifest_path)}
         )

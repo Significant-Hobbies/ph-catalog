@@ -566,10 +566,11 @@ website-evidence subgroup. This mapping assesses current candidates; it does
 not authorize publication if any promotion gate fails.
 
 Protocol provenance: the first 25 selected unresolved products were run with
-the prior v2 local prompt while gold labels were still sealed. Six products
-failed closed on null formatting: the validator required zero confidence and
-empty citations for null, while the prompt had not explicitly said so. The
-v2 first-25 output is retained as a failed diagnostic, excluded from the
+the prior v2 local prompt while gold labels were still sealed. Six output
+rows failed closed across two batches on null formatting: the validator
+required zero confidence and empty citations for null, while the prompt had
+not explicitly said so. The v2 first-25 output is retained as a failed
+diagnostic, excluded from the
 final candidate ledger. The v3 prompt states the null format rule; its first
 25 rerun yielded 21 schema-valid category candidates, four nulls, and zero
 format errors. This was an unlabeled schema repair informed by selected audit

@@ -115,6 +115,7 @@ def test_ledger_requires_contiguous_exact_model_partition(tmp_path):
                 "start_index": index,
                 "total_unresolved_input": 2,
                 "selected_products": 1,
+                "counts": {"candidate": 1 - index, "null": index, "error": 0},
                 "model": AUDIT_MODEL,
                 "model_digest": AUDIT_MODEL_DIGEST,
                 "prompt_version": PROMPT_VERSION,
