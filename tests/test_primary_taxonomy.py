@@ -108,11 +108,38 @@ def test_source_evidence_must_agree() -> None:
         "home",
         "fashion",
         "Jewelry",
+        "Scheduling software",
+        "Meeting software",
+        "Survey and form builders",
+        "Family Care",
+        "Video conferencing",
+        "Live streaming platforms",
+        "Virtual events",
+        "Event software",
+        "Fundraising resources",
+        "Website analytics",
+        "Screenshots and screen recording apps",
+        "Browser Automation",
+        "Digital whiteboards",
+        "Transcription",
+        "task-management",
+        "Task Management",
+        "Customer Success",
+        "customer-success",
+        "customer-communication",
     ],
 )
 def test_ambiguous_source_is_unmapped(source: str) -> None:
     taxonomy = load_taxonomy(TAXONOMY)
     assert primary_from_sources([source], taxonomy) == (None, "no_unambiguous_source_category")
+
+
+def test_customer_loyalty_is_marketing_workflow() -> None:
+    taxonomy = load_taxonomy(TAXONOMY)
+    assert primary_from_sources(["Customer loyalty platforms"], taxonomy) == (
+        "marketing_sales",
+        "unique_source_mapping",
+    )
 
 
 @pytest.mark.parametrize("source", ["Project management software", "SEO tools"])

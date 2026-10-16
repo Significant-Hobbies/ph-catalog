@@ -1,9 +1,9 @@
 {
   "taxonomy_version": "v1-candidate",
-  "taxonomy_sha256": "7456639f87ea9b8f2838a4a87ad4d077f60f2d3212e5dbf40bfbf54faf96dd5a",
+  "taxonomy_sha256": "c5490fda1532b0e1c571a51fa970b4627e65df4b585a6ff01a8eddc8dc1432a2",
   "source_snapshot": "catalog-state:2026-10-15T23:53:43.847299+00:00",
   "source_category_values": 544,
-  "mapped_source_values": 312,
+  "mapped_source_values": 293,
   "categorized_products": 94036,
   "total_products": 575622,
   "unmapped_source_values": [
@@ -68,6 +68,10 @@
       "assignments": 1437
     },
     {
+      "source": "Scheduling software",
+      "assignments": 1386
+    },
+    {
       "source": "Messaging apps",
       "assignments": 1322
     },
@@ -108,6 +112,14 @@
       "assignments": 858
     },
     {
+      "source": "Meeting software",
+      "assignments": 749
+    },
+    {
+      "source": "Website analytics",
+      "assignments": 721
+    },
+    {
       "source": "Apps for kids",
       "assignments": 706
     },
@@ -124,12 +136,24 @@
       "assignments": 613
     },
     {
+      "source": "Screenshots and screen recording apps",
+      "assignments": 596
+    },
+    {
       "source": "User research",
       "assignments": 589
     },
     {
+      "source": "Fundraising resources",
+      "assignments": 586
+    },
+    {
       "source": "Legal services",
       "assignments": 582
+    },
+    {
+      "source": "Event software",
+      "assignments": 564
     },
     {
       "source": "AI Characters",
@@ -142,6 +166,10 @@
     {
       "source": "AI Content Detection",
       "assignments": 553
+    },
+    {
+      "source": "Survey and form builders",
+      "assignments": 524
     },
     {
       "source": "Newsletter platforms",
@@ -168,8 +196,16 @@
       "assignments": 459
     },
     {
+      "source": "Family Care",
+      "assignments": 432
+    },
+    {
       "source": "Podcasting Tools",
       "assignments": 430
+    },
+    {
+      "source": "Live streaming platforms",
+      "assignments": 418
     },
     {
       "source": "Books",
@@ -216,12 +252,24 @@
       "assignments": 289
     },
     {
+      "source": "Video conferencing",
+      "assignments": 274
+    },
+    {
+      "source": "Virtual events",
+      "assignments": 270
+    },
+    {
       "source": "Realtime Voice AI",
       "assignments": 253
     },
     {
       "source": "Twitter apps",
       "assignments": 251
+    },
+    {
+      "source": "Digital whiteboards",
+      "assignments": 249
     },
     {
       "source": "OpenClaw",
@@ -238,6 +286,10 @@
     {
       "source": "LLM Memory",
       "assignments": 213
+    },
+    {
+      "source": "Transcription",
+      "assignments": 205
     },
     {
       "source": "AI Data Scientist",
@@ -270,6 +322,10 @@
     {
       "source": "Headless CMS software",
       "assignments": 159
+    },
+    {
+      "source": "Browser Automation",
+      "assignments": 151
     },
     {
       "source": "Toys",
@@ -416,6 +472,10 @@
       "assignments": 8
     },
     {
+      "source": "task-management",
+      "assignments": 8
+    },
+    {
       "source": "audio",
       "assignments": 7
     },
@@ -524,7 +584,15 @@
       "assignments": 3
     },
     {
+      "source": "Task Management",
+      "assignments": 3
+    },
+    {
       "source": "business",
+      "assignments": 3
+    },
+    {
+      "source": "customer-communication",
       "assignments": 3
     },
     {
@@ -712,6 +780,10 @@
       "assignments": 1
     },
     {
+      "source": "Customer Success",
+      "assignments": 1
+    },
+    {
       "source": "Global Nomad",
       "assignments": 1
     },
@@ -797,6 +869,10 @@
     },
     {
       "source": "cookbooks",
+      "assignments": 1
+    },
+    {
+      "source": "customer-success",
       "assignments": 1
     },
     {
@@ -937,26 +1013,26 @@
     }
   ],
   "product_outcomes": {
-    "conflicting_source_categories": 22617,
-    "no_unambiguous_source_category": 497630,
-    "unique_source_mapping": 55375
+    "conflicting_source_categories": 19872,
+    "no_unambiguous_source_category": 499777,
+    "unique_source_mapping": 55973
   },
   "uniquely_labeled_products_by_category": {
-    "business_operations": 5703,
-    "data_analytics": 1773,
-    "design_creative": 7486,
-    "developer_tools": 7394,
-    "education_learning": 1630,
-    "finance": 5607,
-    "health_wellness": 3911,
+    "business_operations": 4863,
+    "data_analytics": 1664,
+    "design_creative": 7750,
+    "developer_tools": 7502,
+    "education_learning": 1705,
+    "finance": 5585,
+    "health_wellness": 3799,
     "home_lifestyle": 2,
-    "marketing_sales": 6878,
-    "media_entertainment": 1057,
-    "personal_productivity": 3806,
-    "security_privacy": 1326,
-    "shopping_commerce": 1699,
-    "social_community": 3828,
-    "travel_local": 1641,
-    "work_careers": 1634
+    "marketing_sales": 7563,
+    "media_entertainment": 933,
+    "personal_productivity": 3891,
+    "security_privacy": 1379,
+    "shopping_commerce": 1774,
+    "social_community": 4172,
+    "travel_local": 1694,
+    "work_careers": 1697
   }
 }

@@ -11,9 +11,9 @@ format, platform, and generic AI tags remain unmapped.
 The 2026-10-15 `catalog-state` source archive (SHA-256
 `39cc62acf1c8927363fb47abad5032362b08fe99e9b6bc549ad4d770f7955ded`)
 contains 575,622 products and 544 distinct source-category values. The current
-candidate maps 312 values. The matching checked-in audit finds 94,036 products
-with source categories: 55,375 have one source-derived candidate, 22,617 have
-conflicting mapped categories, and 16,044 have no mapped category. These are
+candidate maps 293 values. The matching checked-in audit finds 94,036 products
+with source categories: 55,973 have one source-derived candidate, 19,872 have
+conflicting mapped categories, and 18,191 have no mapped category. These are
 coverage counts, not classifier accuracy or precision. Products without source
 categories remain unlabeled.
 
@@ -75,7 +75,7 @@ The source archive is not a product-level gold standard. A deterministic
 64-product challenge found tags that clearly named the wrong market, including
 a Mac battery utility tagged `Apps for kids`. A subsequent class-stratified
 diagnostic found a scraping proxy tagged `Maps and GPS`. In the same archive,
-125 of the 312 mapped source values occur on ten or fewer products. These
+120 of the 293 mapped source values occur on ten or fewer products. These
 low-support mappings especially need direct product-text review.
 
 For a **new** blinded diagnostic set from the verified `products.csv` (SHA-256
@@ -235,9 +235,68 @@ population precision. Source tags need product-level cleaning.
 The work/careers boundary now excludes skills training, matching the existing
 `Sales training` education mapping. `Music Generation` remains mapped to
 design/creative, whose boundary includes audio creative production. This
-semantic pass does not freeze the ontology: 125 low-support mapped values and
-other boundary cases remain to review. Product-level label cleaning and a
+semantic pass did not freeze the ontology: 125 low-support mapped values and
+other boundary cases remained to review. Product-level label cleaning and a
 fresh independent gold sample are separate gates before training.
+
+## Broader workflow review
+
+A second independent read-only source-map review found 19 more labels whose
+meanings span product markets. The candidate now leaves these source values
+unmapped; their original tags remain in the archive. Counts are assignments,
+not distinct products. The examples show why the tag alone cannot determine
+the dominant workflow, regardless of the quality of any individual tag.
+
+| Unmapped source value | Assignments | Counterexample to the old mapping |
+| --- | ---: | --- |
+| `Scheduling software` | 1,386 | Neou supports personal ADHD focus, outside business operations. |
+| `Meeting software` | 749 | Get-Offer.me supports job seeking, outside business operations. |
+| `Survey and form builders` | 524 | Waitly uses forms for customer acquisition, outside business operations. |
+| `Family Care` | 432 | Giftron supports gift shopping and Heart-Venture is a relationship journal, outside medical care. |
+| `Video conferencing` | 274 | Amazon Chime supports workplace meetings, outside interpersonal social networking. |
+| `Live streaming platforms` | 418 | Ebay Live supports commerce and MirrorFly provides communications infrastructure. |
+| `Virtual events` | 270 | TFH covers competitive sport and Guide covers candidate interviews. |
+| `Event software` | 564 | Curated Festivals '26 helps discover travel and entertainment. |
+| `Fundraising resources` | 586 | High Output Founders' Library is educational content; Launching Next publishes startup news. |
+| `Website analytics` | 721 | Seodar measures SEO and Stanza Systems monitors developer reliability. |
+| `Screenshots and screen recording apps` | 596 | Vidyard serves sales and BrandBird serves marketing design. |
+| `Browser Automation` | 151 | Calyro automates Instagram DMs, outside developer tooling. |
+| `Digital whiteboards` | 249 | ALLO serves team work and GaleristA plans a home layout. |
+| `Transcription` | 205 | Callvix serves business communications; Voxy is a voice agent. |
+| `task-management` | 8 | Ariso serves a team; the tag need not imply personal productivity. |
+| `Task Management` | 3 | Case-equivalent to `task-management`; Tweek is a personal calendar. |
+| `Customer Success` | 1 | WorkHub Connect provides workplace conferencing, not evidence of customer support or retention. |
+| `customer-success` | 1 | LiveFox supports team engagement and education; the phrase spans support operations and lifecycle retention. |
+| `customer-communication` | 3 | AppointHub handles appointments; Oystro handles meetings; Media Jobs lists work. The tag does not distinguish support from promotion. |
+
+These removals affect 7,141 source-tag assignments. `Customer loyalty
+platforms` moves from `business_operations` to `marketing_sales` (405
+assignments) because retention is a marketing lifecycle workflow, illustrated
+by Browse Booster. The category boundaries now explicitly distinguish
+customer retention from general operations and medical caregiving from
+everyday family-life planning.
+
+Relative to the preceding candidate, 2,030 formerly unique source mappings
+become null, 2,650 conflicts become unique, 117 conflicts become null, and
+22 formerly unique mappings become conflicts. Unique source-derived coverage
+rises by 598. Among the same 100 deliberately selected clear blind choices,
+65 now agree, 19 disagree, and 16 abstain; nine other cases remain held
+ambiguous. This is a tuning diagnostic, **not population precision**.
+The current map still has 120 values with at most ten source assignments and
+only two uniquely source-mapped `home_lifestyle` products. Source-derived
+coverage cannot satisfy the Stage 2 product-label and class-support gates.
+For a deterministic transition check, rank the 2,650 new conflict-to-unique
+slugs by SHA-256 of `stage1-review-v3:<slug>` and inspect the first 16 against
+name, tagline, and description. Eleven are plausible matches, two are clearly
+wrong (`LawnManage` becomes finance despite being landscaping-business
+software; `Hustle X` becomes social/community despite being advice videos),
+and three have insufficient or co-primary evidence (`Ramen`, `Emstrata`,
+`Paperglide`). Another newly unique case, `Oystro`, becomes social/community
+from a generic messaging tag despite scheduling workplace meetings. This is a
+targeted diagnostic, not a population estimate or
+training-label validation. The ontology and source map remain `v1-candidate`;
+independent product-level adjudication, including sparse classes, is still
+required before any classifier training or promotion.
 
 This is a taxonomy-tuning set, **not** a classifier validation set. It cannot
 establish population precision. After adjudicating it and documenting any
