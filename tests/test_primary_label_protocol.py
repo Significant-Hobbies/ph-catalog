@@ -28,6 +28,8 @@ def test_sample_is_deterministic_disjoint_and_blinded(
     products.write_text("verified archive")
     previous = tmp_path / "previous-source-key.json"
     previous.write_text(json.dumps([{"slug": "old", "source_categories": ["Home"]}]))
+    rehearsal = tmp_path / "rehearsal-source-key.json"
+    rehearsal.write_text(json.dumps([{"slug": "b", "split": "holdout_random"}]))
     rows = [
         ("old", "Old", "home", "prior tuning", ["Home"]),
         ("a", "A", "editor", "Build software", ["Code editors"]),
@@ -46,11 +48,13 @@ def test_sample_is_deterministic_disjoint_and_blinded(
         "random_count": 1,
         "heldout_per_stratum": 1,
         "development_per_stratum": 1,
+        "additional_exclusion_keys": (rehearsal,),
     }
     blind, key, manifest = protocol.select_bundle(*args, **options)
     assert (blind, key, manifest) == protocol.select_bundle(*args, **options)
     assert len({entry["slug"] for entry in key}) == len(key)
     assert "old" not in {entry["slug"] for entry in key}
+    assert "b" not in {entry["slug"] for entry in key}
     assert sum(map(len, blind.values())) == len(key)
     assert all(
         set(entry) == {"review_id", "name", "tagline", "description"}
@@ -58,6 +62,9 @@ def test_sample_is_deterministic_disjoint_and_blinded(
         for entry in blind[split]
     )
     assert manifest["excluded_tuning_slugs"] == 1
+    assert manifest["excluded_additional_slugs"] == 1
+    assert manifest["excluded_distinct_slugs"] == 2
+    assert manifest["additional_exclusion_key_sha256"] == [protocol.sha256_file(rehearsal)]
     assert manifest["total_products"] == len(rows)
 
     output = tmp_path / "bundle"

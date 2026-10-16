@@ -127,8 +127,10 @@ Source tags are weak sampling strata, not gold labels. A blinded local protocol
 reserves three disjoint slug sets before annotation: 200 lowest SHA-256-ranked
 products from the full archive for a random holdout; up to 20 per provisional
 source category plus conflicting/no-map strata for a separate holdout; and up
-to 40 per stratum for development. The previous 109 taxonomy-tuning slugs are
-excluded from all three. Selection is independent of CSV row order. Blind
+to 40 per stratum for development. The previous 109 taxonomy-tuning slugs,
+1,221 pre-freeze candidate-bundle slugs, and 2,440 slugs in two superseded
+freeze drafts are excluded from all three. Selection
+is independent of CSV row order. Blind
 files contain only name, tagline, and description; the local key keeps slugs,
 original tags, provisional source mapping, and strata separate. The random
 set includes sparse and uncategorized products so coverage claims can include
@@ -136,15 +138,19 @@ abstention on the real archive, not only easy classified products.
 
 ```bash
 uv run python tools/primary_label_protocol.py sample \
-  --taxonomy taxonomy/v1-candidate.json \
+  --taxonomy taxonomy/v1.json \
   --products data/products.csv \
   --previous-tuning-key data/taxonomy-review-v1/source-key.json \
-  --output-dir data/primary-label-v1-2026-10-16
+  --exclude-key data/primary-label-v1-2026-10-16/source-key.json \
+  --exclude-key data/primary-label-v1-frozen-2026-10-16/source-key.json \
+  --exclude-key data/primary-label-v1-frozen-2026-10-16-r2/source-key.json \
+  --output-dir data/primary-label-v1-frozen-2026-10-16-r3 \
+  --seed primary-label-v1-frozen-2026-10-16-r3
 
 uv run python tools/primary_label_protocol.py check \
-  --taxonomy taxonomy/v1-candidate.json \
-  --bundle data/primary-label-v1-2026-10-16 \
-  --annotations data/primary-label-v1-2026-10-16/annotations-template.json
+  --taxonomy taxonomy/v1.json \
+  --bundle data/primary-label-v1-frozen-2026-10-16-r3 \
+  --annotations data/primary-label-v1-frozen-2026-10-16-r3/annotations-template.json
 ```
 
 Annotators fill a separate copy of the annotations template without opening
@@ -168,28 +174,28 @@ all hashes, and the independent true-label support gate before writing a
 report. It reports random-sample coverage and abstention separately from
 stratified macro/per-category precision, recall, and confusion. Null and
 co-primary judgments are ground-truth abstentions; predicting a class for
-them is a false positive. No `evaluate` report exists for the present
-candidate because its gate is closed.
+them is a false positive. No `evaluate` report exists for the frozen taxonomy
+because its product-label gate is closed.
 
-On the 2026-10-15 archive, the pre-freeze candidate protocol reserved 680 development,
-200 random-holdout, and 341 source-stratified-holdout records, excluding all
-109 prior tuning slugs. Only one product remains in the source-derived
-`home_lifestyle` stratum after exclusion; it went to the stratified holdout,
-leaving zero in development. The present mapping is still `v1-candidate` and
-none of these 1,221 records has an adjudicated label. A subsequent source-map
-revision changed the taxonomy hash, so this preserved local bundle is now a
-protocol rehearsal rather than final evaluation evidence. Generate a fresh,
-disjoint bundle under the frozen taxonomy before annotation and evaluation.
-The `check` gate
-requires a frozen taxonomy, completed development labels, at least 30 true
+The frozen `v1` mapping and audit are documented in
+`docs/primary-taxonomy-v1.md`. On the 2026-10-15 archive, its new local bundle
+excludes all 109 previous taxonomy-tuning slugs, all 1,221 slugs from the
+pre-freeze candidate bundle, and 2,440 from two superseded freeze drafts.
+Those old bundles remain protocol rehearsals, not final evaluation evidence.
+The disjoint frozen-hash bundle
+reserves 680 development, 200 random-holdout, and 340 source-stratified-
+holdout records. After 3,770 exclusions, zero source-derived `home_lifestyle`
+records remain for development or stratified holdout. All 1,220 new
+annotations are unreviewed. The `check` gate requires a frozen taxonomy,
+completed development labels, at least 30 true
 single-label development examples per class, at least 20 true single-label
 stratified-holdout examples per class, and a 200-record random holdout before
 evaluation. These are conservative local readiness floors, not measured model
-quality. The current gate is closed. Additional product-text discovery and
-independent adjudication are needed for `home_lifestyle`; mapping coverage
-must never be substituted for that evidence. If the taxonomy changes before
-freeze, reserve a new holdout under the frozen hash rather than reusing this
-candidate set as final promotion evidence.
+quality. The training and evaluation gates remain closed despite the frozen
+ontology. Additional product-text discovery, resampling, and independent
+adjudication are needed for `home_lifestyle`; mapping coverage must never be
+substituted for that evidence. If the taxonomy changes, version it and reserve
+new holdouts under the new hash.
 
 ## Stage 3 — Concrete local NER labels
 
