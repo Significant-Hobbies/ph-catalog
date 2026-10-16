@@ -365,8 +365,9 @@ def evaluate_combined(
         "sample_manifests": submitted["sample_manifests"],
         "label_gate": gate,
         "interpretation": (
-            "original random sample estimates archive-level coverage; targeted and supplemental "
-            "samples are biased diagnostics, not population precision"
+            "original random sample estimates coverage of eligible archived CSV products "
+            "after 3,770 prior-review exclusions; targeted and supplemental samples are biased "
+            "diagnostics, not population precision"
         ),
     }
     if shortfalls:

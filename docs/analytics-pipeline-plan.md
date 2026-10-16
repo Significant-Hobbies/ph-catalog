@@ -125,7 +125,8 @@ Acceptance gate:
 
 Source tags are weak sampling strata, not gold labels. A blinded local protocol
 reserves three disjoint slug sets before annotation: 200 lowest SHA-256-ranked
-products from the full archive for a random holdout; up to 20 per provisional
+products from the eligible `data/products.csv` rows after 3,770 prior-review
+exclusions for a random holdout; up to 20 per provisional
 source category plus conflicting/no-map strata for a separate holdout; and up
 to 40 per stratum for development. The previous 109 taxonomy-tuning slugs,
 1,221 pre-freeze candidate-bundle slugs, and 2,440 slugs in two superseded
@@ -251,8 +252,9 @@ final development probabilities, though serialized joblib bytes differed; use
 the pinned artifact for subsequent inference. No heldout product text or
 labels informed this choice. Before Stage 2 can pass, generate predictions
 from that frozen artifact and independently label/evaluate the 700 reserved
-heldouts. The original random 200 must estimate archive-level coverage
-separately from biased supplemental class-discovery samples. The 340
+heldouts. The original random 200 must estimate coverage in that eligible
+archived CSV population separately from biased supplemental class-discovery
+samples. The 340
 source-stratified main holdouts may have insufficient true per-class support,
 especially home; add a new disjoint class-targeted heldout without retuning if
 the registered support gate fails. Stages 4–7 remain dependent work.
@@ -279,8 +281,9 @@ at least 20 true single-label examples for **each** taxonomy class across the
 500 targeted records. If support is short, it reports shortfalls without
 metrics. When open, the report separates original random, source-stratified
 main, supplemental home, supplemental sparse, and combined targeted results.
-Only the original random set supports archive-level coverage estimates;
-targeted and supplemental precision/recall are sample-specific diagnostics.
+Only the original random set supports coverage estimates for the eligible
+archived CSV population after 3,770 prior-review exclusions; targeted and
+supplemental precision/recall are sample-specific diagnostics.
 All outputs and annotations stay under ignored `data/`, never in Git.
 
 ## Stage 3 — Concrete local NER labels
