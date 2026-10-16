@@ -555,6 +555,12 @@ population gates or establish class precision. A failed gate remains a
 reported limitation of #17, not an automatic new task or a reason to tune on
 this audit.
 
+`tools/primary_final_audit_evaluate.py` implements this fixed rule before gold
+opens. The final unlabeled ledger pins the evaluator source SHA along with its
+own code/model/prompt/output hashes; the evaluator refuses a changed source
+file, blind bundle, prediction ledger, taxonomy, or incomplete independent
+annotations. No scoring run has occurred yet.
+
 Candidate decision mapping is fixed before gold: a Stage 4 `candidate_accept`
 uses its pinned `primary_category`; routed website evidence alone makes no
 categorical decision, so website-only accepted count is zero under the current
@@ -570,9 +576,9 @@ the prior v2 local prompt while gold labels were still sealed. Six output
 rows failed closed across two batches on null formatting: the validator
 required zero confidence and empty citations for null, while the prompt had
 not explicitly said so. The v2 first-25 output is retained as a failed
-diagnostic, excluded from the
-final candidate ledger. The v3 prompt states the null format rule; its first
-25 rerun yielded 21 schema-valid category candidates, four nulls, and zero
+diagnostic and excluded from the final candidate ledger. The v3 prompt states
+the null format rule; its first 25 rerun yielded 21 schema-valid category
+candidates, four nulls, and zero
 format errors. This was an unlabeled schema repair informed by selected audit
 inputs, so the Stage 6 path is not a fully untouched holdout. No correctness
 labels were inspected or used to tune either prompt, and v3 prompt/model

@@ -214,10 +214,20 @@ def build(
         "prompt_sha256": identity[3],
         "taxonomy_sha256": identity[4],
         "ledger_code_sha256": sha256_file(Path(__file__)),
+        "evaluator_code_sha256": sha256_file(
+            Path(__file__).with_name("primary_final_audit_evaluate.py")
+        ),
         "records": len(ledger),
         "random": sum(row["split"] == "random" for row in ledger),
         "biased_diagnostic": sum(row["split"] != "random" for row in ledger),
         "statuses": dict(Counter(row["status"] for row in ledger)),
+        "random_statuses": dict(
+            Counter(row["status"] for row in ledger if row["split"] == "random")
+        ),
+        "diagnostic_statuses": dict(
+            Counter(row["status"] for row in ledger if row["split"] != "random")
+        ),
+        "website_outcomes": dict(Counter(row["outcome"] for row in website_rows)),
         "output_sha256": sha256_file(output),
     }
     output_manifest.write_text(json.dumps(manifest, indent=2) + "\n")

@@ -129,6 +129,9 @@ def test_ledger_requires_contiguous_exact_model_partition(tmp_path):
     report = build(audit, selected, website, handoff, batches, output)
     assert report["records"] == 320
     assert report["statuses"] == {"candidate": 319, "null": 1}
+    assert report["random_statuses"] == {"candidate": 200}
+    assert report["diagnostic_statuses"] == {"candidate": 119, "null": 1}
+    assert report["website_outcomes"] == {"fetched": 1}
     assert [json.loads(line)["final_path"] for line in output.read_text().splitlines()][-2:] == [
         "llm_final",
         "llm_final",
