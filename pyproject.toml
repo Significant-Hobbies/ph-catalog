@@ -18,6 +18,9 @@ ner = [
     "pyarrow>=25.0.0",
     "torch>=2.13.0",
 ]
+classifier = [
+    "scikit-learn>=1.9.1",
+]
 
 [project.scripts]
 ph-catalog = "ph_catalog.cli:main"

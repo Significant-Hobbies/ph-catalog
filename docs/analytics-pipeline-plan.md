@@ -214,6 +214,49 @@ protocols and their biased-sample limits are documented in
 aids only; neither is an independent product label. Do not open any heldout
 until model and thresholds are fixed.
 
+### Combined development gate and local candidate
+
+`tools/primary_combined_development.py` rechecks all three ignored bundle
+manifests, blind-file hashes, frozen taxonomy and archive SHA, complete
+development annotations, disjoint slugs, and sealed heldout annotations. It
+hash-checks heldout blind files without parsing their text, and exports only
+slug, product text, decision, and text hash after every class reaches 30 true
+single development labels. The current combined export has 1,000 development
+rows (885 single, 29 co-primary, 86 null) and preserves the 700 heldouts,
+including the original 200 random records. The local classifier rechecks the
+source bundles against this export before fitting; it rejects stale or
+modified annotation and sample provenance.
+
+The optional `classifier` dependency installs scikit-learn only for local
+training. Two fixed sparse linear candidates use either word TF-IDF or word
+plus character TF-IDF, balanced logistic regression, and internal 3-fold
+sigmoid probability calibration. Five deterministic slug folds produce
+out-of-fold development predictions. A fixed threshold grid chooses the
+largest non-null OOF coverage with at least 85% observed precision and 30
+predictions; null and co-primary development records count as true abstentions.
+The word-plus-character candidate selected 34.1% OOF coverage at 85.9%
+observed non-null precision, 85.2% null/co-primary abstention, and 0.856/0.333
+macro precision/recall. Word-only gave 26.7% coverage at 85.8% precision.
+These are **optimistic development tuning diagnostics**, not independent
+accuracy estimates. Business and finance OOF recall are especially weak;
+broad promotion is not justified by this candidate.
+
+The chosen local artifact is pinned by model SHA-256
+`a561cb0d70129e25f56893abc6c4ee853391c6a9169d12aec20d308030f8b847`
+and threshold SHA-256
+`6bf58337cf258cd889c908914831b38f39a77dc7cb7e16f7bf56202681ae9aa3`.
+Feature configuration, fold seed, development export hash, and OOF report are
+in the ignored candidate manifest. A repeat run reproduced identical OOF and
+final development probabilities, though serialized joblib bytes differed; use
+the pinned artifact for subsequent inference. No heldout product text or
+labels informed this choice. Before Stage 2 can pass, generate predictions
+from that frozen artifact and independently label/evaluate the 700 reserved
+heldouts. The original random 200 must estimate archive-level coverage
+separately from biased supplemental class-discovery samples. The 340
+source-stratified main holdouts may have insufficient true per-class support,
+especially home; add a new disjoint class-targeted heldout without retuning if
+the registered support gate fails. Stages 4–7 remain dependent work.
+
 ## Stage 3 — Concrete local NER labels
 
 Status: implemented and benchmarked.
