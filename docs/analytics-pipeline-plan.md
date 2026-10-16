@@ -289,7 +289,7 @@ supplemental precision/recall are sample-specific diagnostics.
 All outputs and annotations stay under ignored `data/`, never in Git.
 
 To address the five support shortfalls without changing the classifier,
-`tools/primary_support_discovery.py` reserves 25 title-text candidates per
+`tools/primary_support_discovery.py` reserves 25 name/tagline matches per
 class, zero development examples, and no random examples. Its fixed seed and
 seven prior source-key exclusions remove 5,470 distinct previously sampled
 slugs. The 125 blind records omit query groups and source tags; the ignored

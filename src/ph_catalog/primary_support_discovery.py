@@ -1,6 +1,6 @@
 """Reserve a blind, biased support audit for five underfilled heldout classes.
 
-Patterns use product titles only. They discover candidates; they are not labels
+Patterns use product name and tagline only. They discover candidates; they are not labels
 or model features, and this supplemental sample is not population-representative.
 """
 

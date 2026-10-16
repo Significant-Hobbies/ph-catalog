@@ -96,7 +96,7 @@ def select_text_discovery(
     development_per_group: int = 40,
     heldout_per_group: int = 20,
 ) -> tuple[dict[str, list[dict[str, str]]], list[dict[str, str]], dict[str, Any]]:
-    """Reserve disjoint, title-matched candidates without reading source tags."""
+    """Reserve disjoint name/tagline matches without reading source tags."""
     if not seed or development_per_group < 0 or heldout_per_group < 1:
         raise ValueError("seed and holdout size must be positive; development size may be zero")
     if not patterns or not protocol or not purpose:
