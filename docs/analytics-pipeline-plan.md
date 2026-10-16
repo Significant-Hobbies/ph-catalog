@@ -537,6 +537,46 @@ pooled with the Stage 4 confidence bands. The current frozen model's earlier
 random heldout precision remains below a broad publication bar, so no category
 is promoted by this reservation.
 
+Pre-registered decision rule for this audit, fixed before any labels open:
+an accepted categorical decision is correct only when it exactly equals the
+independent unique-primary gold category. A category on a gold co-primary or
+null record is counted wrong; abstention, fetch denial, timeout, malformed
+model output, and missing path output remain uncovered and stay in the random
+200 denominator. Report accepted/correct counts, coverage, and the 95% Wilson
+precision interval over accepted random records. Broad publication requires
+at least 50% random coverage and a Wilson lower precision bound of at least
+90%. Each path admitted to publication additionally needs at least 30
+accepted random decisions and the same 90% lower bound; a class-specific
+claim requires at least 30 independently true-class records in the random
+sample. Report source-text-only, website-evidence-only, and LLM-final paths
+separately, with LLM-after-website as a subgroup, and count each product once.
+The 120 biased diagnostic records can reveal errors but cannot replace these
+population gates or establish class precision. A failed gate remains a
+reported limitation of #17, not an automatic new task or a reason to tune on
+this audit.
+
+Candidate decision mapping is fixed before gold: a Stage 4 `candidate_accept`
+uses its pinned `primary_category`; routed website evidence alone makes no
+categorical decision, so website-only accepted count is zero under the current
+implementation. A Stage 6 schema-valid cited `candidate` is a final audit
+category regardless of its uncalibrated numeric confidence. Stage 6 `null`,
+`error`, or an explicitly unattempted record is uncovered. A website route
+subsequently classified by Stage 6 belongs only to the LLM-final path, with a
+website-evidence subgroup. This mapping assesses current candidates; it does
+not authorize publication if any promotion gate fails.
+
+Protocol provenance: the first 25 selected unresolved products were run with
+the prior v2 local prompt while gold labels were still sealed. Six products
+failed closed on null formatting: the validator required zero confidence and
+empty citations for null, while the prompt had not explicitly said so. The
+v2 first-25 output is retained as a failed diagnostic, excluded from the
+final candidate ledger. The v3 prompt states the null format rule; its first
+25 rerun yielded 21 schema-valid category candidates, four nulls, and zero
+format errors. This was an unlabeled schema repair informed by selected audit
+inputs, so the Stage 6 path is not a fully untouched holdout. No correctness
+labels were inspected or used to tune either prompt, and v3 prompt/model
+hashes must be pinned before independent labels open.
+
 Every taxonomy/model/prompt version produces immutable candidate outputs. It is
 promoted only after:
 
