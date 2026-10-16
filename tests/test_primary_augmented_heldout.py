@@ -1,11 +1,47 @@
 """A biased supplement opens metrics only after true support and replay checks."""
 
+import hashlib
+import json
 from copy import deepcopy
 
 import pytest
 
+from ph_catalog import primary_augmented_heldout as augmented
 from ph_catalog.primary_augmented_heldout import evaluate_augmented
 from ph_catalog.primary_taxonomy import Taxonomy
+
+
+def test_support_exclusions_require_same_pinned_archive(monkeypatch, tmp_path):
+    previous_keys = []
+    for index in range(7):
+        bundle = tmp_path / f"previous-{index}"
+        bundle.mkdir()
+        key = bundle / "source-key.json"
+        key.write_text(json.dumps([{"slug": f"old-{index}"}]))
+        previous_keys.append(key)
+    core_manifest = previous_keys[4].parent / "manifest.json"
+    core_manifest.write_text(json.dumps({"products_csv_sha256": "archive-a"}))
+    monkeypatch.setattr(
+        augmented,
+        "FROZEN_SAMPLE_MANIFESTS",
+        {"main": hashlib.sha256(core_manifest.read_bytes()).hexdigest()},
+    )
+    supplement = tmp_path / "support"
+    supplement.mkdir()
+    (supplement / "source-key.json").write_text(json.dumps([{"slug": "new"}]))
+    support_manifest = {
+        "exclusion_key_sha256": [
+            hashlib.sha256(path.read_bytes()).hexdigest() for path in previous_keys
+        ],
+        "excluded_distinct_slugs": 7,
+        "products_csv_sha256": "archive-b",
+    }
+    (supplement / "manifest.json").write_text(json.dumps(support_manifest))
+    with pytest.raises(ValueError, match="source archive differs"):
+        augmented.check_exclusions(supplement, tuple(previous_keys))
+    support_manifest["products_csv_sha256"] = "archive-a"
+    (supplement / "manifest.json").write_text(json.dumps(support_manifest))
+    augmented.check_exclusions(supplement, tuple(previous_keys))
 
 
 def _row(bundle, split, index, category):

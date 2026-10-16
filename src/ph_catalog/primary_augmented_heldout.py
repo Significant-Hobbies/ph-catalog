@@ -15,6 +15,7 @@ from typing import Any
 
 from ph_catalog.primary_heldout import (
     FROZEN_PREDICTIONS_SHA,
+    FROZEN_SAMPLE_MANIFESTS,
     FROZEN_TAXONOMY_SHA,
     _summarize,
     load_reservations,
@@ -42,6 +43,12 @@ def check_exclusions(support: Path, previous_keys: tuple[Path, ...]) -> None:
         raise ValueError("support discovery overlaps a prior review or reservation")
     if len(previous) != manifest["excluded_distinct_slugs"]:
         raise ValueError("support discovery exclusion count changed")
+    core_manifest_path = previous_keys[4].parent / "manifest.json"
+    if sha256_file(core_manifest_path) != FROZEN_SAMPLE_MANIFESTS["main"]:
+        raise ValueError("original core sample manifest changed")
+    core_manifest = json.loads(core_manifest_path.read_text())
+    if manifest["products_csv_sha256"] != core_manifest["products_csv_sha256"]:
+        raise ValueError("support discovery source archive differs from core holdout")
 
 
 def load_support(
