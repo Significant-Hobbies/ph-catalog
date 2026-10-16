@@ -448,6 +448,29 @@ view.
 
 ## Stage 6 — Local 8B/27B fallback
 
+Status: `tools/primary_local_fallback.py` implements a bounded, category-only
+local candidate behind the pinned unresolved handoff. It rechecks the routing,
+website, handoff, source-mart, taxonomy, model, and reservation hashes before
+reading source product text. It batches two to four products, allows null,
+requires one or two exact field-ID citations for each proposed category, and
+fails malformed batches to null/error rows. The local Ollama digest, prompt
+version/hash, input hash, taxonomy hash, and cited source URL/response hash
+are retained in immutable ignored output; the pipeline artifact does not store
+raw prompts, responses, reasoning, or generated labels. The model's confidence
+is uncalibrated.
+No label generation is enabled until a versioned label vocabulary exists.
+
+The same five selected Stage 5 pilot products were tested locally on
+2026-10-16 with two installed models and the same prompt/schema. Qwen3.5 9B
+produced five fail-closed errors from inexact citations or invalid null
+fields (output SHA-256 `46880111e0329bf4c0f544fb13a4054feab2dbcf68425ad7fc7027d93c058a54`);
+Qwen3.5 27B produced five schema-valid, exactly cited category candidates
+and no errors (output SHA-256
+`7ba7127895c8a9ccff0ad854522534bed5338e29301f2bf77f1ad37ea9884e7c`).
+This is a protocol smoke test on five hand-picked products, with no
+independent gold labels, calibrated confidence, or quality estimate.
+Promotion and wider Stage 6 evaluation remain open.
+
 Run only on products still unresolved after website enrichment. Batch multiple
 products per prompt and require schema-constrained output. Do not store verbose
 reasoning. Store the selected category, labels, confidence, short cited evidence
