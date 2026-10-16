@@ -257,6 +257,32 @@ source-stratified main holdouts may have insufficient true per-class support,
 especially home; add a new disjoint class-targeted heldout without retuning if
 the registered support gate fails. Stages 4–7 remain dependent work.
 
+`tools/primary_heldout.py predict` is the frozen candidate's inference path.
+It pins the taxonomy, development export, candidate manifest, model, and
+threshold file hashes before loading the joblib artifact. It verifies all
+three bundle manifest, source-key, blind-file, annotation, split, and disjoint
+slug contracts, requires all heldout verdict fields blank, then reads only
+the 700 blind product texts for prediction. It writes nullable categories,
+confidence, runner-up, margin, and exact text hashes to an ignored local
+prediction file. The source tags and discovery groups are never model inputs.
+Its output must be fixed before independent heldout annotation begins.
+The current ignored prediction file is
+`data/primary-model-v1/heldout-predictions-v1.json`, SHA-256
+`e97a8c855d09bcf53a607ca4965e63c177a326132f40668b9143c55e2403eef3`;
+two clean runs produced identical bytes. This fixes 700 predictions, not their
+correctness. Human heldout labels remain unreviewed.
+
+`tools/primary_heldout.py evaluate` requires completed independent labels and
+replays the pinned model on the same texts. It rejects predictions that differ
+from that replay. The registered label gate needs the original random 200 and
+at least 20 true single-label examples for **each** taxonomy class across the
+500 targeted records. If support is short, it reports shortfalls without
+metrics. When open, the report separates original random, source-stratified
+main, supplemental home, supplemental sparse, and combined targeted results.
+Only the original random set supports archive-level coverage estimates;
+targeted and supplemental precision/recall are sample-specific diagnostics.
+All outputs and annotations stay under ignored `data/`, never in Git.
+
 ## Stage 3 — Concrete local NER labels
 
 Status: implemented and benchmarked.
