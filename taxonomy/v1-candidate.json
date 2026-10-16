@@ -51,7 +51,6 @@
       "source_categories": [
         "Engineering & Development",
         "AI Coding Agents",
-        "No-code Platforms",
         "AI Infrastructure Tools",
         "Unified API",
         "Testing and QA software",
@@ -80,9 +79,7 @@
         "Developer Tools",
         "Software Engineering",
         "software-engineering",
-        "Vibe Coding Tools",
-        "No-Code",
-        "no-code"
+        "Vibe Coding Tools"
       ]
     },
     {
@@ -109,7 +106,6 @@
         "AI Designer",
         "AI Headshot Generators",
         "Stock photo sites",
-        "Figma Plugins",
         "Figma Templates",
         "Design Tools",
         "User Experience",
@@ -306,10 +302,7 @@
         "Games",
         "News",
         "Blogging platforms",
-        "Newsletter platforms",
         "Live streaming platforms",
-        "Video hosting platforms",
-        "Microblogging platforms",
         "Streaming Services",
         "streaming-services",
         "Video Streaming",
@@ -357,7 +350,6 @@
       "boundary": "Individual writing, planning, notes, time, calendars, documents, and file organization; excludes team operations.",
       "rationale": "The source category names an individual information or task workflow.",
       "source_categories": [
-        "Productivity",
         "Note and writing apps",
         "Writing assistants",
         "Calendar apps",
@@ -365,14 +357,12 @@
         "File storage and sharing apps",
         "PDF Editor",
         "Screenshots and screen recording apps",
-        "AI notetakers",
         "Presentation Software",
         "Spreadsheets",
         "Digital whiteboards",
         "AI Dictation Apps",
         "Transcription",
         "AI Presentation Software",
-        "productivity",
         "writing",
         "Writing",
         "notes",

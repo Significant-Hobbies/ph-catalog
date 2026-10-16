@@ -1,4 +1,6 @@
 {
+  "audit_status": "stale_after_mapping_review",
+  "audit_note": "Counts and taxonomy_sha256 describe the prior 421-value candidate, not the current 411-value mapping. Regenerate from the source archive before use.",
   "taxonomy_version": "v1-candidate",
   "taxonomy_sha256": "03ab419a2c3862e4cb017a58e4de89ad48a92d15f14d1ffe33dd358ac4fd82a1",
   "source_snapshot": "catalog-state:2026-10-15T23:53:43.847299+00:00",

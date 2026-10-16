@@ -1,6 +1,7 @@
 """Tests for conservative primary source mapping."""
 
 import csv
+import json
 from pathlib import Path
 
 import pytest
@@ -27,15 +28,32 @@ def test_source_evidence_must_agree() -> None:
     )
 
 
-def test_duplicate_source_fails_closed(tmp_path: Path) -> None:
-    content = TAXONOMY.read_text()
-    duplicate = content.replace(
-        '"source_categories": ["Project management software"',
-        '"source_categories": ["SEO tools", "Project management software"',
-        1,
-    )
+@pytest.mark.parametrize(
+    "source",
+    [
+        "Productivity",
+        "productivity",
+        "No-code Platforms",
+        "No-Code",
+        "no-code",
+        "Newsletter platforms",
+        "Video hosting platforms",
+        "AI notetakers",
+        "Microblogging platforms",
+        "Figma Plugins",
+    ],
+)
+def test_ambiguous_source_is_unmapped(source: str) -> None:
+    taxonomy = load_taxonomy(TAXONOMY)
+    assert primary_from_sources([source], taxonomy) == (None, "no_unambiguous_source_category")
+
+
+@pytest.mark.parametrize("source", ["Project management software", "SEO tools"])
+def test_duplicate_source_fails_closed(tmp_path: Path, source: str) -> None:
+    document = json.loads(TAXONOMY.read_text())
+    document["categories"][0]["source_categories"].append(source)
     path = tmp_path / "taxonomy.json"
-    path.write_text(duplicate)
+    path.write_text(json.dumps(document))
     with pytest.raises(ValueError, match="duplicate"):
         load_taxonomy(path)
 
