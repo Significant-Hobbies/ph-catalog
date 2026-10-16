@@ -260,6 +260,14 @@ def validate_annotations(
             raise ValueError(f"invalid decision for {review_id}")
         counts[split][decision] += 1
         if decision == "unreviewed":
+            if (
+                annotation.get("primary_category") is not None
+                or annotation.get("co_primary_categories") != []
+                or annotation.get("evidence") != {}
+                or annotation.get("null_reason") is not None
+                or annotation.get("reviewer_id") is not None
+            ):
+                raise ValueError(f"unreviewed annotation contains verdict fields for {review_id}")
             continue
         if not annotation.get("reviewer_id"):
             raise ValueError(f"missing reviewer for {review_id}")

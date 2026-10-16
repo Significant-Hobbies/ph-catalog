@@ -164,6 +164,41 @@ def test_annotation_decisions_and_gate_are_validated(tmp_path, taxonomy: Taxonom
         protocol.export_development_gold(bundle, blind, annotations, taxonomy, output)
 
 
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("primary_category", "developer_tools"),
+        ("co_primary_categories", ["developer_tools", "home_lifestyle"]),
+        ("evidence", {"developer_tools": "Build code"}),
+        ("null_reason", "underdetermined"),
+        ("reviewer_id", "reviewer-a"),
+    ],
+)
+def test_unreviewed_annotation_has_no_verdict_fields(field, value, taxonomy: Taxonomy) -> None:
+    blind = {
+        "development": [],
+        "holdout_random": [
+            {"review_id": "sealed", "name": "Editor", "tagline": "Build code", "description": ""}
+        ],
+        "holdout_stratified": [],
+    }
+    annotation = {
+        "review_id": "sealed",
+        "decision": "unreviewed",
+        "primary_category": None,
+        "co_primary_categories": [],
+        "evidence": {},
+        "null_reason": None,
+        "reviewer_id": None,
+    }
+    assert protocol.validate_annotations(blind, [annotation], taxonomy)["holdout_random"] == {
+        "unreviewed": 1
+    }
+    annotation[field] = value
+    with pytest.raises(ValueError, match="unreviewed annotation contains verdict fields"):
+        protocol.validate_annotations(blind, [annotation], taxonomy)
+
+
 def test_evaluation_refuses_candidate_and_scores_only_reviewed_holdouts(
     tmp_path, taxonomy: Taxonomy
 ) -> None:
