@@ -47,6 +47,39 @@ def test_source_evidence_must_agree() -> None:
         "Email",
         "Telegram",
         "Space design apps",
+        "Marketplace sites",
+        "Apps for kids",
+        "Real estate",
+        "Time tracking apps",
+        "time-tracking",
+        "Furniture",
+        "Writing assistants",
+        "Legal services",
+        "legal",
+        "Music",
+        "music",
+        "Meetings",
+        "meetings",
+        "Writing",
+        "writing",
+        "Education",
+        "education",
+        "sales",
+        "Sales",
+        "advertising",
+        "Advertising",
+        "delivery",
+        "books",
+        "cookbooks",
+        "Art",
+        "art",
+        "Payroll software",
+        "Blogging platforms",
+        "CRM software",
+        "crm",
+        "Shopify Apps",
+        "Twitter apps",
+        "NFT creation tools",
     ],
 )
 def test_ambiguous_source_is_unmapped(source: str) -> None:
@@ -81,3 +114,29 @@ def test_audit_keeps_unknown_and_conflicting_products_unlabeled(tmp_path: Path) 
         "unique_source_mapping": 1,
     }
     assert report["uniquely_labeled_products_by_category"] == {"marketing_sales": 1}
+
+
+def test_case_equivalent_values_cannot_map_to_different_classes(tmp_path: Path) -> None:
+    document = json.loads(TAXONOMY.read_text())
+    developer_tools = next(c for c in document["categories"] if c["id"] == "developer_tools")
+    developer_tools["source_categories"].append("PROJECT MANAGEMENT SOFTWARE")
+    path = tmp_path / "taxonomy.json"
+    path.write_text(json.dumps(document))
+    with pytest.raises(ValueError, match="case-equivalent source categories map differently"):
+        load_taxonomy(path)
+
+
+def test_audit_rejects_mapped_and_unmapped_case_twins(tmp_path: Path) -> None:
+    document = json.loads(TAXONOMY.read_text())
+    media = next(c for c in document["categories"] if c["id"] == "media_entertainment")
+    media["source_categories"].append("Music")
+    taxonomy = tmp_path / "taxonomy.json"
+    taxonomy.write_text(json.dumps(document))
+    products = tmp_path / "products.csv"
+    with products.open("w", newline="") as stream:
+        writer = csv.writer(stream)
+        writer.writerow(["slug", "categories"])
+        writer.writerow(["one", "[Music]"])
+        writer.writerow(["two", "[music]"])
+    with pytest.raises(ValueError, match="case-equivalent source categories mapped and unmapped"):
+        audit(taxonomy, products, require_complete_source_snapshot=False)

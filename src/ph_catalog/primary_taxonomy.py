@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -18,6 +19,11 @@ class Taxonomy:
     sha256: str
 
 
+def normalized_source_value(source: str) -> str:
+    """Only Unicode/case normalization is automatic; broader aliases need review."""
+    return unicodedata.normalize("NFKC", source).casefold()
+
+
 def load_taxonomy(path: Path) -> Taxonomy:
     raw = path.read_bytes()
     document = json.loads(raw)
@@ -26,6 +32,7 @@ def load_taxonomy(path: Path) -> Taxonomy:
         raise ValueError("primary taxonomy must have 12–18 categories")
     names: dict[str, str] = {}
     mapping: dict[str, str] = {}
+    normalized_mapping: dict[str, str] = {}
     rationales: dict[str, str] = {}
     for category in categories:
         category_id = category["id"]
@@ -37,7 +44,12 @@ def load_taxonomy(path: Path) -> Taxonomy:
         for source in category["source_categories"]:
             if not source or source != source.strip() or source in mapping:
                 raise ValueError(f"duplicate or malformed source category: {source!r}")
+            normalized = normalized_source_value(source)
+            previous_category = normalized_mapping.get(normalized)
+            if previous_category is not None and previous_category != category_id:
+                raise ValueError(f"case-equivalent source categories map differently: {source!r}")
             mapping[source] = category_id
+            normalized_mapping[normalized] = category_id
             rationales[source] = category["rationale"]
     return Taxonomy(
         version=document["version"],
