@@ -488,6 +488,55 @@ The model must be allowed to return null/unknown.
 
 ## Stage 7 — Validation and promotion
 
+Status: a new, sealed independent audit reservation exists locally; no audit
+labels or precision result exist. `tools/primary_final_audit_sample.py` first
+excluded all eight earlier tuning/development/holdout source-key bundles and
+the five Stage 5/6 pilot slugs: 5,600 distinct reserved slugs, of which 31
+are absent from the archived analytics mart. It then ranked the full mart
+by a fixed seed. Of 574,752 mart products, 5,569 excluded slugs are present,
+leaving a 569,183-product random denominator. It reserved 200 random products
+regardless of routing outcome. A separate disjoint 5,000-product screen was
+run through the frozen Stage 4 model and yielded 120 model-stratified audit
+records selected by category (or explicit abstention), confidence band, and
+Stage 4 path. These 120 are a biased diagnostic, not part of the random
+denominator. The 320 text-only blind records and private source/stratum key
+are ignored; all 320 annotation templates remain `unreviewed`. The
+recomputation check `tools/primary_final_audit_check.py` verifies the population,
+exclusions, deterministic selection, source text, route hashes, and seal.
+Blind SHA-256: `f4eb461c92dd4dede831646a72986d7387830ca01c5da03d29735ff6df5843e4`.
+Ignored reservation manifest SHA-256: `f8c3fc478236acd898a9929063fb56af4d108c036a98e1de1a5a2c277870479d`.
+It pins sampler code SHA-256 `1a9f213fb4a2637316165179d108dc892842d72204e558ed0e1a0a64bfaa9318`;
+changing the selector requires a new sealed reservation before annotation.
+
+The random 200 contain 61 Stage 4 local source-text accept candidates, 120
+website-evidence routes, and 19 non-web routes; the separate 120 stratified
+records contain 94, 19, and 7 respectively. These are routing counts, not
+correctness or final path rates. Final reporting must keep the random sample
+as the representative coverage/precision denominator and show separate
+source-text-only, website-evidence, and LLM candidate slices. If Stage 6 is
+used after website evidence, report it in the LLM slice with a website-evidence
+subgroup; never count it twice as a website-only decision. No Stage 5 HTML or
+Stage 6 output for these 320 has been used to choose the sample, and their
+labels must stay sealed until all relevant outputs, model/prompt versions, and
+decision rules are fixed. The 1,825 frozen development/heldout rows and
+five-product pilot are excluded from this final audit. Completing website and
+LLM candidate paths, independent annotation/QA, and Stage 7 confusion and
+precision analysis remain open; do not tune frozen decisions on these labels.
+
+This reservation is not a promotion audit result. The 120 diagnostic records
+were selected using predicted category and have at most three records per
+category/confidence/path cell; they cannot estimate true-category recall or
+population precision. Before opening any of the 320 labels, produce immutable
+Stage 4/5/6 outputs or explicit null/error outcomes for every reserved record,
+pin their hashes and decision rules, and pre-register acceptance thresholds.
+Fetches must select the reserved website-route subset rather than the first
+website routes in the 5,200-product screening file. The random 200 alone form
+the representative precision and coverage frame; report its accepted count
+and uncertainty interval. Stage 6 confidence is uncalibrated and must not be
+pooled with the Stage 4 confidence bands. The current frozen model's earlier
+random heldout precision remains below a broad publication bar, so no category
+is promoted by this reservation.
+
 Every taxonomy/model/prompt version produces immutable candidate outputs. It is
 promoted only after:
 
