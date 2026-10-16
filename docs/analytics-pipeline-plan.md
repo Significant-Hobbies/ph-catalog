@@ -488,8 +488,10 @@ The model must be allowed to return null/unknown.
 
 ## Stage 7 — Validation and promotion
 
-Status: a new, sealed independent audit reservation exists locally; no audit
-labels or precision result exist. `tools/primary_final_audit_sample.py` first
+Status: the independent audit is complete; the frozen candidate fails the
+pre-registered publication gates. The scored results and evidence hashes are
+in [`primary-stage7-audit-v1.md`](primary-stage7-audit-v1.md).
+`tools/primary_final_audit_sample.py` first
 excluded all eight earlier tuning/development/holdout source-key bundles and
 the five Stage 5/6 pilot slugs: 5,600 distinct reserved slugs, of which 31
 are absent from the archived analytics mart. It then ranked the full mart
@@ -500,7 +502,8 @@ run through the frozen Stage 4 model and yielded 120 model-stratified audit
 records selected by category (or explicit abstention), confidence band, and
 Stage 4 path. These 120 are a biased diagnostic, not part of the random
 denominator. The 320 text-only blind records and private source/stratum key
-are ignored; all 320 annotation templates remain `unreviewed`. The
+are ignored; the original 320 annotation templates remain `unreviewed`, while
+completed independent annotations are preserved separately. The
 recomputation check `tools/primary_final_audit_check.py` verifies the population,
 exclusions, deterministic selection, source text, route hashes, and seal.
 Blind SHA-256: `f4eb461c92dd4dede831646a72986d7387830ca01c5da03d29735ff6df5843e4`.
@@ -527,19 +530,19 @@ as the representative coverage/precision denominator and show separate
 source-text-only, website-evidence, and LLM candidate slices. If Stage 6 is
 used after website evidence, report it in the LLM slice with a website-evidence
 subgroup; never count it twice as a website-only decision. No Stage 5 HTML or
-Stage 6 output for these 320 has been used to choose the sample, and their
-labels must stay sealed until all relevant outputs, model/prompt versions, and
-decision rules are fixed. The 1,825 frozen development/heldout rows and
-five-product pilot are excluded from this final audit. Completing website and
-LLM candidate paths, independent annotation/QA, and Stage 7 confusion and
-precision analysis remain open; do not tune frozen decisions on these labels.
+Stage 6 output for these 320 was used to choose the sample. Labels stayed
+sealed until outputs, model/prompt versions, and decision rules were fixed.
+The 1,825 frozen development/heldout rows and five-product pilot were excluded.
+Independent annotation, QA, and scoring are complete; do not tune frozen
+decisions on these labels.
 
-This reservation is not a promotion audit result. The 120 diagnostic records
+This reservation alone was not a promotion audit result. The 120 diagnostic records
 were selected using predicted category and have at most three records per
 category/confidence/path cell; they cannot estimate true-category recall or
-population precision. Before opening any of the 320 labels, produce immutable
-Stage 4/5/6 outputs or explicit null/error outcomes for every reserved record,
-pin their hashes and decision rules, and pre-register acceptance thresholds.
+population precision. Before opening any of the 320 labels, the protocol
+required immutable Stage 4/5/6 outputs or explicit null/error outcomes for
+every reserved record, pinned hashes and decision rules, and pre-registered
+acceptance thresholds.
 Fetches must select the reserved website-route subset rather than the first
 website routes in the 5,200-product screening file. The random 200 alone form
 the representative precision and coverage frame; report its accepted count
@@ -572,7 +575,8 @@ own code/model/prompt/output hashes; the evaluator refuses a changed source
 file, blind bundle, prediction ledger, taxonomy, or incomplete independent
 annotations. The evaluator also hard-pins the external audit manifest and
 ledger output SHA-256 values, so changing a ledger and its companion manifest
-together still fails before gold is read. No scoring run has occurred yet.
+together still fails before gold is read. The first score ran after blind
+annotation, second-pass QA, and blind adjudication were complete.
 
 Independent annotators receive only `blind-review.json` and frozen category
 definitions, never the source/stratum key, Stage 4–6 predictions, website
