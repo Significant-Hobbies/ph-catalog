@@ -407,6 +407,29 @@ response hash, and outcome. It never updates Product Hunt source fields.
 Live product-site validation and a combined evidence classification view
 remain open before Stage 5 acceptance.
 
+A bounded 2026-10-16 live pilot used five hand-picked weak-copy products from
+the verified `catalog-handoff-v1` analytics mart. A five-row mini-mart kept
+the original `product_facts` text, URLs, and auxiliary counts; frozen routing
+excluded all 1,825 development/holdout slugs. All five routed to public HTTPS
+sites. The fetcher made ten requests including robots, fetched five HTML pages
+with HTTP 200, and retained 6, 4, 1, 2, and 1 fields respectively. Robots
+returned 4xx, which allowed these requests under the protocol. The routed
+output SHA-256 is `8c9c450167f072e9e3412ff3a85e6aae5bc27486affd96ae4e04643ee64d3460`;
+the ignored evidence output SHA-256 is
+`338030a328afdb73227495ebfade30658f1e47f647d289d239564e589d9162e9`.
+This selected pilot validates the fetch path only; title-only pages remain
+weak evidence and no classifier or category was promoted.
+
+`tools/primary_stage5_handoff.py` joins the pinned routing and website
+artifacts into another immutable, ignored JSONL/manifest. It passes only
+non-web routes and website routes with a completed fetch, marks each as
+provisionally unresolved with a reason, and pins the evidence-row hash. It
+rejects altered manifests or field provenance; unfetched website routes stay
+queued for Stage 5. The pilot handoff contains five unresolved rows, output
+SHA-256 `e812ea367dcec1cbed799298b0c6452a90fa7969db1573c765393105ec83d540`.
+Stage 6 may use this as an input gate after its own schema, citation, and
+model-evaluation checks; this handoff is not a category decision.
+
 Fetch only public pages for routed products. Respect robots directives,
 Retry-After, persistent denial, and the existing global request cap. Do not
 download media or bypass access controls.
